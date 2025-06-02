@@ -91,7 +91,7 @@ export default function Home() {
                   imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
                   items: [{price: 550}]
                 }
-              ]} categoryId={1} />
+              ]} categoryId={2} />
             </div>
           </div>
         </div>

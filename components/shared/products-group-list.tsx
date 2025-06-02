@@ -1,4 +1,6 @@
+'use client';
 import { cn } from '@/lib/utils';
+import { useIntersection } from 'react-use';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Title } from './title';
 import { ProductCard } from './product-card';
@@ -11,8 +13,19 @@ interface IProductsGroupListProps extends DetailedHTMLProps< HTMLAttributes<HTML
 }
 
 export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, products, listClassName, categoryId, className }) => {
+  const intersectionRef = React.useRef(null);
+  const intersection = useIntersection(intersectionRef, {
+    threshold: 0.4,
+  });
+
+  React.useEffect( () => {
+    if( intersection?.isIntersecting ) {
+      console.log(title, categoryId);
+    }
+  }, [intersection?.isIntersecting, title, categoryId]);
+
   return (
-    <div className={cn('', className)}>
+    <div className={cn('', className)} id={title} ref={intersectionRef}>
       <Title text={title} size="lg" className='font-extrabold mb-5' />
       <div className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
         {
