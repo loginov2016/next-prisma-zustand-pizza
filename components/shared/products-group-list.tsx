@@ -4,6 +4,7 @@ import { useIntersection } from 'react-use';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Title } from './title';
 import { ProductCard } from './product-card';
+import { useCategoryStore } from '@/store/category';
 
 interface IProductsGroupListProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
   title: string;
@@ -13,6 +14,7 @@ interface IProductsGroupListProps extends DetailedHTMLProps< HTMLAttributes<HTML
 }
 
 export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, products, listClassName, categoryId, className }) => {
+  const setActiveCategoryId = useCategoryStore( state => state.setActiveId );
   const intersectionRef = React.useRef(null);
   const intersection = useIntersection(intersectionRef, {
     threshold: 0.4,
@@ -20,7 +22,7 @@ export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, pr
 
   React.useEffect( () => {
     if( intersection?.isIntersecting ) {
-      console.log(title, categoryId);
+      setActiveCategoryId(categoryId);
     }
   }, [intersection?.isIntersecting, title, categoryId]);
 
