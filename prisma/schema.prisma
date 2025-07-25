@@ -45,33 +45,33 @@ model Product {
   name     String
   imageUrl String
 
-  ingredients Ingredients[]
+  ingredients Ingredient[]
 
   category Category @relation(fields: [categoryId], references: [id]) // Для JavaScript
   categoryId Int // categoryId для базы данных
 
-  productOption ProductOption[]
+  productVariations ProductVariation[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-/* Опция Продукта, - это размер продукта: маленькая, средняя, большая, традиционное, тонкое, 25см, 30см, 35см */
-model ProductOption {
+/* Вариация Продукта - это размер продукта: маленькая, средняя, большая, традиционное, тонкое, 25см, 30см, 35см */
+model ProductVariation {
   id    Int @id @default(autoincrement())
 
   price Int
   size  Int?
   pizzaType Int?
 
-  cartOption CartOption[]
+  cartProductVariations CartProductVariation[]
 
   product Product @relation(fields: [productId], references: [id])
   productId Int
 }
 
 /* Ингридиенты: помидоры, острый перец, моцарелла, сыр, фирменный соус, чеснок и т. д. */
-model Ingredients {
+model Ingredient {
   id Int @id @default(autoincrement())
 
   name String
@@ -79,19 +79,19 @@ model Ingredients {
   imageUrl String
 
   products Product[]
-  cartOption CartOption[]
+  cartProductVariations CartProductVariation[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
+/* Модель корзины */
 model Cart {
   id Int @id @default(autoincrement())
 
   user User? @relation(fields: [userId], references: [id])
   userId Int? @unique
 
-  cartOption CartOption[]
+  cartProductVariations CartProductVariation[]
 
   token String
 
@@ -101,19 +101,19 @@ model Cart {
   updatedAt DateTime @updatedAt
 }
 
-/* Дополнительные опции продуктов в корзине */
-model CartOption {
+/* Дополнительная вариация продукта в корзине */
+model CartProductVariation {
   id Int @id @default(autoincrement())
 
   cart Cart @relation(fields: [cartId], references: [id])
   cartId Int
 
-  productOption ProductOption @relation(fields: [productOptionId], references: [id])
-  productOptionId Int
+  productVariation ProductVariation @relation(fields: [productVariationId], references: [id])
+  productVariationId Int
 
   quantity Int @default(0)
 
-  ingredients Ingredients[]
+  ingredients Ingredient[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
