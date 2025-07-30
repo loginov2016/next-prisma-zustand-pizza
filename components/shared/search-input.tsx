@@ -24,18 +24,20 @@ export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
     });
 
     /* Заменим useEffect на useDebounce */
-    useDebounce( () => {
-        Api.products.search(searchQuery).then( arrProducts => {
-            console.log(arrProducts);
-            setProducts(arrProducts);
-        } );
+    useDebounce( async () => {
+        try {
+            const response = await Api.products.search(searchQuery)
+            //console.log(response);
+            setProducts(response);
+        } catch (error) {
+            console.log(error);
+        }
     }, 250, [searchQuery]);
 
-    const onClearItem = () => {
+    const onClearSearch = () => {
         setFocused(false);
         setSearchQuery('');
         setProducts([]);
-
     }
 
     return (
@@ -64,7 +66,7 @@ export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {
                                     className="flex items-center gap-3 px-3 py-2 hover:bg-primary/10" 
                                     href={`/product/${product.id}`}
                                     key={product.id}
-                                    onClick={onClearItem}
+                                    onClick={onClearSearch}
                                     >
                                     <img 
                                         src={product.imageUrl}

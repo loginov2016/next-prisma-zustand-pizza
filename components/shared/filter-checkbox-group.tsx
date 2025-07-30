@@ -1,30 +1,33 @@
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { FilterChecboxProps, FilterCheckbox } from './filter-checkbox';
-import { Input } from '../ui';
-import { log } from 'console';
+import { IFilterCheckboxProps, FilterCheckbox } from './filter-checkbox';
+import { Input, Skeleton } from '../ui';
 
-type TItem = FilterChecboxProps;
-
-interface ICheckboxFilterGroupProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface IFilterCheckboxGroupProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string;
-  items: TItem[];
-  defaultItems: TItem[];
+  FilterCheckboxGroup: IFilterCheckboxProps[];
+  defaultFilterCheckboxGroup: IFilterCheckboxProps[];
   limit?: number;
+  loading?: boolean;
   searchInputPlaceholder?: string;
   defaultValues?: string[];
-  onChangeFilter?: (values: string[]) => void;
+  onClickCheckbox?: (id: string) => void;
+  selectedFilterCheckboxID?: Set<string>;
+  name?: string;
 }
 
-export const CheckboxFiltersGroup: React.FC<ICheckboxFilterGroupProps> = ({ 
+export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({ 
     className, 
     title, 
-    items,
-    defaultItems,
+    FilterCheckboxGroup,
+    defaultFilterCheckboxGroup,
     limit = 5,
+    loading,
     searchInputPlaceholder = 'Поиск...',
-    onChangeFilter,
-    defaultValue, 
+    onClickCheckbox,
+    selectedFilterCheckboxID,
+    name,
+    defaultValues, 
 }) => {
   const [showAllCheckbox, setShowAllCheckbox] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState<string>('');
@@ -33,7 +36,18 @@ export const CheckboxFiltersGroup: React.FC<ICheckboxFilterGroupProps> = ({
     setSearchValue(e.target.value);
   }
 
-  const list = showAllCheckbox ? items.filter( item => item.text.toLowerCase().includes(searchValue.toLocaleLowerCase()) ) : defaultItems.slice(0, limit);
+  if(loading) {
+    return <div className={className}>
+      <p className="font-bold mb-3">{title}</p>
+      {
+        ...new Array(limit).fill(0).map( (_, index) => (<Skeleton key={index} className='h-6 mb-4 rounded-[8px]' />) )
+      }
+
+      <Skeleton className='w-28 h-6 mb-4 rounded-[8px]' />
+    </div>
+  }
+
+  const list = showAllCheckbox ? FilterCheckboxGroup.filter( item => item.text.toLowerCase().includes(searchValue.toLocaleLowerCase()) ) : defaultFilterCheckboxGroup.slice(0, limit);
 
   return (
     <div className={cn('', className)}>
@@ -55,18 +69,19 @@ export const CheckboxFiltersGroup: React.FC<ICheckboxFilterGroupProps> = ({
               text={item.text}
               value={item.value}
               endAdornment={item.endAdornment}
-              checked={false}
-              onCheckedChange={ ids => console.log(ids) }
+              checked={selectedFilterCheckboxID?.has(item.value)}
+              onCheckedChange={ () => onClickCheckbox?.(item.value) }
+              name={name}
             />
           )
         )}
       </div>
-      {items.length > limit && (
+      {FilterCheckboxGroup.length > limit && (
         <div className={cn('', {['border-t border-t-neutral-100 mt-4']: showAllCheckbox})}>
           <button 
             onClick={() => setShowAllCheckbox(!showAllCheckbox)} 
             className='text-primary mt-3'
-            >
+          >
             {showAllCheckbox ? 'Скрыть' : '+ Показать всё'}
           </button>
         </div>

@@ -1,17 +1,24 @@
-'use client'
+'use client';
+
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Title } from './title';
 import { FilterCheckbox } from './filter-checkbox';
 import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
-import { CheckboxFiltersGroup } from './checkbox-filters-group';
+import { FilterCheckboxGroup } from './filter-checkbox-group';
+import { useFilterIngredients } from '@/hooks/useFilterIngredients';
 
 interface IFiltersProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   
 }
 
 export const Filters: React.FC<IFiltersProps> = ({ className }) => {
+  console.log('Сработал компонент Filters');
+  const { ingredients, loading, selectedFilterCheckboxID, onAddFilterCheckboxID } = useFilterIngredients();
+
+  const arrCheckboxes = ingredients.map( item => ({ text: item.name, value: String(item.id), }) );
+
   return (
     <div className={cn('', className)}>
       {/* Верхние чекбоксы */}
@@ -30,86 +37,16 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
         <RangeSlider min={0} max={1000} step={10} value={[0, 1000]} />
       </div>
       {/* Ингридиенты */}
-      <CheckboxFiltersGroup 
-        title="Ингридиенты"
+      <FilterCheckboxGroup 
+        title='Ингридиенты'
+        name='ingredients'
         className="mt-5"
         limit={6}
-        defaultItems={[
-          {
-            text: 'Сырный соус',
-            value: '1'
-          },
-          {
-            text: 'Моццарелла',
-            value: '2'
-          },
-          {
-            text: 'Чеснок',
-            value: '3'
-          },
-          {
-            text: 'Солённые огурчики',
-            value: '4'
-          },
-          {
-            text: 'Красный лук',
-            value: '5'
-          },
-          {
-            text: 'Томаты',
-            value: '6'
-          },
-        ]}
-        items={[
-          {
-            text: 'Сырный соус',
-            value: '1'
-          },
-          {
-            text: 'Моццарелла',
-            value: '2'
-          },
-          {
-            text: 'Чеснок',
-            value: '3'
-          },
-          {
-            text: 'Солённые огурчики',
-            value: '4'
-          },
-          {
-            text: 'Красный лук',
-            value: '5'
-          },
-          {
-            text: 'Томаты',
-            value: '6'
-          },
-          {
-            text: 'Сырный соус',
-            value: '1'
-          },
-          {
-            text: 'Моццарелла',
-            value: '2'
-          },
-          {
-            text: 'Чеснок',
-            value: '3'
-          },
-          {
-            text: 'Солённые огурчики',
-            value: '4'
-          },
-          {
-            text: 'Красный лук',
-            value: '5'
-          },
-          {
-            text: 'Томаты',
-            value: '6'
-          },
-        ]}
+        defaultFilterCheckboxGroup={arrCheckboxes.slice(0, 6)}
+        FilterCheckboxGroup={arrCheckboxes}
+        loading={loading}
+        onClickCheckbox={onAddFilterCheckboxID}
+        selectedFilterCheckboxID={selectedFilterCheckboxID}
       />
     </div>
   );
