@@ -6,13 +6,13 @@ import { Input, Skeleton } from '../ui';
 interface IFilterCheckboxGroupProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string;
   FilterCheckboxGroup: IFilterCheckboxProps[];
-  defaultFilterCheckboxGroup: IFilterCheckboxProps[];
+  defaultFilterCheckboxGroup?: IFilterCheckboxProps[];
   limit?: number;
   loading?: boolean;
   searchInputPlaceholder?: string;
   defaultValues?: string[];
   onClickCheckbox?: (id: string) => void;
-  selectedFilterCheckboxID?: Set<string>;
+  selectedFilterCheckbox?: Set<string>;
   name?: string;
 }
 
@@ -25,7 +25,7 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
     loading,
     searchInputPlaceholder = 'Поиск...',
     onClickCheckbox,
-    selectedFilterCheckboxID,
+    selectedFilterCheckbox,
     name,
     defaultValues, 
 }) => {
@@ -47,7 +47,7 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
     </div>
   }
 
-  const list = showAllCheckbox ? FilterCheckboxGroup.filter( item => item.text.toLowerCase().includes(searchValue.toLocaleLowerCase()) ) : defaultFilterCheckboxGroup.slice(0, limit);
+  const list = showAllCheckbox ? FilterCheckboxGroup.filter( item => item.text.toLowerCase().includes(searchValue.toLocaleLowerCase()) ) : (defaultFilterCheckboxGroup || FilterCheckboxGroup).slice(0, limit);
 
   return (
     <div className={cn('', className)}>
@@ -69,7 +69,7 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
               text={item.text}
               value={item.value}
               endAdornment={item.endAdornment}
-              checked={selectedFilterCheckboxID?.has(item.value)}
+              checked={selectedFilterCheckbox?.has(item.value)}
               onCheckedChange={ () => onClickCheckbox?.(item.value) }
               name={name}
             />
