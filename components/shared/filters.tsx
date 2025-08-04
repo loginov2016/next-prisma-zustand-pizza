@@ -1,34 +1,33 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from 'react';
 import { Title } from './title';
-import { FilterCheckbox } from './filter-checkbox';
 import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
 import { FilterCheckboxGroup } from './filter-checkbox-group';
 import { useFilterIngredients } from '@/hooks/use-filter-ingredients';
 import { useSet } from 'react-use';
+import qs from 'qs';
+import { useRouter } from 'next/navigation';
 
 interface IFiltersProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   
 }
 
 interface IFilterPriceProps {
-  priceFrom: number;
-  priceTo: number;
+  priceFrom?: number;
+  priceTo?: number;
 }
 
 export const Filters: React.FC<IFiltersProps> = ({ className }) => {
-  console.log('Сработал компонент Filters');
-  const { ingredients, loading, selectedFilterCheckbox, onAddFilterCheckboxID } = useFilterIngredients();
+  //console.log('Сработал компонент Filters');
+  const filterRouter = useRouter();
+  const { ingredients, loading, selectedIngredients, onAddFilterCheckboxID } = useFilterIngredients();
   const [filterCheckboxBySizes, { toggle: toggleFilterCheckboxBySizes }] = useSet(new Set<string>([]));
   const [filterCheckboxByPizzaTypes, { toggle: toggleFilterCheckboxByPizzaTypes }] = useSet(new Set<string>([]));
 
-  const [filterPrices, setFilterPrice] = useState<IFilterPriceProps>({
-    priceFrom: 0,
-    priceTo: 1000
-  });
+  const [filterPrices, setFilterPrice] = useState<IFilterPriceProps>({});
 
   const arrCheckboxes = ingredients.map( item => ({ text: item.name, value: String(item.id), }) );
 
@@ -38,6 +37,27 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
       [prices]: value,
     })
   };
+
+  useEffect(() => {
+    console.log('Сработал копонент Filter');
+    const filters = {
+      ...filterPrices,
+      pizzaTypes: Array.from(filterCheckboxByPizzaTypes),
+      pizzaSizes: Array.from(filterCheckboxBySizes),
+      ingredients: Array.from(selectedIngredients),
+    };
+
+    const filterQueryString = qs.stringify(filters, {
+      arrayFormat: 'comma'
+    });
+    /* 
+      Обязательно нужно передавать в push второй аргумент: { scroll: false },
+      чобы при клике на чекбокс, скролл не прыгал на верх.   
+    */
+    filterRouter.push(`?${filterQueryString}`, { scroll: false });
+    //console.log(filterQueryString);
+
+  }, [filterPrices, filterCheckboxByPizzaTypes, filterCheckboxBySizes, selectedIngredients, filterRouter] );
 
   return (
     <div className={cn('', className)}>
@@ -82,7 +102,7 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
           min={0} 
           max={1000} 
           step={10} 
-          value={[filterPrices.priceFrom, filterPrices.priceTo]} 
+          value={[filterPrices.priceFrom || 0, filterPrices.priceTo || 1000]} 
           onValueChange={([from, to]) => setFilterPrice({priceFrom: from, priceTo: to}) }
         />
       </div>
@@ -97,7 +117,7 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
         FilterCheckboxGroup={arrCheckboxes}
         loading={loading}
         onClickCheckbox={onAddFilterCheckboxID}
-        selectedFilterCheckbox={selectedFilterCheckbox}
+        selectedFilterCheckbox={selectedIngredients}
       />
     </div>
   );

@@ -1,7 +1,8 @@
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { IFilterCheckboxProps, FilterCheckbox } from './filter-checkbox';
-import { Input, Skeleton } from '../ui';
+import { Button, Input, Skeleton } from '../ui';
+import { CircleX } from 'lucide-react';
 
 interface IFilterCheckboxGroupProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string;
@@ -36,6 +37,11 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
     setSearchValue(e.target.value);
   }
 
+  const onClearSearchInput = () => {
+    console.log('Clear Search Input');
+    setSearchValue('');
+  }
+
   if(loading) {
     return <div className={className}>
       <p className="font-bold mb-3">{title}</p>
@@ -54,11 +60,22 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
       <p className="font-bold mb-3">{title}</p>
   
       {showAllCheckbox && (
-        <div className="mb-5">
+        <div className="mb-5 relative">
+          {/* <CloseIcon className='absolute right-2 top-2' stroke='#FF6900' /> */}
+          <Button 
+            variant={'outline'} 
+            size={'icon'} 
+            className='absolute right-2 w-6 h-6 border-none top-1.5 focus-visible:ring-0 focus-visible:ring-offset-0'
+            onClick={onClearSearchInput}
+          >
+            <CircleX stroke='#FFB480'/>
+          </Button>
           <Input
             onChange={onChangeSearchInput} 
             placeholder={searchInputPlaceholder} 
-            className='bg-gray-50 border-none' />
+            className='bg-gray-50 border-none'
+            value={searchValue}
+          />
         </div>
       )}
 
@@ -76,13 +93,20 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
           )
         )}
       </div>
+
+      {list.length === 0 && (
+        <div className={cn('flex flex-col gap-4 max-h-96 pr-2')}>
+          Ничего не найдено
+        </div>
+      )}  
+
       {FilterCheckboxGroup.length > limit && (
         <div className={cn('', {['border-t border-t-neutral-100 mt-4']: showAllCheckbox})}>
           <button 
             onClick={() => setShowAllCheckbox(!showAllCheckbox)} 
             className='text-primary mt-3'
           >
-            {showAllCheckbox ? 'Скрыть' : '+ Показать всё'}
+            {showAllCheckbox ? '- Скрыть' : '+ Показать всё'}
           </button>
         </div>
       )}
