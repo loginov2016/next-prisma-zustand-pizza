@@ -9,7 +9,7 @@ import { FilterCheckboxGroup } from './filter-checkbox-group';
 import { useFilterIngredients } from '@/hooks/use-filter-ingredients';
 import { useSet } from 'react-use';
 import qs from 'qs';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface IFiltersProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   
@@ -20,14 +20,24 @@ interface IFilterPriceProps {
   priceTo?: number;
 }
 
+export interface IFilterQueryString extends IFilterPriceProps {
+  pizzaTypes: string;
+  pizzaSizes: string;
+  ingredients: string;
+}
+
 export const Filters: React.FC<IFiltersProps> = ({ className }) => {
   //console.log('Сработал компонент Filters');
+  const searchParams = useSearchParams() as unknown as Map<keyof IFilterQueryString, string>
   const filterRouter = useRouter();
-  const { ingredients, loading, selectedIngredients, onAddFilterCheckboxID } = useFilterIngredients();
-  const [filterCheckboxBySizes, { toggle: toggleFilterCheckboxBySizes }] = useSet(new Set<string>([]));
-  const [filterCheckboxByPizzaTypes, { toggle: toggleFilterCheckboxByPizzaTypes }] = useSet(new Set<string>([]));
+  const { ingredients, loading, selectedIngredients, onAddFilterCheckboxID, onClearAllFilterCheckboxID } = useFilterIngredients(searchParams.has('ingredients') ? searchParams.get('ingredients')?.split(',') : []);
+  const [filterCheckboxBySizes, { toggle: toggleFilterCheckboxBySizes }] = useSet(new Set<string>( searchParams.has('pizzaSizes') ? searchParams.get('pizzaSizes')?.split(',') : [] ));
+  const [filterCheckboxByPizzaTypes, { toggle: toggleFilterCheckboxByPizzaTypes }] = useSet(new Set<string>(searchParams.has('pizzaTypes') ? searchParams.get('pizzaTypes')?.split(',') : []));
 
-  const [filterPrices, setFilterPrice] = useState<IFilterPriceProps>({});
+  const [filterPrices, setFilterPrice] = useState<IFilterPriceProps>({
+    priceFrom: Number( searchParams.get('priceFrom') ) || undefined,
+    priceTo:   Number( searchParams.get('priceTo') )   || undefined,
+  });
 
   const arrCheckboxes = ingredients.map( item => ({ text: item.name, value: String(item.id), }) );
 
@@ -38,6 +48,8 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
     })
   };
 
+  //console.log( searchParams.get('priceFrom') );
+
   useEffect(() => {
     console.log('Сработал копонент Filter');
     const filters = {
@@ -46,16 +58,17 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
       pizzaSizes: Array.from(filterCheckboxBySizes),
       ingredients: Array.from(selectedIngredients),
     };
-
+    /* Строка запроса в GET запросе. */
     const filterQueryString = qs.stringify(filters, {
       arrayFormat: 'comma'
     });
+    //console.log(filterQueryString);
     /* 
       Обязательно нужно передавать в push второй аргумент: { scroll: false },
       чобы при клике на чекбокс, скролл не прыгал на верх.   
     */
     filterRouter.push(`?${filterQueryString}`, { scroll: false });
-    //console.log(filterQueryString);
+    
 
   }, [filterPrices, filterCheckboxByPizzaTypes, filterCheckboxBySizes, selectedIngredients, filterRouter] );
 
@@ -117,6 +130,7 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
         FilterCheckboxGroup={arrCheckboxes}
         loading={loading}
         onClickCheckbox={onAddFilterCheckboxID}
+        onClearAllFilterCheckboxID={onClearAllFilterCheckboxID}
         selectedFilterCheckbox={selectedIngredients}
       />
     </div>

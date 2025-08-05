@@ -13,6 +13,7 @@ interface IFilterCheckboxGroupProps extends DetailedHTMLProps<HTMLAttributes<HTM
   searchInputPlaceholder?: string;
   defaultValues?: string[];
   onClickCheckbox?: (id: string) => void;
+  onClearAllFilterCheckboxID?: () => void;
   selectedFilterCheckbox?: Set<string>;
   name?: string;
 }
@@ -26,6 +27,7 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
     loading,
     searchInputPlaceholder = 'Поиск...',
     onClickCheckbox,
+    onClearAllFilterCheckboxID,
     selectedFilterCheckbox,
     name,
     defaultValues, 
@@ -65,7 +67,7 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
           <Button 
             variant={'outline'} 
             size={'icon'} 
-            className='absolute right-2 w-6 h-6 border-none top-1.5 focus-visible:ring-0 focus-visible:ring-offset-0'
+            className='absolute right-2 w-6 h-6 border-none top-1.5 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer'
             onClick={onClearSearchInput}
           >
             <CircleX stroke='#FFB480'/>
@@ -101,12 +103,18 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
       )}  
 
       {FilterCheckboxGroup.length > limit && (
-        <div className={cn('', {['border-t border-t-neutral-100 mt-4']: showAllCheckbox})}>
+        <div className={cn('flex justify-between items-center', {['border-t border-t-neutral-100 mt-4']: showAllCheckbox})}>
           <button 
             onClick={() => setShowAllCheckbox(!showAllCheckbox)} 
-            className='text-primary mt-3'
+            className='text-primary mt-3 cursor-pointer'
           >
             {showAllCheckbox ? '- Скрыть' : '+ Показать всё'}
+          </button>
+          <button 
+            className='text-primary mt-3 cursor-pointer'
+            onClick={onClearAllFilterCheckboxID}
+          >
+            Сбросить фильтры
           </button>
         </div>
       )}

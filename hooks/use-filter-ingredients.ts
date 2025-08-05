@@ -8,15 +8,16 @@ interface IIngredients {
     loading: boolean;
     selectedIngredients: Set<string>;
     onAddFilterCheckboxID: (id: string) => void;
+    onClearAllFilterCheckboxID: () => void;
     //setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export const useFilterIngredients = (): IIngredients => {
+export const useFilterIngredients = (initialValue: string[] = []): IIngredients => {
     //console.log('Сработал хук useFilterIngredients');
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const [selectedIngredients, { toggle }] = useSet(new Set<string>([]));
+    const [selectedIngredients, { toggle, clear }] = useSet(new Set<string>(initialValue));
 
     useEffect( () => {
         //console.log('Сработал callback useEffect хука useFilterIngredients');
@@ -36,5 +37,5 @@ export const useFilterIngredients = (): IIngredients => {
        fetchIngredients(); 
     }, []);
 
-    return {ingredients, loading, selectedIngredients, onAddFilterCheckboxID: toggle }
+    return {ingredients, loading, selectedIngredients, onAddFilterCheckboxID: toggle, onClearAllFilterCheckboxID: clear }
 }
