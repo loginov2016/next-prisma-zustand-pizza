@@ -1,6 +1,6 @@
 import { Api } from "@/services/api-client";
 import { Ingredient } from "@prisma/client";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSet } from "react-use";
 
 interface IIngredients {
@@ -8,7 +8,7 @@ interface IIngredients {
     loading: boolean;
     selectedIngredients: Set<string>;
     onAddFilterCheckboxID: (id: string) => void;
-    onClearAllFilterCheckboxID: () => void;
+    onClearSelectedFilterIngredients: () => void;
     //setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -37,5 +37,5 @@ export const useFilterIngredients = (initialValue: string[] = []): IIngredients 
        fetchIngredients(); 
     }, []);
 
-    return {ingredients, loading, selectedIngredients, onAddFilterCheckboxID: toggle, onClearAllFilterCheckboxID: clear }
+    return {ingredients, loading, selectedIngredients, onAddFilterCheckboxID: toggle, onClearSelectedFilterIngredients: clear }
 }

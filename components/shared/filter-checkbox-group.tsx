@@ -13,7 +13,7 @@ interface IFilterCheckboxGroupProps extends DetailedHTMLProps<HTMLAttributes<HTM
   searchInputPlaceholder?: string;
   defaultValues?: string[];
   onClickCheckbox?: (id: string) => void;
-  onClearAllFilterCheckboxID?: () => void;
+  onClearFilterCheckboxGroup?: () => void;
   selectedFilterCheckbox?: Set<string>;
   name?: string;
 }
@@ -27,7 +27,7 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
     loading,
     searchInputPlaceholder = 'Поиск...',
     onClickCheckbox,
-    onClearAllFilterCheckboxID,
+    onClearFilterCheckboxGroup,
     selectedFilterCheckbox,
     name,
     defaultValues, 
@@ -112,9 +112,9 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
           </button>
           <button 
             className='text-primary mt-3 cursor-pointer'
-            onClick={onClearAllFilterCheckboxID}
+            onClick={onClearFilterCheckboxGroup}
           >
-            Сбросить фильтры
+            Сбросить все фильтры
           </button>
         </div>
       )}

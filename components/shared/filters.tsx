@@ -30,9 +30,9 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
   //console.log('Сработал компонент Filters');
   const searchParams = useSearchParams() as unknown as Map<keyof IFilterQueryString, string>
   const filterRouter = useRouter();
-  const { ingredients, loading, selectedIngredients, onAddFilterCheckboxID, onClearAllFilterCheckboxID } = useFilterIngredients(searchParams.has('ingredients') ? searchParams.get('ingredients')?.split(',') : []);
-  const [filterCheckboxBySizes, { toggle: toggleFilterCheckboxBySizes }] = useSet(new Set<string>( searchParams.has('pizzaSizes') ? searchParams.get('pizzaSizes')?.split(',') : [] ));
-  const [filterCheckboxByPizzaTypes, { toggle: toggleFilterCheckboxByPizzaTypes }] = useSet(new Set<string>(searchParams.has('pizzaTypes') ? searchParams.get('pizzaTypes')?.split(',') : []));
+  const { ingredients, loading, selectedIngredients, onAddFilterCheckboxID, onClearSelectedFilterIngredients } = useFilterIngredients(searchParams.has('ingredients') ? searchParams.get('ingredients')?.split(',') : []);
+  const [filterCheckboxBySizes, { toggle: toggleFilterCheckboxBySizes, clear: onClearSelectedFilterBySizes }] = useSet(new Set<string>( searchParams.has('pizzaSizes') ? searchParams.get('pizzaSizes')?.split(',') : [] ));
+  const [filterCheckboxByPizzaTypes, { toggle: toggleFilterCheckboxByPizzaTypes, clear: onClearSelectedFilterByPizzaTypes }] = useSet(new Set<string>(searchParams.has('pizzaTypes') ? searchParams.get('pizzaTypes')?.split(',') : []));
 
   const [filterPrices, setFilterPrice] = useState<IFilterPriceProps>({
     priceFrom: Number( searchParams.get('priceFrom') ) || undefined,
@@ -47,6 +47,10 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
       [prices]: value,
     })
   };
+
+  const onClearSelectedFilterByPrice = () => {
+    setFilterPrice({priceFrom: 0, priceTo: 1000})
+  }
 
   //console.log( searchParams.get('priceFrom') );
 
@@ -75,7 +79,7 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
   return (
     <div className={cn('', className)}>
 
-      {/* Верхние чекбоксы */}
+      {/* Верхняя группа чекбоксов */}
       <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
 
       <FilterCheckboxGroup 
@@ -101,10 +105,10 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
           { text: '30 см', value: '30' },
           { text: '40 см', value: '40' },
         ]}
-        onClickCheckbox={toggleFilterCheckboxBySizes} 
+        onClickCheckbox={toggleFilterCheckboxBySizes}
       />
 
-      {/* Фильтр цен */}
+      {/* Фильтры цен */}
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
         <p className="font-bold mb-3">Цена от и до:</p>
         <div className="flex gap-3 mb-5">
@@ -120,7 +124,7 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
         />
       </div>
 
-      {/* Фильтры Ингридиентов */}
+      {/* Фильтры группы чекбоксов ингридиентов */}
       <FilterCheckboxGroup 
         title='Ингридиенты'
         name='ingredients'
@@ -130,7 +134,13 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
         FilterCheckboxGroup={arrCheckboxes}
         loading={loading}
         onClickCheckbox={onAddFilterCheckboxID}
-        onClearAllFilterCheckboxID={onClearAllFilterCheckboxID}
+        onClearFilterCheckboxGroup={() => {
+          onClearSelectedFilterByPizzaTypes();
+          onClearSelectedFilterBySizes();
+          onClearSelectedFilterByPrice();
+          onClearSelectedFilterIngredients();
+          }
+        }
         selectedFilterCheckbox={selectedIngredients}
       />
     </div>
