@@ -1,15 +1,12 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Title } from './title';
 import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
 import { FilterCheckboxGroup } from './filter-checkbox-group';
-import { useFilterIngredients } from '@/hooks/use-filter-ingredients';
-import { useSet } from 'react-use';
-import qs from 'qs';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useFilter, useIngredients, useQueryString } from '@/hooks';
 
 interface IFiltersProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   
@@ -27,54 +24,27 @@ export interface IFilterQueryString extends IFilterPriceProps {
 }
 
 export const Filters: React.FC<IFiltersProps> = ({ className }) => {
-  //console.log('Сработал компонент Filters');
-  const searchParams = useSearchParams() as unknown as Map<keyof IFilterQueryString, string>
-  const filterRouter = useRouter();
-  const { ingredients, loading, selectedIngredients, onAddFilterCheckboxID, onClearSelectedFilterIngredients } = useFilterIngredients(searchParams.has('ingredients') ? searchParams.get('ingredients')?.split(',') : []);
-  const [filterCheckboxBySizes, { toggle: toggleFilterCheckboxBySizes, clear: onClearSelectedFilterBySizes }] = useSet(new Set<string>( searchParams.has('pizzaSizes') ? searchParams.get('pizzaSizes')?.split(',') : [] ));
-  const [filterCheckboxByPizzaTypes, { toggle: toggleFilterCheckboxByPizzaTypes, clear: onClearSelectedFilterByPizzaTypes }] = useSet(new Set<string>(searchParams.has('pizzaTypes') ? searchParams.get('pizzaTypes')?.split(',') : []));
+  const { ingredients, loading } = useIngredients();
+  const filters = useFilter();
+  const { 
+    selectedIngredients,
+    filterCheckboxBySizes,
+    filterCheckboxByPizzaTypes,
+    filterPrices,
+    onChangeFilterPrice,
+    setFilterPrice,
+    onAddFilterCheckboxID,
+    toggleFilterCheckboxBySizes,
+    toggleFilterCheckboxByPizzaTypes,
+    onClearSelectedFilterIngredients,
+    onClearSelectedFilterBySizes,
+    onClearSelectedFilterByPizzaTypes,
+    onClearSelectedFilterByPrice, 
+  } = filters;
+  
+  useQueryString(filters);
 
-  const [filterPrices, setFilterPrice] = useState<IFilterPriceProps>({
-    priceFrom: Number( searchParams.get('priceFrom') ) || undefined,
-    priceTo:   Number( searchParams.get('priceTo') )   || undefined,
-  });
-
-  const arrCheckboxes = ingredients.map( item => ({ text: item.name, value: String(item.id), }) );
-
-  const onChangeFilterPrice = (prices: keyof IFilterPriceProps, value: number): void => {
-    setFilterPrice({
-      ...filterPrices,
-      [prices]: value,
-    })
-  };
-
-  const onClearSelectedFilterByPrice = () => {
-    setFilterPrice({priceFrom: 0, priceTo: 1000})
-  }
-
-  //console.log( searchParams.get('priceFrom') );
-
-  useEffect(() => {
-    console.log('Сработал копонент Filter');
-    const filters = {
-      ...filterPrices,
-      pizzaTypes: Array.from(filterCheckboxByPizzaTypes),
-      pizzaSizes: Array.from(filterCheckboxBySizes),
-      ingredients: Array.from(selectedIngredients),
-    };
-    /* Строка запроса в GET запросе. */
-    const filterQueryString = qs.stringify(filters, {
-      arrayFormat: 'comma'
-    });
-    //console.log(filterQueryString);
-    /* 
-      Обязательно нужно передавать в push второй аргумент: { scroll: false },
-      чобы при клике на чекбокс, скролл не прыгал на верх.   
-    */
-    filterRouter.push(`?${filterQueryString}`, { scroll: false });
-    
-
-  }, [filterPrices, filterCheckboxByPizzaTypes, filterCheckboxBySizes, selectedIngredients, filterRouter] );
+  const arrIngredients = ingredients.map( item => ({ text: item.name, value: String(item.id), }) );
 
   return (
     <div className={cn('', className)}>
@@ -130,8 +100,8 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
         name='ingredients'
         className="mt-5"
         limit={6}
-        defaultFilterCheckboxGroup={arrCheckboxes.slice(0, 6)}
-        FilterCheckboxGroup={arrCheckboxes}
+        defaultFilterCheckboxGroup={arrIngredients.slice(0, 6)}
+        FilterCheckboxGroup={arrIngredients}
         loading={loading}
         onClickCheckbox={onAddFilterCheckboxID}
         onClearFilterCheckboxGroup={() => {
