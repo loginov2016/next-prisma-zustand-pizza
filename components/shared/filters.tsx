@@ -32,7 +32,6 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
     filterCheckboxByPizzaTypes,
     filterPrices,
     onChangeFilterPrice,
-    setFilterPrice,
     onAddFilterCheckboxID,
     toggleFilterCheckboxBySizes,
     toggleFilterCheckboxByPizzaTypes,
@@ -43,6 +42,13 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
   } = filters;
   
   useQueryString(filters);
+
+  const updatePrices = (prices: number[]) => {
+    onChangeFilterPrice('priceFrom', prices[0]);
+    onChangeFilterPrice('priceTo', prices[1]);
+  }
+
+  //([from, to]) => setFilterPrice({priceFrom: from, priceTo: to})
 
   const arrIngredients = ingredients.map( item => ({ text: item.name, value: String(item.id), }) );
 
@@ -90,7 +96,7 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
           max={1000} 
           step={10} 
           value={[filterPrices.priceFrom || 0, filterPrices.priceTo || 1000]} 
-          onValueChange={([from, to]) => setFilterPrice({priceFrom: from, priceTo: to}) }
+          onValueChange={ updatePrices }
         />
       </div>
 

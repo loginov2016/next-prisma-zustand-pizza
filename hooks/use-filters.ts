@@ -9,7 +9,6 @@ interface IFilters {
   filterCheckboxByPizzaTypes: Set<string>;
   filterPrices: IFilterPriceProps;
   onChangeFilterPrice: (key: keyof IFilterPriceProps, value: number) => void;
-  setFilterPrice: Dispatch<SetStateAction<IFilterPriceProps>>;
   onAddFilterCheckboxID: (key: string) => void;
   toggleFilterCheckboxBySizes: (key: string) => void;
   toggleFilterCheckboxByPizzaTypes: (key: string) => void;
@@ -32,10 +31,10 @@ export const useFilter = (): IFilters => {
   });
 
   const onChangeFilterPrice = (prices: keyof IFilterPriceProps, value: number): void => {
-    setFilterPrice({
-      ...filterPrices,
+    setFilterPrice( (prevState) => ({
+      ...prevState,
       [prices]: value,
-    });
+    }));
   };
 
   const onClearSelectedFilterByPrice = () => {
@@ -48,7 +47,6 @@ export const useFilter = (): IFilters => {
     filterCheckboxByPizzaTypes,
     filterPrices,
     onChangeFilterPrice,
-    setFilterPrice,
     onAddFilterCheckboxID: toggle,
     toggleFilterCheckboxBySizes,
     toggleFilterCheckboxByPizzaTypes,

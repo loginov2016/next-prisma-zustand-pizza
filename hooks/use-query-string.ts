@@ -7,14 +7,14 @@ export interface IFilterPriceProps {
   priceTo?: number;
 }
 
-export interface IQueryFilters {
+export interface IQueryFiltersProps {
   filterCheckboxByPizzaTypes: Set<string>;
   filterCheckboxBySizes: Set<string>; 
   selectedIngredients: Set<string>; 
   filterPrices: IFilterPriceProps;
 }
 
-export const useQueryString = (queryParams: IQueryFilters): void => {
+export const useQueryString = (queryParams: IQueryFiltersProps): void => {
   //console.log('Сработал хук useQueryString');
   const router = useRouter();
 
