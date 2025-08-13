@@ -20,12 +20,12 @@ export const useIngredients = (): IIngredients => {
 
     useEffect( () => {
             //console.log('Сработал callback useEffect хука useIngredients');
-            async function fetchIngredients() {
+            async function getIngredients() {
                 try {
                     setLoading(true);
                     const ingredients = await Api.ingredients.getAll();
                     setIngredients(ingredients);
-                    //console.log('Сработала ф-ия fetchIngredients!');
+                    //console.log('Сработала ф-ия getIngredients!');
                 } catch (error) {
                     console.log(error);
                 }
@@ -33,7 +33,7 @@ export const useIngredients = (): IIngredients => {
                     setLoading(false);
                 }
             }
-           fetchIngredients(); 
+           getIngredients(); 
     }, []);
 
     return {

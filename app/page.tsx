@@ -1,12 +1,38 @@
-import { Container, Filters, ProductCard, ProductsGroupList, Title, TopBar } from "@/components/shared";
+import { Container, Filters, ProductsGroupList, Title, TopBar } from "@/components/shared";
+import { prisma } from "@/prisma/prisma-client";
+//import { getProducts } from "@/services/products";
+//import { useGoods } from "@/hooks";
+import { Category, Ingredient, Product, ProductVariation } from "@prisma/client";
 
-export default function Home() {
+type TProducts = {
+    productVariations: ProductVariation[];
+    ingredients: Ingredient[];
+} & Product
+
+type TGoods = {
+    products: TProducts[];
+} & Category;
+
+export default async function Home() {
+  
+  const categories = await prisma.category.findMany({
+                                include: {
+                                    products: {
+                                        include: {
+                                            ingredients: true,
+                                            productVariations: true,
+                                        }
+                                    }
+                                }
+                              });
+  //console.log(categories[0].products);       
+                      
   return (
     <>
       <Container className="mt-10">
         <Title text="Все пиццы" size="lg" className="font-extrabold"/>
       </Container>
-      <TopBar />
+      <TopBar categories={categories.filter( category => category.products.length > 0 )}/>
       <Container className="mt-10 pb-14">
         <div className="flex gap-[80px]">
           {/* Фильтрация товаров */}
@@ -16,82 +42,18 @@ export default function Home() {
           {/* Список товаров */}
           <div className="flex-1">
             <div className="flex flex-col gap-16">
-              <ProductsGroupList title="Пиццы" products={[
-                {
-                  id: 1,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 2,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 3,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 4,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 5,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 6,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                }
-              ]} categoryId={1} />
-              <ProductsGroupList title="Комбо" products={[
-                {
-                  id: 1,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 2,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 3,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 4,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 5,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                },
-                {
-                  id: 6,
-                  name: 'Чизбургер',
-                  imageUrl: 'https://media.dodostatic.net/image/r:366x366/11ee7d61698827ee9b8db6d0aec53410.avif',
-                  items: [{price: 550}]
-                }
-              ]} categoryId={2} />
+              {
+                categories.map( category => (
+                  category.products.length > 0 && (
+                    <ProductsGroupList 
+                      key={category.id}
+                      title={category.name}
+                      categoryId={category.id}
+                      products={category.products}
+                    />
+                  )
+                ) )
+              }
             </div>
           </div>
         </div>
