@@ -18,20 +18,3 @@ export const ProductImage: React.FC<IProductImageProps> = ({ name, imageUrl, cla
   </div>
   );
 }
-
-
-/* 
-  {categoryId == 1 && (
-          <>
-            <PizzaImage name={name} imageUrl={imageUrl} size={size}/>
-          </>
-        )
-      }
-      {categoryId !== 1 && (
-        <img 
-          src={imageUrl} 
-          alt={name}
-          className={cn('relative left-2 top-2 transition-all z-10 duration-300 w-[350px] h-[350px]', className)}
-        />
-      )}
-*/

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 import { IProductImageProps } from './product-image';
 
 export interface IPizzaImageProps extends IProductImageProps {

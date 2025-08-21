@@ -3,19 +3,19 @@
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 
-type TPizzaSizeOption = {
+type TPizzaOptions = {
     name: string;
     value: string;
     disabled?: boolean;
 }
 
-interface IPizzaSizeOptionsProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
-    items: readonly TPizzaSizeOption[];
-    onClickOptionItem?: (value: TPizzaSizeOption['value']) => void;
-    value: TPizzaSizeOption['value'];
+interface IPizzaOptionProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
+    items: readonly TPizzaOptions[];
+    onClickOptionItem?: (value: TPizzaOptions['value']) => void;
+    value: TPizzaOptions['value'];
 }
 
-export const PizzaSizeOptions: React.FC<IPizzaSizeOptionsProps> = ({ items, onClickOptionItem, value, className }) => {
+export const PizzaOptions: React.FC<IPizzaOptionProps> = ({ items, onClickOptionItem, value, className }) => {
   return (
     <div className={cn('flex justify-between bg-[#F3F3F7] rounded-3xl p-1 select-none', className)}>
       {
