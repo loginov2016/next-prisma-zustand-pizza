@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { Container } from './container';
+import { Container } from '../ui/container';
 import { Button } from '../ui';
 import { ArrowRight, ShoppingCart, User } from 'lucide-react';
 import Link from 'next/link';

@@ -12,18 +12,6 @@ interface ICategoriesProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElem
 
 //const items = ['Пиццы', 'Комбо', 'Закуски', 'Коктейли', 'Кофе', 'Напитки', 'Десерты', 'Картошка фри' ];
 
-/* const categories = [
-    {id: 1, name: 'Пиццы'},
-    {id: 2, name: 'Комбо'},
-    {id: 3, name: 'Закуски'},
-    {id: 4, name: 'Коктейли'},
-    {id: 5, name: 'Кофе'},
-    {id: 6, name: 'Напитки'},
-    {id: 7, name: 'Десерты'},
-    {id: 8, name: 'Картошка фри'},
-    
-]; */
-
 export const Categories: React.FC<ICategoriesProps> = ({ items, className }) => {
     const activeCategoryId = useCategoryStore( state => state.activeId );
     //console.log('activeCategoryId: ', activeCategoryId);

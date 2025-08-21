@@ -4,14 +4,14 @@ import { prisma } from "@/prisma/prisma-client";
 //import { useGoods } from "@/hooks";
 import { Category, Ingredient, Product, ProductVariation } from "@prisma/client";
 
-type TProducts = {
+/* type TProducts = {
     productVariations: ProductVariation[];
     ingredients: Ingredient[];
 } & Product
 
 type TGoods = {
     products: TProducts[];
-} & Category;
+} & Category; */
 
 export default async function Home() {
   
@@ -25,7 +25,7 @@ export default async function Home() {
                                     }
                                 }
                               });
-  //console.log(categories[0].products);       
+  //console.log(categories[0].products);     
                       
   return (
     <>

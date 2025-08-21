@@ -603,4 +603,37 @@ const goods = [
       }
     ]
   }
-]
+];
+
+/* const categories: ({
+    products: ({
+        ingredients: {
+            id: number;
+            name: string;
+            price: number;
+            imageUrl: string;
+            createdAt: Date;
+            updatedAt: Date;
+        }[];
+        productVariations: {
+            id: number;
+            price: number;
+            size: number | null;
+            pizzaType: number | null;
+            productId: number;
+        }[];
+    } & {
+        id: number;
+        name: string;
+        imageUrl: string;
+        createdAt: Date;
+        updatedAt: Date;
+        categoryId: number;
+    })[];
+} & {
+    id: number;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+})[] */
+

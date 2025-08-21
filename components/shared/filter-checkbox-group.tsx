@@ -70,7 +70,7 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
             className='absolute right-2 w-6 h-6 border-none top-1.5 focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer'
             onClick={onClearSearchInput}
           >
-            <CircleX stroke='#FFB480'/>
+            <CircleX className='border-ring' /> {/* oklch(0.705 0.213 47.604) text-primary stroke='#FFB480' */}
           </Button>
           <Input
             onChange={onChangeSearchInput} 

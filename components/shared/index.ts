@@ -1,4 +1,4 @@
-export { Container } from './container';
+export { Container } from '../ui/container';
 export { Header } from './header';
 export { Title } from './title';
 export { Categories } from './categories';
@@ -11,3 +11,8 @@ export { FilterCheckboxGroup } from './filter-checkbox-group';
 export { ProductCard } from './product-card';
 export { ProductsGroupList } from './products-group-list';
 export { SearchInput } from './search-input';
+export { ProductImage, type IProductImageProps } from './product-image';
+export { PizzaSizeOptions } from './pizza-size-options';
+export { ChooseProductForm } from './choose-product-form';
+export { PizzaImage, type IPizzaImageProps } from './pizza-image';
+export * from './modals';

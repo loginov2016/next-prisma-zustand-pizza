@@ -24,20 +24,20 @@ export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, pr
     if( intersection?.isIntersecting ) {
       setActiveCategoryId(categoryId);
     }
-  }, [intersection?.isIntersecting, title, categoryId]);
+  }, [intersection?.isIntersecting, title, categoryId, setActiveCategoryId]);
 
   return (
     <div className={cn('', className)} id={title} ref={intersectionRef}>
       <Title text={title} size="lg" className='font-extrabold mb-5' />
       <div className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
         {
-          products.map( (product, i) => (
+          products.map( (product) => (
             <ProductCard
               key={product.id}
               id={product.id}
               name={product.name}
               imageUrl={product.imageUrl}
-              price={product.price}
+              price={product.productVariations[0].price}
             />
           ) )
         }
