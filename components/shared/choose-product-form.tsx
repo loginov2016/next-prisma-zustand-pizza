@@ -7,13 +7,13 @@ import { Button } from '../ui';
 interface IChooseProductFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     name: string;
     imageUrl: string;
-    onClickAdd?: VoidFunction;
+    onClickAddToCart?: VoidFunction;
 }
 
 export const ChooseProductForm: React.FC<IChooseProductFormProps> = ({
     name,
     imageUrl,
-    onClickAdd,
+    onClickAddToCart,
     className,
 }) => {
     const textDetails = '30 см, традиционное тесто 30';
