@@ -16,4 +16,6 @@ export { PizzaOptions                          } from './pizza-options';
 export { ChooseProductForm                     } from './choose-product-form';
 export { PizzaImage, type IPizzaImageProps     } from './pizza-image';
 export { PizzaIngredient                       } from './pizza-ingredient';
+export { CartButton                            } from './cart-button';
+export { CartDrawer                            } from './cart-drawer';
 export * from './modals';
