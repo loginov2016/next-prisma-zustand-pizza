@@ -1,3 +1,4 @@
+import { IPizzaSizes, IPizzaTypes } from "@/@types/pizza";
 
 export const mapPizzaSize = {
     20: 'Маленькая',
@@ -10,12 +11,14 @@ export const mapPizzaType = {
     2: 'тонкая',
 } as const;
 
-export const pizzaSizes = Object.entries(mapPizzaSize).map( ([value, name]) => ({
+export const pizzaSizes  = Object.entries(mapPizzaSize).map( ([value, name]) => ({
     name,
     value,
-}) ); // pizzaSizes === [{name: 'Маленькая', value: '20'}, {name: 'Средняя', value: '30'}, {name: 'Большая', value: '40'} ];
+}) ) as IPizzaSizes[]; // pizzaSizes === [{name: 'Маленькая', value: '20'}, {name: 'Средняя', value: '30'}, {name: 'Большая', value: '40'} ];
+
+
 export const pizzaTypes = Object.entries(mapPizzaType).map( ([value, name]) => ({
     name,
     value,
-}) ); // pizzaTypes === [{name: 'традиционная', value: '1'}, {name: 'тонкая', value: '2'}];
+}) as IPizzaTypes ); // pizzaTypes === [{name: 'традиционная', value: '1'}, {name: 'тонкая', value: '2'}];
 

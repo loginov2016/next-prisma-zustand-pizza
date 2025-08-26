@@ -1,13 +1,10 @@
 'use client';
 
+import { TPizzaOptions } from '@/@types/pizza';
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 
-type TPizzaOptions = {
-    name: string;
-    value: string;
-    disabled?: boolean;
-}
+
 
 interface IPizzaOptionProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     items: readonly TPizzaOptions[];
