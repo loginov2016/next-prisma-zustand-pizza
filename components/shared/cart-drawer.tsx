@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import {
@@ -12,6 +14,8 @@ import {
 import Link from 'next/link';
 import { Button } from '../ui';
 import { ArrowRight } from 'lucide-react';
+import { CartDrawerItem } from './cart-drawer-item';
+import { getCartItemDetails } from '@/lib';
 
 
 
@@ -32,7 +36,58 @@ export const CartDrawer: React.FC<ICartDrawerProps> = ({ children, className }) 
                 </SheetTitle>
             </SheetHeader>
 
-            {/* Cart Products */}
+            <div className="mt-5 overflow-auto flex-1">
+                <div className="mb-2">
+                    <CartDrawerItem 
+                        id={1}
+                        imageUrl='https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp'
+                        details={getCartItemDetails(30, 2, [{name: 'сырный соус'}, {name:'томаты'}, {name: 'соус альфредо'}])}
+                        name='Чоризо фреш'
+                        price={521}
+                        quantity={1}
+                    />
+                </div>
+                <div className="mb-2">
+                    <CartDrawerItem 
+                        id={1}
+                        imageUrl='https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp'
+                        details={getCartItemDetails(30, 2, [{name: 'сырный соус'}, {name:'томаты'}, {name: 'соус альфредо'}])}
+                        name='Чоризо фреш'
+                        price={521}
+                        quantity={1}
+                    />
+                </div>
+                <div className="mb-2">
+                    <CartDrawerItem 
+                        id={1}
+                        imageUrl='https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp'
+                        details={getCartItemDetails(30, 2, [{name: 'сырный соус'}, {name:'томаты'}, {name: 'соус альфредо'}])}
+                        name='Чоризо фреш'
+                        price={521}
+                        quantity={1}
+                    />
+                </div>
+                <div className="mb-2">
+                    <CartDrawerItem 
+                        id={1}
+                        imageUrl='https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp'
+                        details={getCartItemDetails(30, 2, [{name: 'сырный соус'}, {name:'томаты'}, {name: 'соус альфредо'}])}
+                        name='Чоризо фреш'
+                        price={521}
+                        quantity={1}
+                    />
+                </div>
+                <div className="mb-2">
+                    <CartDrawerItem 
+                        id={1}
+                        imageUrl='https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp'
+                        details={getCartItemDetails(30, 2, [{name: 'сырный соус'}, {name:'томаты'}, {name: 'соус альфредо'}])}
+                        name='Чоризо фреш'
+                        price={521}
+                        quantity={1}
+                    />
+                </div>
+            </div>
 
             <SheetFooter className='bg-white p-8'>
                 <div className="w-full">

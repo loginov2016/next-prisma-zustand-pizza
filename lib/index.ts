@@ -4,6 +4,7 @@ export { getSumOfIngredientPrices               } from './get-sum-ingredient-pri
 export { getPriceForPizzaVariation              } from './get-price-for-pizza-variation';
 export { getPizzaSizesWithDisabledOption        } from './get-pizza-sizes-with-disabled-option';
 export { getTotalPrice                          } from './get-total-price';
+export { getCartItemDetails                     } from './get-cart-item-details';
 
 
 
