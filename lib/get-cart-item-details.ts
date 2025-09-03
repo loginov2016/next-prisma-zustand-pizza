@@ -1,11 +1,11 @@
 import { TKeysMapPizzaSize, TKeysMapPizzaType } from "@/@types/pizza";
 import { mapPizzaType } from "@/constants/pizza";
-import { Ingredient } from "@prisma/client";
+import { TCartStateItem } from "./get-cart-details";
 
 export const getCartItemDetails = (
-    pizzaSize: TKeysMapPizzaSize,
+    ingredients: TCartStateItem['ingredients'],
     pizzaType: TKeysMapPizzaType,
-    ingredients: Ingredient[]
+    pizzaSize: TKeysMapPizzaSize,
     ): string => {
     const details: string[] = [];
     

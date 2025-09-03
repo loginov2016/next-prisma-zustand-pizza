@@ -5,6 +5,9 @@ export { getPriceForPizzaVariation              } from './get-price-for-pizza-va
 export { getPizzaSizesWithDisabledOption        } from './get-pizza-sizes-with-disabled-option';
 export { getTotalPrice                          } from './get-total-price';
 export { getCartItemDetails                     } from './get-cart-item-details';
+export { getCartDetails                         } from './get-cart-details';
+export { getCartItemTotalPrice                  } from './get-cart-item-total-price';
+export { getNumberWord                          } from './get-number-word';
 
 
 

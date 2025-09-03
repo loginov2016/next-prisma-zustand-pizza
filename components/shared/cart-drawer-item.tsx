@@ -22,7 +22,7 @@ export const CartDrawerItem: React.FC<ICartDrawerItemProps> = ({
   disabled,
   className }) => {
   return (
-    <div className={cn('flex bg-white p-5 gap-6', className)}>
+    <div className={cn('flex items-center bg-white p-5 gap-6', className)}>
       <CartItemDetailsImage src={imageUrl} />
       
       <div className="flex-1">
