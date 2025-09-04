@@ -11,7 +11,7 @@ export interface ICartState {
     /* Получение товаров из корзины */
     fetchCartItems: () => Promise<void>;
     /* Запрос на обновление количества товаров в корзине */
-    updateItemQuantity: (id: number, quantity: number) => Promise<void>;
+    updateCartItemQuantity: (id: number, quantity: number) => Promise<void>;
     /* Запрос на добавление товаров в корзину */
     addCartItem: (values: any) => Promise<void>;
     /* Запрос на удаление товаров из корзины */
@@ -26,7 +26,7 @@ export const useCartStore = create<ICartState>( (set, get) => ({
         fetchCartItems: async () => {
             try {
                 set({ loading: true, error: false });
-                const data = await Api.cart.fetchCart();
+                const data = await Api.cart.getCart();
                 console.log('fetchCartItems', {data});
                 //console.log('fetchCartItems', getCartDetails(data));
                 if ( !getCartDetails(data) ) {
@@ -40,7 +40,23 @@ export const useCartStore = create<ICartState>( (set, get) => ({
                 set({ loading: false });
             }
         },
-        updateItemQuantity: async (id: number, quantity: number) => {},
+        updateCartItemQuantity: async (id: number, quantity: number) => {
+            try {
+                set({ loading: true, error: false });
+                const data = await Api.cart.updateItemQuantity(id, quantity);
+                console.log('fetchCartItems', {data});
+                //console.log('fetchCartItems', getCartDetails(data));
+                if ( !getCartDetails(data) ) {
+                    throw new Error('Ошибка! Функция getCartDetails вернула null!')
+                }
+                set( getCartDetails(data) );
+            } catch (error) {
+                console.log('Ошибка аинхронной функции fetchCartItems: ', error);
+                set({ error: true });
+            } finally {
+                set({ loading: false });
+            }
+        },
         addCartItem: async (values: any) => {},
         removeCartItem: async (id: number) => {},
     })

@@ -10,6 +10,7 @@ export async function GET(req: NextRequest) {
         if (!token) {
             return NextResponse.json({totalAmount: 0, cartItems: []});
         }
+        
         const userCart = await prisma.cart.findFirst({
             where: {
                 OR: [
@@ -41,6 +42,7 @@ export async function GET(req: NextRequest) {
     }
 
 }
+
 
 /* 
 

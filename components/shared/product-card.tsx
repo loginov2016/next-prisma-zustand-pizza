@@ -17,7 +17,7 @@ interface IProductCardProps {
 export const ProductCard: React.FC<IProductCardProps> = ({ id, name, price, imageUrl, className }) => {
   // hover:-translate-y-3
   return (
-    <div className={cn('flex flex-col justify-between rounded-lg transition duration-300 hover:shadow-[0px_5px_20px_rgba(255,109,7,0.25)] hover:scale-105', className)}>
+    <div className={cn('flex flex-col justify-between rounded-lg transition duration-300 hover:shadow-[0px_5px_20px_rgba(255,105,0,0.4)] hover:scale-105', className)}>
       <Link href={`/product/${id}`} className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
         <img className="w-[215px] h-[215px]" src={imageUrl} alt={name} />
       </Link>

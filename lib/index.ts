@@ -8,6 +8,7 @@ export { getCartItemDetails                     } from './get-cart-item-details'
 export { getCartDetails                         } from './get-cart-details';
 export { getCartItemTotalPrice                  } from './get-cart-item-total-price';
 export { getNumberWord                          } from './get-number-word';
+export { updateCartTotalAmount                  } from './update-cart-total-amount';
 
 
 
