@@ -58,7 +58,23 @@ export const useCartStore = create<ICartState>( (set, get) => ({
             }
         },
         addCartItem: async (values: any) => {},
-        removeCartItem: async (id: number) => {},
+        removeCartItem: async (id: number) => {
+            try {
+                set({ loading: true, error: false });
+                const data = await Api.cart.removeCartItem(id);
+                console.log('removeCartItems', {data});
+                //console.log('removeCartItem', getCartDetails(data));
+                if ( !getCartDetails(data) ) {
+                    throw new Error('Ошибка! Функция getCartDetails вернула null!')
+                }
+                set( getCartDetails(data) );
+            } catch (error) {
+                console.log('Ошибка аинхронной функции removeCartItem: ', error);
+                set({ error: true });
+            } finally {
+                set({ loading: false });
+            }
+        },
     })
 );
 
