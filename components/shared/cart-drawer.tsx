@@ -63,25 +63,26 @@ export const CartDrawer: React.FC<ICartDrawerProps> = ({ children, className }) 
                 </SheetHeader>
 
                 <div className="mt-5 overflow-auto flex-1">
-                    <div className="mb-2">
+                    
                         {
                             cartItems.map( cartItem => (
-                                <CartDrawerItem
-                                    key={cartItem.id}
-                                    id={cartItem.id}
-                                    imageUrl={cartItem.imageUrl}
-                                    details={ cartItem.pizzaSize && cartItem.pizzaType ? getCartItemDetails(cartItem.ingredients, cartItem.pizzaType as TKeysMapPizzaType, cartItem.pizzaSize as TKeysMapPizzaSize) : ''}
-                                    name={cartItem.name}
-                                    price={cartItem.price}
-                                    quantity={cartItem.quantity}
-                                    onClickCountButton={(type) => {
-                                        onClickCountButton(cartItem.id, cartItem.quantity, type)
-                                    }}
-                                    onClickRemoveCartItem={() => removeCartItem(cartItem.id)}
-                                />
+                                <div className="mb-2" key={cartItem.id}>
+                                    <CartDrawerItem
+                                        id={cartItem.id}
+                                        imageUrl={cartItem.imageUrl}
+                                        details={ cartItem.pizzaSize && cartItem.pizzaType ? getCartItemDetails(cartItem.ingredients, cartItem.pizzaType as TKeysMapPizzaType, cartItem.pizzaSize as TKeysMapPizzaSize) : ''}
+                                        name={cartItem.name}
+                                        price={cartItem.price}
+                                        quantity={cartItem.quantity}
+                                        onClickCountButton={(type) => {
+                                            onClickCountButton(cartItem.id, cartItem.quantity, type)
+                                        }}
+                                        onClickRemoveCartItem={() => removeCartItem(cartItem.id)}
+                                    />
+                                </div>
                             ) )
                         }
-                    </div>
+                    
                 </div>
 
                 <SheetFooter className='bg-white p-8'>

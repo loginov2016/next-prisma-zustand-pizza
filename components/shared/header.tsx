@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
@@ -7,12 +9,17 @@ import { ArrowRight, ShoppingCart, User } from 'lucide-react';
 import Link from 'next/link';
 import { SearchInput } from './search-input';
 import { CartButton } from './cart-button';
+import { useCartStore } from '@/store';
 
 interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
  
 }
 
 export const Header: React.FC<IHeaderProps> = ({ className }) => {
+  const totalAmount = useCartStore( state => state.totalAmount);
+  const cartItems   = useCartStore( state => state.cartItems );
+
+
   return (
     <header className={cn('border border-b', className)}>
       <Container className='flex items-center justify-between py-12'>
@@ -38,7 +45,10 @@ export const Header: React.FC<IHeaderProps> = ({ className }) => {
                 Войти
             </Button>
 
-            <CartButton />
+            <CartButton 
+              quantityProducts={cartItems.length}
+              totalAmount={totalAmount}
+            />
         </div>
       </Container>
     </header>

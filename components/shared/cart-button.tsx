@@ -5,18 +5,20 @@ import { ArrowRight, ShoppingCart } from 'lucide-react';
 import { CartDrawer } from './cart-drawer';
 
 interface ICartButtonProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
-  
+  quantityProducts: number;
+  totalAmount: number;
 }
 
-export const CartButton: React.FC<ICartButtonProps> = ({ className }) => {
+export const CartButton: React.FC<ICartButtonProps> = ({ quantityProducts, totalAmount, className }) => {
+
   return (
     <CartDrawer>
         <Button className={cn('group relative', className)}>
-            <b>520 ₽</b>
+            <b>{totalAmount} ₽</b>
             <span className="h-full w-[1px] bg-white/30 mx-3"></span>
             <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
                 <ShoppingCart size={16} className='relative' strokeWidth={2}/>
-                <b>3</b>
+                <b>{quantityProducts}</b>
             </div>
             <ArrowRight 
                 size={20} 
