@@ -7,17 +7,17 @@ import { Button } from '../ui';
 interface IChooseProductFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     name: string;
     imageUrl: string;
-    onClickAddToCart?: VoidFunction;
+    price: number;
+    onSubmitAddProductsToCart: VoidFunction;
 }
 
 export const ChooseProductForm: React.FC<IChooseProductFormProps> = ({
     name,
     imageUrl,
-    onClickAddToCart,
+    price,
+    onSubmitAddProductsToCart,
     className,
 }) => {
-    const textDetails = '30 см, традиционное тесто 30';
-    const totalPrice  = 350;
 
     return (
     <div className={cn('flex flex-1', className)}>
@@ -29,12 +29,13 @@ export const ChooseProductForm: React.FC<IChooseProductFormProps> = ({
                 text={name}
                 size={'md'} 
             />
-            <p className="text-gray-400">{textDetails}</p>
+            {/* <p className="text-gray-400">{textDetails}</p> */}
 
             <Button
                 className='h-[55px] px-10 text-base rounded-[18px] w-full mt-10'
+                onClick={onSubmitAddProductsToCart}
             >
-                Добавить в корзину за {totalPrice} ₽
+                Добавить в корзину за {price} ₽
             </Button>
         </div>
     </div>

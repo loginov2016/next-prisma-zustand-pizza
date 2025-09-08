@@ -1,6 +1,6 @@
 import { TKeysMapPizzaSize, TKeysMapPizzaType, TPizzaOptions, TPizzaSizes } from "@/@types/pizza";
 import { pizzaSizes } from "@/constants/pizza";
-import { getFilterProductVariationsByPizzaType, getPizzaSizesWithDisabledOption } from "@/lib";
+import { getCurrentProductVariationId, getFilterProductVariationsByPizzaType, getPizzaSizesWithDisabledOption } from "@/lib";
 import { ProductVariation } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useSet } from "react-use";
@@ -10,6 +10,7 @@ interface IUsePizzaOptions {
     type: TKeysMapPizzaType;
     setSize: (size: TKeysMapPizzaSize) => void;
     setType: (size: TKeysMapPizzaType) => void;
+    currentProductVariationId?: number;
     selectedIngredients: Set<number>;
     availablePizzaSizesWithDisabledOption: TPizzaOptions[];
     addOrRemoveIngredient: (id: number) => void;
@@ -26,6 +27,8 @@ export const usePizzaOptions = (productVariations: ProductVariation[]): IUsePizz
     const availablePizzaSizesForOneType = getFilterProductVariationsByPizzaType(productVariations, type);
     
     const availablePizzaSizesWithDisabledOption = getPizzaSizesWithDisabledOption(pizzaSizes, availablePizzaSizesForOneType);
+
+    const currentProductVariationId = getCurrentProductVariationId(productVariations, size, type);
 
 
     useEffect( () => {
@@ -50,6 +53,7 @@ export const usePizzaOptions = (productVariations: ProductVariation[]): IUsePizz
         type,
         setSize,
         setType,
+        currentProductVariationId,
         selectedIngredients,
         addOrRemoveIngredient,
         availablePizzaSizesWithDisabledOption,

@@ -1,6 +1,7 @@
 import { getCartDetails } from "@/lib";
 import type { TCartStateItem } from "@/lib/get-cart-details";
 import { Api } from "@/services/api-client";
+import { ICreateCartProductVariationValues } from "@/services/dto/cart.dto";
 import { create } from "zustand";
 
 export interface ICartState {
@@ -13,7 +14,7 @@ export interface ICartState {
     /* Запрос на обновление количества товаров в корзине */
     updateCartItemQuantity: (id: number, quantity: number) => Promise<void>;
     /* Запрос на добавление товаров в корзину */
-    addCartItem: (values: any) => Promise<void>;
+    addCartItem: (values: ICreateCartProductVariationValues) => Promise<void>;
     /* Запрос на удаление товаров из корзины */
     removeCartItem: (id: number) => Promise<void>;
 }
@@ -57,7 +58,23 @@ export const useCartStore = create<ICartState>( (set, get) => ({
                 set({ loading: false });
             }
         },
-        addCartItem: async (values: any) => {},
+        addCartItem: async (values: ICreateCartProductVariationValues) => {
+             try {
+                set({ loading: true, error: false });
+                const data = await Api.cart.addCartItem(values);
+                console.log('addCartItems', {data});
+                //console.log('addCartItem', getCartDetails(data));
+                if ( !getCartDetails(data) ) {
+                    throw new Error('Ошибка! Функция getCartDetails вернула null!')
+                }
+                set( getCartDetails(data) );
+            } catch (error) {
+                console.log('Ошибка аинхронной функции addCartItem: ', error);
+                set({ error: true });
+            } finally {
+                set({ loading: false });
+            }
+        },
         removeCartItem: async (id: number) => {
             try {
                 set({ loading: true, error: false });

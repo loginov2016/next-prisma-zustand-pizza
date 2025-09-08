@@ -11,6 +11,11 @@ export interface ICartDTO extends Cart {
     cartProductVariations: TCartItemDTO[];
 }
 
+export interface ICreateCartProductVariationValues {
+    productVariationId: number;
+    ingredients?: number[];
+}
+
 /* data: {
     cartProductVariations: [
         0: {

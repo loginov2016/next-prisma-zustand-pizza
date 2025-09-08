@@ -13,6 +13,11 @@ import { mapPizzaType, pizzaTypes } from '@/constants/pizza';
 import type { TKeysMapPizzaSize, TKeysMapPizzaType } from '@/@types/pizza';
 import { usePizzaOptions } from '@/hooks';
 
+/**
+ * Форма выбора пиццы.
+ * 
+ * 
+*/
 
 interface IChoosePizzaFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     name: string;
@@ -20,7 +25,7 @@ interface IChoosePizzaFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDi
     imageUrl: string;
     ingredients: Ingredient[];
     productVariations: ProductVariation[];
-    onClickAddProductsToCart?: VoidFunction;
+    onSubmitAddProductsToCart: (id: number, ingredients: number[]) => void;
 }
 
 export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
@@ -28,17 +33,19 @@ export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
     imageUrl,
     ingredients,
     productVariations,
-    onClickAddProductsToCart,
+    onSubmitAddProductsToCart,
     className,
 }) => {
     //console.log(ingredients);
     //console.log(productVariations); // [{id: 1, price: 388, size: 20, pizzaType: 1, productId: 18}, {id: 2, price: 510, size: 30, pizzaType: 2, productId: 18}, {id: 3, price: 466, size: 40, pizzaType: 2, productId: 18}]
+    
     const {
         size,
         type,
         setSize,
         setType,
         addOrRemoveIngredient,
+        currentProductVariationId,
         selectedIngredients,
         availablePizzaSizesWithDisabledOption,
     } = usePizzaOptions(productVariations);
@@ -47,14 +54,18 @@ export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
     const textDetailsOrder = `${size} см, ${mapPizzaType[type]} пицца`;
     const totalPrice = getTotalPrice(productVariations, ingredients, selectedIngredients, size, type);
 
+
     const handleClickAddToCart = () => {
-        onClickAddProductsToCart?.();
-        console.log({
-            totalPrice,
-            size,
-            type,
-            selectedIngredients,
-        });
+        if (currentProductVariationId) {
+            onSubmitAddProductsToCart(currentProductVariationId, Array.from(selectedIngredients));
+            console.log({
+                totalPrice,
+                size,
+                type,
+                selectedIngredients,
+            });
+        }
+        
     }
 
     return (

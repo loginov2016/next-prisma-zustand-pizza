@@ -7,6 +7,8 @@ import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { ChooseProductForm } from '../choose-product-form';
 import { TProductWithOptions } from '@/@types/prisma';
 import { ChoosePizzaForm } from '../choose-pizza-form';
+import { useCartStore } from '@/store';
+import { ICreateCartProductVariationValues } from '@/services/dto/cart.dto';
 
 
 interface IChooseProductModalProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
@@ -15,7 +17,23 @@ interface IChooseProductModalProps extends DetailedHTMLProps< HTMLAttributes<HTM
 
 export const ChooseProductModal: React.FC<IChooseProductModalProps> = ({ product, className }) => {
     const router = useRouter();
+    console.log('[ChooseProductModal] productVariations', product.productVariations);
+    const firstProductVariationItem = product.productVariations[0];
     const isPizzaForm = product.categoryId === 1;
+    const addCartItem = useCartStore( state => state.addCartItem);
+
+    const onAddProduct = () => {
+        addCartItem({
+            productVariationId: firstProductVariationItem.id,
+        });
+    }
+
+    const onAddPizza = (currentProductVariationId: number, ingredients: number[]) => {
+        addCartItem({
+            productVariationId: currentProductVariationId,
+            ingredients,
+        });
+    }
 
     return (
         <Dialog open={Boolean(product)} onOpenChange={ () => router.back()  } >
@@ -28,11 +46,14 @@ export const ChooseProductModal: React.FC<IChooseProductModalProps> = ({ product
                             size={30} 
                             ingredients={product.ingredients} 
                             productVariations={product.productVariations}
+                            onSubmitAddProductsToCart={onAddPizza}
                         />
                     ) : (
                         <ChooseProductForm
                             name={product.name}
-                            imageUrl={product.imageUrl}  
+                            imageUrl={product.imageUrl}
+                            price={firstProductVariationItem.price}
+                            onSubmitAddProductsToCart={onAddProduct}
                         />
                     )
                 }
