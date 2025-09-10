@@ -18,6 +18,15 @@ interface ICartDetails {
     totalAmount: number;
 }
 
+/**
+ * Given the server response data, this function transforms it into an object with 
+ * all the necessary information for the cart page.
+ * 
+ * @param data - The response from the server.
+ * @returns An object with the following properties: cartItems and totalAmount.
+ * cartItems is an array of objects, each containing: id, quantity, name, imageUrl, price, pizzaSize, pizzaType and ingredients.
+ * totalAmount is a number representing the total amount of all items in the cart.
+ */    
 export const getCartDetails = (data: ICartDTO): ICartDetails => {
     
     /* if (data.cartProductVariations.length === 0) {

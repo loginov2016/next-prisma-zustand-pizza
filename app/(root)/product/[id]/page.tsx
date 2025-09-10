@@ -4,7 +4,8 @@ import { prisma } from '@/prisma/prisma-client'
 import { notFound } from 'next/navigation';
 import React from 'react'
 
-export default async function ProductPage({params: { id }}: {params: {id: string}}) {
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const product = await prisma.product.findFirst({ where: { id: Number(id) } });
 
   if (!product) {
@@ -21,8 +22,9 @@ export default async function ProductPage({params: { id }}: {params: {id: string
         />
         <div className="w-[490px] bg-[#f8f7f6] p-7">
           <Title text={product.name} size='md' className='font-extrabold mb-1' />
-          <PizzaOptions items={pizzaSizes}
-          value='2'
+          <PizzaOptions 
+            items={pizzaSizes}
+            value='2'
           />
           <p className="text-gray-400">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia quis eius vel expedita, necessitatibus illum inventore pariatur impedit quidem porro perspiciatis enim, explicabo cupiditate nisi, laborum vitae! Fugiat, quo numquam.

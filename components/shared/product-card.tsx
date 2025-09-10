@@ -5,16 +5,18 @@ import Link from 'next/link';
 import { Title } from './title';
 import { Button } from '../ui';
 import { Plus } from 'lucide-react';
+import { Ingredient } from '@prisma/client';
 
 interface IProductCardProps {
   id: number;
   name: string;
   price: number;
   imageUrl: string;
+  ingredients: Ingredient[];
   className?: string;
 }
 
-export const ProductCard: React.FC<IProductCardProps> = ({ id, name, price, imageUrl, className }) => {
+export const ProductCard: React.FC<IProductCardProps> = ({ id, name, price, imageUrl, ingredients, className }) => {
   // hover:-translate-y-3
   return (
     <div className={cn('flex flex-col justify-between rounded-lg transition duration-300 hover:shadow-[0px_5px_20px_rgba(255,105,0,0.4)] hover:scale-105', className)}>
@@ -22,7 +24,9 @@ export const ProductCard: React.FC<IProductCardProps> = ({ id, name, price, imag
         <img className="w-[215px] h-[215px]" src={imageUrl} alt={name} />
       </Link>
       <Title text={name} size='sm' className='mb-1 mt-3 font-bold' />
-      <p className="text-sm text-gray-400">Цыплёнокб моцарелла, сыры чеддер и пармезан, сырный соус, томаты, соус альфредо, чеснок</p>
+      <p className="text-sm text-gray-400">
+        {ingredients.map((item) => item.name).join(', ')}
+      </p>
       <div className="flex justify-between items-center mt-4">
         <span className="text-[20px]">
           от <b>{price} ₽</b>

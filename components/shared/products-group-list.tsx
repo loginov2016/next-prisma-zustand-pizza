@@ -5,10 +5,11 @@ import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Title } from './title';
 import { ProductCard } from './product-card';
 import { useCategoryStore } from '@/store/category';
+import { TProductWithOptions } from '@/@types/prisma';
 
 interface IProductsGroupListProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
   title: string;
-  products: any[];
+  products: TProductWithOptions[];
   listClassName?: string;
   categoryId: number;
 }
@@ -38,6 +39,7 @@ export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, pr
               name={product.name}
               imageUrl={product.imageUrl}
               price={product.productVariations[0].price}
+              ingredients={product.ingredients}
             />
           ) )
         }
