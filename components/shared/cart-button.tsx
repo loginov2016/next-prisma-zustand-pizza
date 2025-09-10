@@ -1,24 +1,38 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Button } from '../ui';
 import { ArrowRight, ShoppingCart } from 'lucide-react';
 import { CartDrawer } from './cart-drawer';
+import { useCartStore } from '@/store';
 
 interface ICartButtonProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
-  quantityProducts: number;
-  totalAmount: number;
+  
 }
 
-export const CartButton: React.FC<ICartButtonProps> = ({ quantityProducts, totalAmount, className }) => {
+/**
+ * @description
+ * 
+ * Component for displaying the cart button and its contents.
+ * 
+ * @param {ICartButtonProps} props
+ * @param {string} [props.className] - The class name of the component.
+ * @returns {JSX.Element} The component.
+ */
+export const CartButton: React.FC<ICartButtonProps> = ({ className }) => {
+  const totalAmount = useCartStore( state => state.totalAmount);
+  const cartItems   = useCartStore( state => state.cartItems );
+  const loading     = useCartStore( state => state.loading );
 
   return (
     <CartDrawer>
-        <Button className={cn('group relative', className)}>
+        <Button loading={loading} className={cn('group relative', {'w-[105px]': loading}, className)}>
             <b>{totalAmount} ₽</b>
             <span className="h-full w-[1px] bg-white/30 mx-3"></span>
             <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
                 <ShoppingCart size={16} className='relative' strokeWidth={2}/>
-                <b>{quantityProducts}</b>
+                <b>{cartItems.length}</b>
             </div>
             <ArrowRight 
                 size={20} 

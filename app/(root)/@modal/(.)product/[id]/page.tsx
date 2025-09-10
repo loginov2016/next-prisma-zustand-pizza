@@ -4,7 +4,7 @@ import { notFound, useParams } from 'next/navigation';
 import React, { use } from 'react'
 
 export default async function ProductModalPage({ params: { id } }: { params: { id: string } }) {
-  //const paramValues = React.use(id); 
+  //const paramValues = await params;
 
   const product = await prisma.product.findFirst({
     where: {

@@ -16,8 +16,8 @@ interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>
 }
 
 export const Header: React.FC<IHeaderProps> = ({ className }) => {
-  const totalAmount = useCartStore( state => state.totalAmount);
-  const cartItems   = useCartStore( state => state.cartItems );
+  /* const totalAmount = useCartStore( state => state.totalAmount);
+  const cartItems   = useCartStore( state => state.cartItems ); */
 
 
   return (
@@ -45,10 +45,7 @@ export const Header: React.FC<IHeaderProps> = ({ className }) => {
                 Войти
             </Button>
 
-            <CartButton 
-              quantityProducts={cartItems.length}
-              totalAmount={totalAmount}
-            />
+            <CartButton />
         </div>
       </Container>
     </header>

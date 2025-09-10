@@ -22,6 +22,7 @@ import { usePizzaOptions } from '@/hooks';
 interface IChoosePizzaFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     name: string;
     size: 20 | 30 | 40;
+    loading?: boolean;
     imageUrl: string;
     ingredients: Ingredient[];
     productVariations: ProductVariation[];
@@ -30,6 +31,7 @@ interface IChoosePizzaFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDi
 
 export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
     name,
+    loading,
     imageUrl,
     ingredients,
     productVariations,
@@ -110,6 +112,7 @@ export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
 
             <Button
                 className='h-[55px] px-10 text-base rounded-[18px] w-full mt-10'
+                loading={loading}
                 onClick={handleClickAddToCart}
             >
                 Добавить в корзину за {totalPrice} ₽

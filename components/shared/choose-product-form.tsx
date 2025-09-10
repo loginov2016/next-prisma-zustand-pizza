@@ -6,6 +6,7 @@ import { Button } from '../ui';
 
 interface IChooseProductFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     name: string;
+    loading?: boolean;
     imageUrl: string;
     price: number;
     onSubmitAddProductsToCart: VoidFunction;
@@ -13,6 +14,7 @@ interface IChooseProductFormProps extends DetailedHTMLProps< HTMLAttributes<HTML
 
 export const ChooseProductForm: React.FC<IChooseProductFormProps> = ({
     name,
+    loading,
     imageUrl,
     price,
     onSubmitAddProductsToCart,
@@ -33,7 +35,8 @@ export const ChooseProductForm: React.FC<IChooseProductFormProps> = ({
 
             <Button
                 className='h-[55px] px-10 text-base rounded-[18px] w-full mt-10'
-                onClick={onSubmitAddProductsToCart}
+                loading={loading}
+                onClick={() => onSubmitAddProductsToCart()}
             >
                 Добавить в корзину за {price} ₽
             </Button>
