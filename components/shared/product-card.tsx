@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable @next/next/no-img-element */
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
@@ -25,7 +26,7 @@ export const ProductCard: React.FC<IProductCardProps> = ({ id, name, price, imag
       </Link>
       <Title text={name} size='sm' className='mb-1 mt-3 font-bold' />
       <p className="text-sm text-gray-400">
-        {ingredients.map((item) => item.name).join(', ')}
+        {ingredients.map((ingredient) => ingredient.name).join(', ')}
       </p>
       <div className="flex justify-between items-center mt-4">
         <span className="text-[20px]">

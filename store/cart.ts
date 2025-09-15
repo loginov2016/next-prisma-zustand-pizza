@@ -28,7 +28,7 @@ export const useCartStore = create<ICartState>( (set, get) => ({
             try {
                 set({ loading: true, error: false });
                 const data = await Api.cart.getCart();
-                console.log('fetchCartItems', {data});
+                //console.log('fetchCartItems', {data});
                 //console.log('fetchCartItems', getCartDetails(data));
                 if ( !getCartDetails(data) ) {
                     throw new Error('Ошибка! Функция getCartDetails вернула null!')

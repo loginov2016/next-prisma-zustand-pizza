@@ -23,9 +23,7 @@ export default function HomeLayout({
 }>) {
   return (
     <main className='min-h-screen'>
-      <Suspense>
-        <Header />
-      </Suspense>
+      <Header />
       {children}
       {modal}
     </main>

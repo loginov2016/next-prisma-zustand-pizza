@@ -2,9 +2,7 @@ import { cn } from '@/lib/utils';
 import { ArrowUpDown } from 'lucide-react';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 
-interface ISortPopupProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  
-}
+interface ISortPopupProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
 export const SortPopup: React.FC<ISortPopupProps> = ({ className }) => {
   return (

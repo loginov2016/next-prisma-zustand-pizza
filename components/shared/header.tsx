@@ -11,9 +11,7 @@ import { SearchInput } from './search-input';
 import { CartButton } from './cart-button';
 import { useCartStore } from '@/store';
 
-interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
- 
-}
+interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
 
 export const Header: React.FC<IHeaderProps> = ({ className }) => {
   /* const totalAmount = useCartStore( state => state.totalAmount);

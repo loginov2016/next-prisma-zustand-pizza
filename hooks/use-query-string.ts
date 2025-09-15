@@ -29,7 +29,8 @@ export const useQueryString = (queryParams: IQueryFiltersProps): void => {
       const queryFilterString = qs.stringify(queryFilters, {
         arrayFormat: 'comma'
       });
-      //console.log(queryString);
+      //console.log(queryFilterString);
+      //console.log({queryFilters});
       /* 
         Обязательно нужно передавать в метод push второй аргумент: { scroll: false },
         чобы при клике на чекбокс, скролл не прыгал на верх.

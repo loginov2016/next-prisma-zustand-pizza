@@ -36,6 +36,7 @@ export const CartDrawer: React.FC<ICartDrawerProps> = ({ children, className }) 
     const fetchCartItems         = useCartStore( state => state.fetchCartItems);
     const updateCartItemQuantity = useCartStore( state => state.updateCartItemQuantity);
     const removeCartItem         = useCartStore( state => state.removeCartItem);
+    const loading                = useCartStore( state => state.loading);
     
     //console.log({cartItems});
 
@@ -47,7 +48,7 @@ export const CartDrawer: React.FC<ICartDrawerProps> = ({ children, className }) 
 
     useEffect( () => {
         fetchCartItems();
-        console.log({cartItems});
+        //console.log({cartItems});
     }, []);
 
     return (
@@ -99,6 +100,7 @@ export const CartDrawer: React.FC<ICartDrawerProps> = ({ children, className }) 
                         <Button 
                             className="w-full h-12 text-base"
                             type='submit'
+                            disabled={loading}
                         >
                             Оформить заказ
                             <ArrowRight className='w-5 ml-2'/>

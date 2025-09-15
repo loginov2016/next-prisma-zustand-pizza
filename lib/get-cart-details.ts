@@ -52,6 +52,6 @@ export const getCartDetails = (data: ICartDTO): ICartDetails => {
         cartItems: items,
         totalAmount: data.totalAmount,
     };
-    console.log({cartDetails});
+    //console.log({cartDetails});
     return cartDetails;
 }

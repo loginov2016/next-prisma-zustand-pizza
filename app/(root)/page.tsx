@@ -1,8 +1,6 @@
 import { Container, Filters, ProductsGroupList, Title, TopBar } from "@/components/shared";
-import { prisma } from "@/prisma/prisma-client";
-//import { getProducts } from "@/services/products";
-//import { useGoods } from "@/hooks";
-import { Category, Ingredient, Product, ProductVariation } from "@prisma/client";
+import { findPizzasByFilteringOptions, IGetSearchParams } from "@/lib/find-pizzas-by-filtering-options";
+import { Suspense } from "react";
 
 /* type TProducts = {
     productVariations: ProductVariation[];
@@ -13,20 +11,13 @@ type TGoods = {
     products: TProducts[];
 } & Category; */
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<IGetSearchParams> }) {
+  const params = await searchParams;
+  //console.log('params: ', params);
+  const categories = await findPizzasByFilteringOptions(params);
+  //console.log('Categories: ', categories);
+  //console.log('Categories: ',categories.filter( category => category.products.length > 0 ));
   
-  const categories = await prisma.category.findMany({
-                                include: {
-                                    products: {
-                                        include: {
-                                            ingredients: true,
-                                            productVariations: true,
-                                        }
-                                    }
-                                }
-                              });
-  //console.log(categories[0].products);     
-                      
   return (
     <>
       <Container className="mt-10">
@@ -37,7 +28,9 @@ export default async function Home() {
         <div className="flex gap-[80px]">
           {/* Фильтрация товаров */}
           <div className="w-[250px]">
-            <Filters />
+            <Suspense>
+              <Filters />
+            </Suspense>
           </div>
           {/* Список товаров */}
           <div className="flex-1">

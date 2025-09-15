@@ -17,14 +17,14 @@ export const useSearchQueryParams = () => {
         case 'ingredients': {
           return searchParams.has('ingredients') ? searchParams.get('ingredients')?.split(',') : [];
         };
-        case 'pizzaSizes' :  {
-          return searchParams.has("pizzaSizes") ? searchParams.get('pizzaSizes')?.split(',') : [];
+        case 'pizzaSizes' : {
+          return searchParams.has("pizzaSizes")  ? searchParams.get('pizzaSizes')?.split(',') : [];
         };
-        case 'pizzaTypes' :  {
-          return searchParams.has('pizzaTypes') ? searchParams.get('pizzaTypes')?.split(',') : [];
+        case 'pizzaTypes' : {
+          return searchParams.has('pizzaTypes')  ? searchParams.get('pizzaTypes')?.split(',') : [];
         };
-        case 'priceFrom' : return searchParams.get('priceFrom');
-        case 'priceTo' :   return searchParams.get('priceTo');
+        case 'priceFrom'  : return searchParams.get('priceFrom');
+        case 'priceTo'    : return searchParams.get('priceTo');
       }
   }
   

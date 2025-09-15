@@ -24,6 +24,7 @@ export interface IFilterQueryString extends IFilterPriceProps {
 }
 
 export const Filters: React.FC<IFiltersProps> = ({ className }) => {
+  //console.log('Сработал компонент Filters');
   const { ingredients, loading } = useIngredients();
   const filters = useFilter();
   const { 
@@ -44,8 +45,9 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
   useQueryString(filters);
 
   const updatePrices = (prices: number[]) => {
+    console.log('updatePrices', prices);
     onChangeFilterPrice('priceFrom', prices[0]);
-    onChangeFilterPrice('priceTo', prices[1]);
+    onChangeFilterPrice('priceTo',   prices[1]);
   }
 
   //([from, to]) => setFilterPrice({priceFrom: from, priceTo: to})
@@ -88,8 +90,22 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
         <p className="font-bold mb-3">Цена от и до:</p>
         <div className="flex gap-3 mb-5">
-          <Input type="number" placeholder="0" min={0} max={1000} value={String(filterPrices.priceFrom)} onChange={(e) => onChangeFilterPrice('priceFrom', +e.target.value)} />
-          <Input type="number" placeholder="1000" min={100} max={1000} value={String(filterPrices.priceTo)} onChange={(e) => onChangeFilterPrice('priceTo', +e.target.value)} />
+          <Input 
+            type="number" 
+            placeholder="0" 
+            min={0} 
+            max={1000} 
+            value={String(filterPrices.priceFrom)} 
+            onChange={(e) => onChangeFilterPrice('priceFrom', Number(e.target.value))} 
+          />
+          <Input 
+            type="number" 
+            placeholder="1000" 
+            min={100} 
+            max={1000} 
+            value={String(filterPrices.priceTo)} 
+            onChange={(e) => onChangeFilterPrice('priceTo', Number(e.target.value))} 
+          />
         </div>
         <RangeSlider 
           min={0} 

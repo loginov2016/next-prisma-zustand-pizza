@@ -7,25 +7,31 @@ import { ProductCard } from './product-card';
 import { useCategoryStore } from '@/store/category';
 import { TProductWithOptions } from '@/@types/prisma';
 
-interface IProductsGroupListProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
+interface IProductsGroupListProps {
   title: string;
   products: TProductWithOptions[];
   listClassName?: string;
   categoryId: number;
+  className?: string;
 }
 
 export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, products, listClassName, categoryId, className }) => {
-  const setActiveCategoryId = useCategoryStore( state => state.setActiveId );
+  const setActiveId = useCategoryStore( state => state.setActiveId );
   const intersectionRef = React.useRef(null);
   const intersection = useIntersection(intersectionRef, {
-    threshold: 0.4,
+    root: null,
+    rootMargin: '10px',
+    threshold: 0.6,
   });
+
+  const setActiveCategoryId = React.useCallback( setActiveId, [setActiveId]);
 
   React.useEffect( () => {
     if( intersection?.isIntersecting ) {
+      console.log('title: ', title, 'categoryId: ', categoryId);
       setActiveCategoryId(categoryId);
     }
-  }, [intersection?.isIntersecting, title, categoryId, setActiveCategoryId]);
+  }, [categoryId, intersection?.isIntersecting, setActiveCategoryId, title]);
 
   return (
     <div className={cn('', className)} id={title} ref={intersectionRef}>

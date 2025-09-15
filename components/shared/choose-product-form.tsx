@@ -25,7 +25,7 @@ export const ChooseProductForm: React.FC<IChooseProductFormProps> = ({
     <div className={cn('flex flex-1', className)}>
         <ProductImage name={name} imageUrl={imageUrl} />
 
-        <div className="w-[490px] bg-[#f8f7f6] p-7">
+        <div className="flex flex-col justify-between w-[490px] bg-[#f8f7f6] p-7">
             <Title 
                 className="font-extrabold mb-1"
                 text={name}

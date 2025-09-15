@@ -2,9 +2,9 @@ import { updateCartTotalAmount } from "@/lib";
 import { prisma } from "@/prisma/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const id  = Number(params.id);
+    const { id } = await params;
     const data = ( await req.json() ) as { quantity: number };
     const token = req.cookies.get('cartToken')?.value;
 
@@ -14,7 +14,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     // Поиск товара в корзине по id.
     const cartItem = await prisma.cartProductVariation.findFirst({
         where: {
-            id,
+            id: Number(id),
         }
     });
     // Если поиск не удался, возвращаем ошибку.
@@ -25,7 +25,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     // Здесь функция будет дожидаться выполнения асинхронной функции.
     await prisma.cartProductVariation.update({
         where: {
-            id,
+            id: Number(id),
         },
         data: {
             quantity: data.quantity
@@ -42,9 +42,9 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-        const id  = Number(params.id);
+        const { id } = await params;
         const token = req.cookies.get('cartToken')?.value;
 
         if (!token) {
@@ -53,7 +53,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 
         const cartItem = await prisma.cartProductVariation.findFirst({
             where: {
-                id,
+                id: Number(id),
             }
         });
 
@@ -64,7 +64,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
         // Функция DELETE дожидается удаления корзины по id.
         await prisma.cartProductVariation.delete({
             where: {
-                id,
+                id: Number(id),
             },
         });
 
