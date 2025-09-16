@@ -74,6 +74,7 @@ export const CartDrawer: React.FC<ICartDrawerProps> = ({ children, className }) 
                                         details={ cartItem.pizzaSize && cartItem.pizzaType ? getCartItemDetails(cartItem.ingredients, cartItem.pizzaType as TKeysMapPizzaType, cartItem.pizzaSize as TKeysMapPizzaSize) : ''}
                                         name={cartItem.name}
                                         price={cartItem.price}
+                                        disabled={cartItem.disabled}
                                         quantity={cartItem.quantity}
                                         onClickCountButton={(type) => {
                                             onClickCountButton(cartItem.id, cartItem.quantity, type)

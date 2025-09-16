@@ -7,6 +7,7 @@ export type TCartStateItem = {
     name: string;
     imageUrl: string;
     price: number;
+    disabled?: boolean;
     pizzaSize?: number | null;
     pizzaType?: number | null;
     ingredients: Array<{name: string; price: number}>
@@ -35,18 +36,19 @@ export const getCartDetails = (data: ICartDTO): ICartDetails => {
     }  */
     // Вопрос: есть ли cartItems у data ??? Ответ: нет! У data есть только cartProductVariations!
     const items = data.cartProductVariations.map( item => ({
-        id: item.id,
-        quantity: item.quantity,
-        name: item.productVariation.product.name,
-        imageUrl: item.productVariation.product.imageUrl,
-        price: getCartItemTotalPrice(item),
-        pizzaSize: item.productVariation.size,
-        pizzaType: item.productVariation.pizzaType,
-        ingredients: item.ingredients.map( ingredient => ( {
-            name: ingredient.name,
-            price: ingredient.price,
-        }) )
-    }) );
+            id: item.id,
+            quantity: item.quantity,
+            name: item.productVariation.product.name,
+            imageUrl: item.productVariation.product.imageUrl,
+            price: getCartItemTotalPrice(item),
+            disabled: false,
+            pizzaSize: item.productVariation.size,
+            pizzaType: item.productVariation.pizzaType,
+            ingredients: item.ingredients.map( ingredient => ( {
+                name: ingredient.name,
+                price: ingredient.price,
+            }) )
+        }) ) as TCartStateItem[];
     //console.log({items});
     const cartDetails = {
         cartItems: items,

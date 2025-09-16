@@ -74,7 +74,7 @@ export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
     <div className={cn('flex flex-1', className)}>
         <PizzaImage name={name} imageUrl={imageUrl} size={size} />
 
-        <div className="w-[490px] bg-[#f8f7f6] px-7">
+        <div className="w-[490px] bg-[#f8f7f6] p-7">
             <Title 
                 className="font-extrabold mb-1"
                 text={name}
@@ -82,7 +82,7 @@ export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
             />
             <p className="text-gray-400">{textDetailsOrder}</p>
 
-            <div className="flex flex-col gap-1 mt-5">
+            <div className="flex flex-col gap-1 mt-1">
                 <PizzaOptions 
                     items={availablePizzaSizesWithDisabledOption} 
                     value={String(size)} 
@@ -111,7 +111,7 @@ export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
             </div>
 
             <Button
-                className='h-[55px] px-10 text-base rounded-[18px] w-full mt-10'
+                className='h-[55px] px-10 text-base rounded-[18px] w-full mt-5'
                 loading={loading}
                 onClick={handleClickAddToCart}
             >
