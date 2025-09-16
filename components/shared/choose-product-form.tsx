@@ -4,7 +4,7 @@ import { ProductImage } from './product-image';
 import { Title } from './title';
 import { Button } from '../ui';
 
-interface IChooseProductFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
+export interface IChooseProductFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     name: string;
     loading?: boolean;
     imageUrl: string;

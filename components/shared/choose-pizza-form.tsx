@@ -19,7 +19,7 @@ import { usePizzaOptions } from '@/hooks';
  * 
 */
 
-interface IChoosePizzaFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
+export interface IChoosePizzaFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     name: string;
     size: 20 | 30 | 40;
     loading?: boolean;
@@ -74,7 +74,7 @@ export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
     <div className={cn('flex flex-1', className)}>
         <PizzaImage name={name} imageUrl={imageUrl} size={size} />
 
-        <div className="w-[490px] bg-[#f8f7f6] p-7">
+        <div className="w-[490px] bg-[#f8f7f6] px-7">
             <Title 
                 className="font-extrabold mb-1"
                 text={name}
@@ -82,7 +82,7 @@ export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
             />
             <p className="text-gray-400">{textDetailsOrder}</p>
 
-            <div className="flex flex-col gap-4 mt-5">
+            <div className="flex flex-col gap-1 mt-5">
                 <PizzaOptions 
                     items={availablePizzaSizesWithDisabledOption} 
                     value={String(size)} 

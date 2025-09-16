@@ -1,12 +1,30 @@
-import { Container, PizzaImage, PizzaOptions, Title } from '@/components/shared';
+import { Container, PizzaImage, PizzaOptions, SelectingForm, Title } from '@/components/shared';
 import { pizzaSizes } from '@/constants/pizza';
 import { prisma } from '@/prisma/prisma-client'
 import { notFound } from 'next/navigation';
+
 import React from 'react'
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const product = await prisma.product.findFirst({ where: { id: Number(id) } });
+  const product = await prisma.product.findFirst({ 
+    where: { 
+      id: Number(id) 
+    },
+    include: {
+      ingredients: true,
+      category: {
+        include: {
+          products: {
+            include: {
+              productVariations: true,
+            }
+          },
+        }
+      },
+      productVariations: true,
+    }
+  });
 
   if (!product) {
     return notFound();
@@ -14,7 +32,14 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
   return (
     <Container className="flex flex-col my-10">
-      <div className="flex flex-1">
+      <SelectingForm product={product} />
+    </Container>
+  )
+}
+
+/* 
+
+<div className="flex flex-1">
         <PizzaImage 
           name={product.name}
           imageUrl={product.imageUrl}
@@ -32,6 +57,5 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           </p>
         </div>
       </div>
-    </Container>
-  )
-}
+
+*/
