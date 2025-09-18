@@ -26,8 +26,8 @@ export const useFilter = (): IFilters => {
   const [filterCheckboxBySizes,      { toggle: toggleFilterCheckboxBySizes, clear: onClearSelectedFilterBySizes }]           = useSet(new Set<string>( queryParams('pizzaSizes') ));
   const [filterCheckboxByPizzaTypes, { toggle: toggleFilterCheckboxByPizzaTypes, clear: onClearSelectedFilterByPizzaTypes }] = useSet(new Set<string>( queryParams('pizzaTypes') ));
   const [filterPrices, setFilterPrice] = useState<IFilterPriceProps>({
-                                        priceFrom: Number( queryParams( 'priceFrom') ) || undefined,
-                                        priceTo:   Number( queryParams( 'priceTo')   ) || undefined,
+                                        priceFrom: Number( queryParams( 'priceFrom') ),
+                                        priceTo:   Number( queryParams( 'priceTo')   ),
                                       });
 
   const onChangeFilterPrice = (name: keyof IFilterPriceProps, value: number): void => {
@@ -39,7 +39,7 @@ export const useFilter = (): IFilters => {
   };
 
   const onClearSelectedFilterByPrice = () => {
-    setFilterPrice({priceFrom: undefined, priceTo: undefined});
+    setFilterPrice({priceFrom: 0, priceTo: 1000});
   }
 
   //console.log('filterPrices', filterPrices);

@@ -16,7 +16,7 @@ interface IProductsGroupListProps {
 }
 
 export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, products, listClassName, categoryId, className }) => {
-  const setActiveId = useCategoryStore( state => state.setActiveId );
+  const setActiveCategoryId = useCategoryStore( state => state.setActiveId );
   const intersectionRef = React.useRef(null);
   const intersection = useIntersection(intersectionRef, {
     root: null,
@@ -24,13 +24,14 @@ export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, pr
     threshold: 0.6,
   });
 
-  const setActiveCategoryId = React.useCallback( setActiveId, [setActiveId]);
-
   React.useEffect( () => {
     if( intersection?.isIntersecting ) {
+      console.log('intersection?.isIntersecting : ', intersection?.isIntersecting);
       console.log('title: ', title, 'categoryId: ', categoryId);
       setActiveCategoryId(categoryId);
     }
+    console.log('intersection?.isIntersecting : ', intersection?.isIntersecting);
+    console.log('title: ', title, 'categoryId: ', categoryId);
   }, [categoryId, intersection?.isIntersecting, setActiveCategoryId, title]);
 
   return (

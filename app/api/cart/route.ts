@@ -86,16 +86,18 @@ export async function POST(req: NextRequest) {
           quantity: findCartItem.quantity + 1
         }
       });
-    } 
-
-    await prisma.cartProductVariation.create({
-       data: {
+    } else {
+      await prisma.cartProductVariation.create({
+        data: {
         cartId: userCart.id,
         productVariationId: data.productVariationId,
         quantity: 1,
         ingredients: { connect: data.ingredients?.map((id) => ({ id })) },
-      }
-    });
+        }
+      });
+    }
+
+    
 
       // Теперь нужно обновить корзину - посчитав общую стоимость всех продуктов в корзине, и вернуть её.
       const updateUserCart = await updateCartTotalAmount(token);

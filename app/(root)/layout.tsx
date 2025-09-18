@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/shared";
 import { Suspense } from "react";
+import { Footer } from "@/components/shared/footer";
 
 export const metadata: Metadata = {
   title: "Super Pizza | Главная",
@@ -26,6 +27,7 @@ export default function HomeLayout({
       <Header />
       {children}
       {modal}
+      <Footer />
     </main>
   );
 }

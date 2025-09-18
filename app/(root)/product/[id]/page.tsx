@@ -1,5 +1,4 @@
-import { Container, PizzaImage, PizzaOptions, SelectingForm, Title } from '@/components/shared';
-import { pizzaSizes } from '@/constants/pizza';
+import { Container,  SelectingForm } from '@/components/shared';
 import { prisma } from '@/prisma/prisma-client'
 import { notFound } from 'next/navigation';
 
@@ -39,23 +38,23 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
 /* 
 
-<div className="flex flex-1">
-        <PizzaImage 
-          name={product.name}
-          imageUrl={product.imageUrl}
-          size={30}
-        />
-        <div className="w-[490px] bg-[#f8f7f6] p-7">
-          <Title text={product.name} size='md' className='font-extrabold mb-1' />
-          <PizzaOptions 
-            items={pizzaSizes}
-            value='2'
-          />
-          <p className="text-gray-400">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia quis eius vel expedita, necessitatibus illum inventore pariatur impedit quidem porro perspiciatis enim, explicabo cupiditate nisi, laborum vitae! Fugiat, quo numquam.
-            Fuga illo nemo odit! Facere possimus dolor, accusantium voluptatum, a dolorem cupiditate suscipit molestias dicta omnis quos laborum et minima recusandae accusamus eum dolores, libero veritatis nemo repellat voluptatem eos.
-          </p>
-        </div>
-      </div>
+  <div className="flex flex-1">
+    <PizzaImage 
+      name={product.name}
+      imageUrl={product.imageUrl}
+      size={30}
+    />
+    <div className="w-[490px] bg-[#f8f7f6] p-7">
+      <Title text={product.name} size='md' className='font-extrabold mb-1' />
+      <PizzaOptions 
+        items={pizzaSizes}
+        value='2'
+      />
+      <p className="text-gray-400">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia quis eius vel expedita, necessitatibus illum inventore pariatur impedit quidem porro perspiciatis enim, explicabo cupiditate nisi, laborum vitae! Fugiat, quo numquam.
+        Fuga illo nemo odit! Facere possimus dolor, accusantium voluptatum, a dolorem cupiditate suscipit molestias dicta omnis quos laborum et minima recusandae accusamus eum dolores, libero veritatis nemo repellat voluptatem eos.
+      </p>
+    </div>
+  </div>
 
 */
