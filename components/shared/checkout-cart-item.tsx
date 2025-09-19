@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { X } from 'lucide-react';
 import { ICartItemProps } from './cart-item-details/cart-item-details.types';
 import { CartItemDetailsCountButton, CartItemDetailsImage, CartItemDetailsPrice, CartItemInfo } from './cart-item-details';
-import { Ingredient } from '@prisma/client';
 
 
 interface ICheckoutCartItemProps extends ICartItemProps {
@@ -28,7 +27,7 @@ export const CheckoutCartItem: React.FC<ICheckoutCartItemProps> = ({
   return (
     <div
       className={cn(
-        'flex items-center justify-between',
+        'flex items-center justify-between border-b border-gray-200',
         {'opacity-50 pointer-events-none': disabled},
         className,
       )}>

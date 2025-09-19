@@ -1,4 +1,5 @@
 import { Container, Header } from "@/components/shared"
+import { Footer } from "@/components/shared/footer"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function CheckoutLayout({
         <Container>
             <Header hasSearch={false} hasCartButton={false} className="border-gray-200" />
             {children}
+            <Footer />
         </Container>
     </main>
   )

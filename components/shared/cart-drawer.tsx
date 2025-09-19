@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from 'react';
 import {
   Sheet,
   SheetClose,
@@ -21,38 +21,17 @@ import { useCartStore } from '@/store/cart';
 import { TKeysMapPizzaSize, TKeysMapPizzaType, TPizzaTypes } from '@/@types/pizza';
 import Image from 'next/image';
 import { Title } from './title';
+import { useGetCart } from '@/hooks';
 
 
 
-interface ICartDrawerProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
-  
-}
+interface ICartDrawerProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
-export const CartDrawer: React.FC<ICartDrawerProps> = ({ children, className }) => {
-    /* const [ totalAmount, fetchCartItems, cartItems ] = useCartStore( state => [
-        state.totalAmount, 
-        state.fetchCartItems,
-        state.cartItems,
-    ] ); */
-    const totalAmount            = useCartStore( state => state.totalAmount);
-    const cartItems              = useCartStore( state => state.cartItems);
-    const fetchCartItems         = useCartStore( state => state.fetchCartItems);
-    const updateCartItemQuantity = useCartStore( state => state.updateCartItemQuantity);
-    const removeCartItem         = useCartStore( state => state.removeCartItem);
-    const loading                = useCartStore( state => state.loading);
+export const CartDrawer: React.FC<ICartDrawerProps> = ({ children }) => {
+    const { totalAmount, cartItems, removeCartItem, onClickCountButton } = useGetCart();
+    const [ buttonLoading, setButtonLoading ] = useState(false);
     
     //console.log({cartItems});
-
-    const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
-        //console.log({id, quantity, type});
-        const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
-        updateCartItemQuantity(id, newQuantity); 
-    }
-
-    useEffect( () => {
-        fetchCartItems();
-        //console.log({cartItems});
-    }, []);
 
     return (
         <Sheet>
@@ -121,11 +100,13 @@ export const CartDrawer: React.FC<ICartDrawerProps> = ({ children, className }) 
                                         <span className="font-bold text-lg">{totalAmount} ₽</span>
                                     </div>
                                 </div>
-                                <Link href='/cart'>
+                                <Link href='/checkout'>
                                     <Button 
                                         className="w-full h-12 text-base"
                                         type='submit'
-                                        disabled={loading}
+                                        loading={buttonLoading}
+                                        onClick={() => setButtonLoading(true)}
+                                        /* disabled={loading} */
                                     >
                                         Оформить заказ
                                         <ArrowRight className='w-5 ml-2'/>
