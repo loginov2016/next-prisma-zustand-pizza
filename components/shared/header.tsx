@@ -11,15 +11,18 @@ import { SearchInput } from './search-input';
 import { CartButton } from './cart-button';
 import { useCartStore } from '@/store';
 
-interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
+  hasSearch?: boolean;
+  hasCartButton?: boolean;
+}
 
-export const Header: React.FC<IHeaderProps> = ({ className }) => {
+export const Header: React.FC<IHeaderProps> = ({ hasSearch = true, hasCartButton = true, className }) => {
   /* const totalAmount = useCartStore( state => state.totalAmount);
   const cartItems   = useCartStore( state => state.cartItems ); */
 
 
   return (
-    <header className={cn('border border-b', className)}>
+    <header className={cn('border-b', className)}>
       <Container className='flex items-center justify-between py-12'>
         {/* Левая часть Header*/}
         <Link href='/'>
@@ -32,10 +35,13 @@ export const Header: React.FC<IHeaderProps> = ({ className }) => {
           </div>
         </Link>
         
-        <div className="mx-10 flex-1">
-          <SearchInput />
-        </div>
-
+        { hasSearch && (
+            <div className="mx-10 flex-1">
+              <SearchInput />
+            </div>
+          )
+        }
+        
         {/* Правая часть Header*/}
         <div className="flex items-center gap-3">
             <Button variant="outline" className='flex items-center gap-1'>
@@ -43,7 +49,7 @@ export const Header: React.FC<IHeaderProps> = ({ className }) => {
                 Войти
             </Button>
 
-            <CartButton />
+            { hasCartButton && <CartButton />}
         </div>
       </Container>
     </header>

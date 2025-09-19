@@ -25,4 +25,7 @@ export { FranchiseStats                        } from './franchise-stats';
 export { LegalInfo                             } from './legal-info';
 export { SocialLinks                           } from './social-links';
 export { OrganizationInfo                      } from './organization-info';
+export { WhiteBlock                            } from './white-block';
+export { CheckoutItemDetails                   } from './checkout-item-details';
+export { CheckoutCartItem                      } from './checkout-cart-item';
 export * from './modals';
