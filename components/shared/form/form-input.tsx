@@ -5,7 +5,7 @@ import { ErrorText } from "../error-text"
 import { ClearButton } from "../clear-button"
 import { useForm, useFormContext } from "react-hook-form"
 
-interface IFormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface IFormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label?: string;
     required?: boolean;
@@ -20,7 +20,7 @@ export const FormInput: React.FC<IFormInputProps> = ({name, label, required, cla
     const onClickClearButton = () => setValue(name, '', { shouldValidate: true });
 
 
-    console.log({register});
+    //console.log({register});
     return (
         <div className={cn('', className)}>
             {label && (

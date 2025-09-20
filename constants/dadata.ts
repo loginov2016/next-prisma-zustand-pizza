@@ -1,0 +1,1 @@
+export const DADATA_API_KEY: string = '323bbd54d0fe836f28834cb5e77a4b01873a44ee';
