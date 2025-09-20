@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { WhiteBlock } from './white-block';
+import { WhiteBlock } from '../white-block';
 import { CheckoutItemDetails } from './checkout-item-details';
 import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
-import { Button } from '../ui';
+import { Button } from '../../ui';
 
 const VAT = 15; // Процент НДС
 const DELIVERY_PRICE = 240; // Стоимость доставки

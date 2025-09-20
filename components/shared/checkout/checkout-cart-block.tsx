@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { WhiteBlock } from './white-block';
+import { WhiteBlock } from '../white-block';
 import { CheckoutCartItem } from './checkout-cart-item';
 import { getCartItemDetails } from '@/lib';
 import { TKeysMapPizzaSize, TKeysMapPizzaType } from '@/@types/pizza';

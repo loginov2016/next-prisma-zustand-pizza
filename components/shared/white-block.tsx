@@ -19,7 +19,7 @@ export const WhiteBlock: React.FC<IWhiteBlockProps> = ({ title, endAdornment, co
                 </div>
             )
         }
-        <div className={cn('p-5 py-4', contentClassName)}>{children}</div>
+        <div className={cn('p-5 py-4 pb-10', contentClassName)}>{children}</div>
     </div>
   );
 }
