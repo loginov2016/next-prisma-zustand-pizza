@@ -6,19 +6,23 @@ import { getCartItemDetails } from '@/lib';
 import { TKeysMapPizzaSize, TKeysMapPizzaType } from '@/@types/pizza';
 import { TCartStateItem } from '@/lib/get-cart-details';
 import { IUseGetCart } from '@/hooks';
+import { Skeleton } from '@/components/ui';
+import { CheckoutItemSkeleton } from './checkout-item-skeleton';
 
 interface ICheckoutCartBlockProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     cartItems: TCartStateItem[];
+    loading?: boolean;
     removeCartItem: IUseGetCart['removeCartItem'];
     onClickCountButton: IUseGetCart['onClickCountButton'];
 }
 
-export const CheckoutCartBlock: React.FC<ICheckoutCartBlockProps> = ({ cartItems, removeCartItem, onClickCountButton, className }) => {
+export const CheckoutCartBlock: React.FC<ICheckoutCartBlockProps> = ({ loading, cartItems, removeCartItem, onClickCountButton, className }) => {
 
     return (
         <WhiteBlock title='1. Корзина' className={cn('', className)}>
             <div className="flex flex-col gap-5">
-                {
+                
+                { loading ? [...Array(5)].map( (_, index) => <CheckoutItemSkeleton key={index} /> ) :
                     cartItems.map((cartItem) => (
                         <CheckoutCartItem
                             key={cartItem.id}

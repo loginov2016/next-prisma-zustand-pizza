@@ -3,7 +3,7 @@ import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 
 interface ICheckoutItemDetailsProps  {
     title?: ReactNode;
-    value?: string;
+    value?: ReactNode;
     className?: string;
 }
 
