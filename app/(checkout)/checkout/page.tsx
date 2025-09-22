@@ -1,15 +1,19 @@
 'use client';
 
-import { useForm, SubmitHandler, Form, FormProvider } from "react-hook-form"
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { CheckoutCartBlock, CheckoutDeliveryAddressBlock, CheckoutPersonalDataBlock,  CheckoutSidebar, checkoutFormSchema, type TCheckoutFormSchema, Container, Title } from '@/components/shared';
 import { useGetCart } from '@/hooks';
 import { cn } from "@/lib/utils";
+import { createOrder } from "@/app/actions";
+import toast from "react-hot-toast";
+import { fi } from "zod/v4/locales";
 
 interface ICheckoutPageProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
 
 export default function CheckoutPage() {
+    const [buttonLoading, setButtonLoading] = React.useState(false);
     const { totalAmount, cartItems, removeCartItem, onClickCountButton, loading } = useGetCart();
 
     const form = useForm<TCheckoutFormSchema>({
@@ -24,8 +28,23 @@ export default function CheckoutPage() {
         }
     });
     
-    const onSubmitForm: SubmitHandler<TCheckoutFormSchema> = (data) => {
-        console.log(data);
+    const onSubmitForm: SubmitHandler<TCheckoutFormSchema> = async (data) => {
+        //console.log(data);
+        //createOrder(data);
+        try {
+            setButtonLoading(true);
+            const url = await createOrder(data);
+
+            toast.success('Заказ успешно оформлен! Переход на оплату...', {icon: '✅'});
+
+            if (url) {
+                location.href = url;
+            }
+        } catch (error) {
+            console.log(error);
+            setButtonLoading(false);
+            toast.error('Не удалось создать заказ!', {icon: '❌'});
+        } 
     }
 
     return (
@@ -42,7 +61,10 @@ export default function CheckoutPage() {
                         </div>
                         {/* Правая часть */}
                         <div className='w-[450px]'>
-                            <CheckoutSidebar totalAmount={totalAmount} loading={loading} />
+                            <CheckoutSidebar 
+                                totalAmount={totalAmount} 
+                                loading={loading || buttonLoading}
+                            />
                         </div>
                     </div>
                 </form>
