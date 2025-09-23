@@ -1,0 +1,1 @@
+export { PaymentForOrderTemplate, type IPaymentForOrderProps } from './payment-for-order-template';

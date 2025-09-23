@@ -1,9 +1,11 @@
+'use client';
+
 import { cn } from "@/lib/utils"
 import { RequiredSymbol } from "../required-symbol"
 import { Input } from "@/components/ui"
 import { ErrorText } from "../error-text"
 import { ClearButton } from "../clear-button"
-import { useForm, useFormContext } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 
 export interface IFormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;

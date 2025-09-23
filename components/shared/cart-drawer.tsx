@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
 import {
   Sheet,
   SheetClose,

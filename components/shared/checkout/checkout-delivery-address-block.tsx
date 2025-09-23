@@ -1,7 +1,9 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { WhiteBlock } from '../white-block';
-import { FormInput, FormTextarea } from '../form';
+import { FormTextarea } from '../form';
 import { AddressInput } from '../address-input';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ErrorText } from '../error-text';
@@ -16,10 +18,13 @@ export const CheckoutDeliveryAddressBlock: React.FC<ICheckoutDeliveryAddressBloc
             <Controller 
               name='address'
               control={control}
-              render={({ field, fieldState }) => <>
-                <AddressInput onChangeAddress={field.onChange} />
-                {fieldState.error?.message && <ErrorText text={fieldState.error.message} />}
-                </>}
+              render={ ( {field, fieldState} ) => (
+                  <>
+                    <AddressInput onChangeAddress={field.onChange} />
+                    {fieldState.error?.message && <ErrorText text={fieldState.error.message} />}
+                  </>
+                )
+              }
             />
             <FormTextarea
                 name='comment'

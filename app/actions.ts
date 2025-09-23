@@ -1,10 +1,11 @@
 'use server';
 
-import { TCheckoutFormSchema } from "@/components/shared";
+import { PaymentForOrderTemplate, TCheckoutFormSchema } from "@/components/shared";
+import { sendEmail } from "@/lib/send-email";
 import { prisma } from "@/prisma/prisma-client";
 import { OrderStatus } from "@prisma/client";
 import { cookies } from "next/headers";
-import { ca } from "zod/v4/locales";
+
 
 export async function createOrder(data: TCheckoutFormSchema ) {
     console.log(data);
@@ -12,9 +13,10 @@ export async function createOrder(data: TCheckoutFormSchema ) {
    try {
         const cookieStore = cookies();
         const cartToken = (await cookieStore).get('cartToken')?.value;
+
         // Если токен корзины не нашлся, то возвращаем ошибку.
         if (!cartToken) {
-        throw new Error('Cart token not found');
+            throw new Error('Cart token not found');
         }
         // Поиск корзины по токену.
         const userCart = await prisma.cart.findFirst({
@@ -73,30 +75,21 @@ export async function createOrder(data: TCheckoutFormSchema ) {
                 cartId: userCart.id,
             }
         });
+        // Возвращаем ссылку на страницу оплаты.
+        
+        console.log(data.email);
+
+        await sendEmail(data.email, 'Super Pizza / Оплатите заказ #' + order.id, PaymentForOrderTemplate({ 
+            orderId: order.id, 
+            totalAmount: order.totalAmount,
+            paymentUrl: 'https://resend.com/docs/send-with-nextjs',
+            })
+        );    
 
         return `http://localhost:3000/checkout/${cartToken}`;
 
    } catch (error) {
-    console.log(error);
+        console.log('[Created order] Server Error', error);
+        return null;
    }
-
-        
-
-    
 }
-
-/* 
-
-data: {
-            token,
-            totalAmount: 1500,
-            listProductsCart: [],
-            status: OrderStatus.PENDING,
-            fullName: data.firstName + ' ' + data.lastName,
-            email: data.email,
-            phone: data.phone,
-            address: data.address,
-            comment: data.comment
-        }
-
-*/

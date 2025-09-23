@@ -8,7 +8,6 @@ import { useGetCart } from '@/hooks';
 import { cn } from "@/lib/utils";
 import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
-import { fi } from "zod/v4/locales";
 
 interface ICheckoutPageProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
 
@@ -38,7 +37,7 @@ export default function CheckoutPage() {
             toast.success('Заказ успешно оформлен! Переход на оплату...', {icon: '✅'});
 
             if (url) {
-                location.href = url;
+                window.location.href = url;
             }
         } catch (error) {
             console.log(error);

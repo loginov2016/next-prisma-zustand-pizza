@@ -1,8 +1,5 @@
 import {  z } from "zod";
 
-
-
-
 export const checkoutFormSchema = z.object({
     firstName: z.string().min(3, { message: "Имя должно содержать не менее 3 символов" }),
     lastName: z.string().min(3,  { message: "Фамилия должна содержать не менее 3 символов" }),

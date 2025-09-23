@@ -6,6 +6,7 @@ import { notFound, useRouter } from 'next/navigation';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { TProductWithOptions } from '@/@types/prisma';
 import { SelectingForm } from '../selecting-form';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 
 interface IChooseProductModalProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
@@ -23,7 +24,9 @@ export const ChooseProductModal: React.FC<IChooseProductModalProps> = ({ product
     return (
         <Dialog open={Boolean(product)} onOpenChange={ () => router.back()  } >
             <DialogContent className={cn('p-0 !w-[1060px] !max-w-[1060px] min-h-[500px] bg-white overflow-hidden', className)}>
-                <SelectingForm product={product} onCloseModalWindow={ () => router.back() } />
+                <DialogTitle> 
+                    <SelectingForm product={product} onCloseModalWindow={ () => router.back() } />
+                </DialogTitle>
             </DialogContent>
         </Dialog>
     );

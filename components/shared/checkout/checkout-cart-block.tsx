@@ -6,7 +6,6 @@ import { getCartItemDetails } from '@/lib';
 import { TKeysMapPizzaSize, TKeysMapPizzaType } from '@/@types/pizza';
 import { TCartStateItem } from '@/lib/get-cart-details';
 import { IUseGetCart } from '@/hooks';
-import { Skeleton } from '@/components/ui';
 import { CheckoutItemSkeleton } from './checkout-item-skeleton';
 
 interface ICheckoutCartBlockProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {

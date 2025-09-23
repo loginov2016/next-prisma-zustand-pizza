@@ -4,9 +4,6 @@ import { DADATA_API_KEY } from '@/constants/dadata';
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 
-
-
-
 interface IAddressInputProps {
     onChangeAddress?: (value?: string) => void
 }

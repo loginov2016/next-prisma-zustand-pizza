@@ -4,10 +4,8 @@ import { useCartStore } from "@/store";
 import { ChoosePizzaForm, type IChoosePizzaFormProps } from "./choose-pizza-form"
 import { ChooseProductForm, type IChooseProductFormProps } from "./choose-product-form"
 import toast from "react-hot-toast";
-//import router from "next/router";  Был - next/router
-import { FC, DetailedHTMLProps, HTMLAttributes } from "react";
+import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { TProductWithOptions } from "@/@types/prisma";
-//import { useRouter } from "next/navigation";
 
 interface ISelectingFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement >{
     product: TProductWithOptions;
