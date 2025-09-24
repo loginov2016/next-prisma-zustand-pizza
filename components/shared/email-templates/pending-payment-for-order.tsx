@@ -6,7 +6,7 @@ export interface IPaymentForOrderProps {
   paymentUrl: string;
 }
 
-export function PaymentForOrderTemplate({ orderId, totalAmount, paymentUrl }: IPaymentForOrderProps) {
+export function PendingPaymentForOrder({ orderId, totalAmount, paymentUrl }: IPaymentForOrderProps) {
   return (
     <div>
         <h1>Заказ, #{orderId}</h1>

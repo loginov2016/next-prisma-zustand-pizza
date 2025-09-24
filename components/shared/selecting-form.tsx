@@ -1,8 +1,8 @@
 'use client';
 
 import { useCartStore } from "@/store";
-import { ChoosePizzaForm, type IChoosePizzaFormProps } from "./choose-pizza-form"
-import { ChooseProductForm, type IChooseProductFormProps } from "./choose-product-form"
+import { ChoosePizzaForm } from "./choose-pizza-form"
+import { ChooseProductForm } from "./choose-product-form"
 import toast from "react-hot-toast";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { TProductWithOptions } from "@/@types/prisma";

@@ -9,7 +9,6 @@ import { ArrowRight, ShoppingCart, User } from 'lucide-react';
 import Link from 'next/link';
 import { SearchInput } from './search-input';
 import { CartButton } from './cart-button';
-import { useCartStore } from '@/store';
 
 interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
   hasSearch?: boolean;
@@ -17,10 +16,6 @@ interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>
 }
 
 export const Header: React.FC<IHeaderProps> = ({ hasSearch = true, hasCartButton = true, className }) => {
-  /* const totalAmount = useCartStore( state => state.totalAmount);
-  const cartItems   = useCartStore( state => state.cartItems ); */
-
-
   return (
     <header className={cn('border-b', className)}>
       <Container className='flex items-center justify-between py-12'>

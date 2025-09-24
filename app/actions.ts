@@ -1,6 +1,7 @@
 'use server';
 
-import { PaymentForOrderTemplate, TCheckoutFormSchema } from "@/components/shared";
+import { PendingPaymentForOrder, TCheckoutFormSchema } from "@/components/shared";
+import { createPayment } from "@/lib";
 import { sendEmail } from "@/lib/send-email";
 import { prisma } from "@/prisma/prisma-client";
 import { OrderStatus } from "@prisma/client";
@@ -60,7 +61,7 @@ export async function createOrder(data: TCheckoutFormSchema ) {
                     listProductsCart: JSON.stringify(userCart.cartProductVariations),
                 }
         });
-        // Обнуление суммы заказа корзины пользователя по id.
+        // Обнуление суммы заказа корзины пользователя по id корзины.
         await prisma.cart.update({
             where: {
                 id: userCart.id,
@@ -77,19 +78,42 @@ export async function createOrder(data: TCheckoutFormSchema ) {
         });
         // Возвращаем ссылку на страницу оплаты.
         
-        console.log(data.email);
+        //console.log(data.email);
 
-        await sendEmail(data.email, 'Super Pizza / Оплатите заказ #' + order.id, PaymentForOrderTemplate({ 
+        const paymentData = await createPayment({
+            amount: order.totalAmount,
+            orderId: order.id,
+            description: 'Оплата Заказ #' + order.id,
+        });
+
+        if (!paymentData) {
+            throw new Error('Payment data not found');
+        }
+
+        await prisma.order.update({
+            where: {
+                id: order.id,
+            },
+            data: {
+                paymentId: paymentData.id,
+            }
+        });
+
+        const paymentUrl = paymentData.confirmation.confirmation_url;
+        console.log(paymentUrl);
+
+        await sendEmail(data.email, 'Super Pizza / Оплатите заказ #' + order.id, PendingPaymentForOrder({ 
             orderId: order.id, 
             totalAmount: order.totalAmount,
-            paymentUrl: 'https://resend.com/docs/send-with-nextjs',
+            paymentUrl,
             })
         );    
 
-        return `http://localhost:3000/checkout/${cartToken}`;
+        return paymentUrl;
 
    } catch (error) {
         console.log('[Created order] Server Error', error);
+        //throw new Error('[Created order] Server Error');
         return null;
    }
 }

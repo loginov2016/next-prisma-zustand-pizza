@@ -1,1 +1,2 @@
-export { PaymentForOrderTemplate, type IPaymentForOrderProps } from './payment-for-order-template';
+export { PendingPaymentForOrder, type IPaymentForOrderProps        } from './pending-payment-for-order';
+export { SuccessPaymentForOrder, type ISuccessPaymentForOrderProps } from './success-payment-for-order';
