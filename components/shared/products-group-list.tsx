@@ -26,12 +26,12 @@ export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, pr
 
   React.useEffect( () => {
     if( intersection?.isIntersecting ) {
-      console.log('intersection?.isIntersecting : ', intersection?.isIntersecting);
-      console.log('title: ', title, 'categoryId: ', categoryId);
+      //console.log('intersection?.isIntersecting : ', intersection?.isIntersecting);
+      //console.log('title: ', title, 'categoryId: ', categoryId);
       setActiveCategoryId(categoryId);
     }
-    console.log('intersection?.isIntersecting : ', intersection?.isIntersecting);
-    console.log('title: ', title, 'categoryId: ', categoryId);
+    //console.log('intersection?.isIntersecting : ', intersection?.isIntersecting);
+    //console.log('title: ', title, 'categoryId: ', categoryId);
   }, [categoryId, intersection?.isIntersecting, setActiveCategoryId, title]);
 
   return (

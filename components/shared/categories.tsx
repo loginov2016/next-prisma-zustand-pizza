@@ -14,7 +14,7 @@ interface ICategoriesProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElem
 
 export const Categories: React.FC<ICategoriesProps> = ({ items, className }) => {
     const activeCategoryId = useCategoryStore( state => state.activeId );
-    console.log('activeCategoryId: ', activeCategoryId);
+    //console.log('activeCategoryId: ', activeCategoryId);
     //console.log('items: ', items);
     return (
         <div className={cn('inline-flex bg-gray-50 rounded-2xl gap-1 p-1', className)}>

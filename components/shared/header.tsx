@@ -2,13 +2,17 @@
 
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
 import { Container } from '../ui/container';
 import { Button } from '../ui';
 import { ArrowRight, ShoppingCart, User } from 'lucide-react';
 import Link from 'next/link';
 import { SearchInput } from './search-input';
 import { CartButton } from './cart-button';
+import { useSearchParam } from 'react-use';
+import { useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { set } from 'react-hook-form';
 
 interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
   hasSearch?: boolean;
@@ -16,6 +20,19 @@ interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>
 }
 
 export const Header: React.FC<IHeaderProps> = ({ hasSearch = true, hasCartButton = true, className }) => {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    console.log('Header');
+
+    if ( searchParams.has('success') ) {
+      setTimeout(() => {
+        toast.success('Заказ успешно оплачен! Информация о заказе отправлена на почту.', {icon: '✅'});
+      }, 0);
+    }
+  }, []);
+
+
   return (
     <header className={cn('border-b', className)}>
       <Container className='flex items-center justify-between py-12'>

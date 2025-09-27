@@ -42,3 +42,4 @@ export { PendingPaymentForOrder, type IPaymentForOrderProps        } from './ema
 export { SuccessPaymentForOrder, type ISuccessPaymentForOrderProps } from './email-templates';
 export { FormInput, FormTextarea                                   } from './form';
 export { ChooseProductModal                                        } from './modals';
+export { Providers                                                 } from './providers';

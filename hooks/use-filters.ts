@@ -1,7 +1,8 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useSet } from "react-use";
 import { IFilterPriceProps } from "./use-query-string";
 import { useSearchQueryParams } from "./use-search-query-params";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface IFilters {
   selectedIngredients:               Set<string>;
@@ -27,7 +28,7 @@ export const useFilter = (): IFilters => {
   const [filterCheckboxByPizzaTypes, { toggle: toggleFilterCheckboxByPizzaTypes, clear: onClearSelectedFilterByPizzaTypes }] = useSet(new Set<string>( queryParams('pizzaTypes') ));
   const [filterPrices, setFilterPrice] = useState<IFilterPriceProps>({
                                         priceFrom: Number( queryParams( 'priceFrom') ),
-                                        priceTo:   Number( queryParams( 'priceTo')   ),
+                                        priceTo:   Number( queryParams( 'priceTo')  ),
                                       });
 
   const onChangeFilterPrice = (name: keyof IFilterPriceProps, value: number): void => {
@@ -39,7 +40,7 @@ export const useFilter = (): IFilters => {
   };
 
   const onClearSelectedFilterByPrice = () => {
-    setFilterPrice({priceFrom: 0, priceTo: 1000});
+    setFilterPrice({priceFrom: 0, priceTo: 0});
   }
 
   //console.log('filterPrices', filterPrices);

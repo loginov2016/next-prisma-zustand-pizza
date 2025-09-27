@@ -1,12 +1,13 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
 import { Title } from './title';
 import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
 import { FilterCheckboxGroup } from './filter-checkbox-group';
 import { useFilter, useIngredients, useQueryString } from '@/hooks';
+import { useSearchParams } from 'next/navigation';
 
 interface IFiltersProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   
@@ -25,6 +26,8 @@ export interface IFilterQueryString extends IFilterPriceProps {
 
 export const Filters: React.FC<IFiltersProps> = ({ className }) => {
   //console.log('Сработал компонент Filters');
+  //const searchParams = useSearchParams();
+  
   const { ingredients, loading } = useIngredients();
   const filters = useFilter();
   const { 
@@ -53,6 +56,18 @@ export const Filters: React.FC<IFiltersProps> = ({ className }) => {
   //([from, to]) => setFilterPrice({priceFrom: from, priceTo: to})
 
   const arrIngredients = ingredients.map( item => ({ text: item.name, value: String(item.id), }) );
+
+  /* useEffect( () => {
+    if ( searchParams.toString() === 'priceFrom=0&priceTo=0' ) {
+      //router.push('/', { scroll: false });
+      const params = new URLSearchParams(searchParams.toString());
+      //console.log('params: ', params.toString()); // params: priceFrom=0&priceTo=0
+      params.delete('priceFrom');
+      params.delete('priceTo');
+      //console.log('params: ', params.toString()); // params: 
+      //router.push(`?${params.toString()}`, { scroll: false });
+    }
+  }, []); */
 
   return (
     <div className={cn('', className)}>
