@@ -13,7 +13,7 @@ export const Providers: React.FC<PropsWithChildren> = ({ children }) => {
             {children}
         </SessionProvider>
         <Toaster />
-        <NextTopLoader />
+        <NextTopLoader color="#FF6900" height={3} />
     </>
   );
 }

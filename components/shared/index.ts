@@ -41,5 +41,6 @@ export { AddressInput                                              } from './add
 export { PendingPaymentForOrder, type IPaymentForOrderProps        } from './email-templates';
 export { SuccessPaymentForOrder, type ISuccessPaymentForOrderProps } from './email-templates';
 export { FormInput, FormTextarea                                   } from './form';
-export { ChooseProductModal                                        } from './modals';
+export { ChooseProductModal, AuthModal                             } from './modals';
 export { Providers                                                 } from './providers';
+export { ProfileButton                                             } from './profile-button';

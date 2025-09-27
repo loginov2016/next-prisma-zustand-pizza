@@ -48,7 +48,7 @@ export const useQueryString = (queryParams: IQueryFiltersProps): void => {
         arrayFormat: 'comma'
       });
       
-      console.log({queryFilterString});
+      //console.log({queryFilterString});
       // queryFilterString === 'priceFrom=0&priceTo=0'
       //const priceFrom = searchParams.has('priceFrom') ? searchParams.get('priceFrom') : '0';
       //const priceTo   = searchParams.has('priceTo')   ? searchParams.get('priceTo')   : '0';
