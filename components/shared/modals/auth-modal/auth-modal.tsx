@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Button } from '@/components/ui';
-import { sign } from 'crypto';
 import { signIn } from 'next-auth/react';
+import { LoginForm, RegisterForm } from './forms';
 
 
 interface IAuthModalProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
@@ -14,6 +14,11 @@ interface IAuthModalProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivEleme
 }
 
 export const AuthModal: React.FC<IAuthModalProps> = ({ open, onClose, className }) => {
+    const [type, setType] = React.useState<'login' | 'register'>('login');
+
+    const onSwitchType = () => {
+        setType( type === 'login' ? 'register' : 'login' );
+    }
 
     const handleClose = () => {
         onClose();
@@ -22,7 +27,15 @@ export const AuthModal: React.FC<IAuthModalProps> = ({ open, onClose, className 
     return (
         <Dialog open={open} onOpenChange={ handleClose }>
             <DialogContent className={cn('w-[450px] bg-white p-10', className)}>
-                <h1>Auth Modal</h1>
+                
+                {
+                    type === 'login' ? (
+                        <LoginForm onClose={handleClose} />
+                    ) : (
+                        <RegisterForm onClose={handleClose} />
+                    )
+                }
+
                 <hr />
                 <div className="flex gap-2">
                     <Button 
@@ -56,6 +69,15 @@ export const AuthModal: React.FC<IAuthModalProps> = ({ open, onClose, className 
                         Google
                     </Button>
                 </div>
+
+                <Button 
+                    variant="outline"
+                    onClick={onSwitchType}
+                    type='button'
+                    className='h-12'
+                >
+                    { type === 'login' ? 'Войти' : 'Регистрация' }
+                </Button>        
             </DialogContent>
         </Dialog>
     );

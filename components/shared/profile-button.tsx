@@ -41,7 +41,7 @@ export const ProfileButton: React.FC<IProfileButtonProps> = ({ onClickSignIn, cl
                     <Link href="/profile">
                         <Button variant='secondary' className='flex items-center gap-2'>
                             <CircleUser size={18} />
-                            Профиль
+                            {session.user?.name ?  session.user?.name : 'Войти'}
                         </Button>
                     </Link>
                 )
