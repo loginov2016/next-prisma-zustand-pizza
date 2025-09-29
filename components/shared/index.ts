@@ -44,3 +44,5 @@ export { FormInput, FormTextarea                                   } from './for
 export { ChooseProductModal, AuthModal                             } from './modals';
 export { Providers                                                 } from './providers';
 export { ProfileButton                                             } from './profile-button';
+export { InfoBlock                                                 } from './info-block';
+export { ProfileForm                                               } from './profile-form';

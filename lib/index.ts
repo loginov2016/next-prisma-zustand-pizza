@@ -13,6 +13,7 @@ export { findOrCreateCart                       } from './find-or-create-cart';
 export { getCurrentProductVariationId           } from './get-current-product-variation-id';
 export { sendEmail                              } from './send-email';
 export { createPayment                          } from './create-payment';
+//export { getUserSession                       } from './get-user-session'; // Не работает реэкспорт!!!
 
 
 

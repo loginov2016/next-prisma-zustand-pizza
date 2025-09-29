@@ -1,6 +1,12 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
+
+/* 
+    Была ошибка: Attempted import error: 'FormProvider' is not exported from 'react-hook-form' (imported as 'FormProvider').
+    Решение: 'use client';
+*/
+
 import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,7 +16,6 @@ import { FormInput, Title } from '@/components/shared';
 import { Button } from '@/components/ui';
 import toast from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
-import { on } from 'events';
 
 
 interface ILoginFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
