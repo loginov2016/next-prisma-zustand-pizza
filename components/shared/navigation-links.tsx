@@ -24,7 +24,7 @@ export const NavigationLinks: React.FC<INavigationLinksProps> = ({ className }) 
         <section className='flex flex-col gap-3'>
           <h4 className='font-extrabold text-white/60'>Контакты</h4>
           <Link href='tel:89097045551' target='_blank' className='hover:text-white/60'>Мой тел-н: +7(909)704-55-51</Link>
-          <Link href='mailto:loginov_av@mail.ru' target='_blank' className='hover:text-white/60'>Моя почта: loginov_av@mail.ru</Link>
+          <Link href='mailto:loginov_av_2024@mail.ru' target='_blank' className='hover:text-white/60'>Моя почта: loginov_av_2024@mail.ru</Link>
         </section>
       </div>
     </div>

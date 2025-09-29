@@ -2,18 +2,21 @@
 
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
 import { CheckoutCartBlock, CheckoutDeliveryAddressBlock, CheckoutPersonalDataBlock,  CheckoutSidebar, checkoutFormSchema, type TCheckoutFormSchema, Container, Title } from '@/components/shared';
 import { useGetCart } from '@/hooks';
 import { cn } from "@/lib/utils";
 import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import { Api } from "@/services/api-client";
 
 interface ICheckoutPageProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
 
 export default function CheckoutPage() {
     const [buttonLoading, setButtonLoading] = React.useState(false);
     const { totalAmount, cartItems, removeCartItem, onClickCountButton, loading } = useGetCart();
+    const { data: session } = useSession();
 
     const form = useForm<TCheckoutFormSchema>({
         resolver: zodResolver(checkoutFormSchema),
@@ -27,6 +30,21 @@ export default function CheckoutPage() {
         }
     });
     
+    useEffect(() => {
+        async function fetchUserInfo() {
+            const data = await Api.auth.getMe();
+            const [firstName, lastName] = data.fullName.split(' ');
+            form.setValue('firstName', firstName);
+            form.setValue('lastName', lastName);
+            form.setValue('email', data.email);
+        }
+
+
+        if ( session ) {
+            fetchUserInfo()
+        }
+    }, [session]);
+
     const onSubmitForm: SubmitHandler<TCheckoutFormSchema> = async (data) => {
         //console.log(data);
         //createOrder(data);

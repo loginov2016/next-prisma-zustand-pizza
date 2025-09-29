@@ -8,6 +8,7 @@ import { FormInput } from '../form';
 interface ICheckoutPersonalDataBlockProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
 
 export const CheckoutPersonalDataBlock: React.FC<ICheckoutPersonalDataBlockProps> = ({ className }) => {
+    
     return (
         <WhiteBlock title='2. Персональные данные' className={cn('', className)}>
             <div className="grid grid-cols-2 gap-5">
