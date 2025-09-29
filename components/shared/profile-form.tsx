@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
 import { Title } from './title';
 import { FormInput } from './form';
+import { updateUserInfo } from '@/app/actions';
 
 interface IProfileFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
     data: User;
@@ -59,8 +60,6 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) =>
                 <FormInput name='email' label='E-mail' required />
                 <FormInput name='password' label='Новый пароль' required />
                 <FormInput name='confirmPassword' label='Повторите пароль' required />
-            </form>
-            <div className='flex flex-col w-96'>
                 <Button 
                     disabled={form.formState.isSubmitting} 
                     className="text-base mt-3" 
@@ -77,7 +76,7 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) =>
                 >
                 Выйти из профиля
                 </Button>
-            </div>
+            </form>
         </FormProvider>
     </Container>
     );

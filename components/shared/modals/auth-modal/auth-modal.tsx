@@ -76,7 +76,7 @@ export const AuthModal: React.FC<IAuthModalProps> = ({ open, onClose, className 
                     type='button'
                     className='h-12'
                 >
-                    { type === 'login' ? 'Войти' : 'Регистрация' }
+                    { type !== 'login' ? 'Войти' : 'Регистрация' }
                 </Button>        
             </DialogContent>
         </Dialog>

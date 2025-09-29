@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
         if (isSucceeded) {
             await sendEmail(
                 order.email, 
-                'Super Pizza / Ваш заказ успешно оплачен', 
+                'Super Pizza / Ваш заказ успешно оплачен 📝', 
                 SuccessPaymentForOrder({ 
                     orderId: order.id, 
                     totalAmount: order.totalAmount, 

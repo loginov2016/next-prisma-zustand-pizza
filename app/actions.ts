@@ -1,10 +1,16 @@
 'use server';
 
 import { PendingPaymentForOrder, TCheckoutFormSchema } from "@/components/shared";
+import { VerificationUser } from "@/components/shared/email-templates";
+import { authOptions } from "@/constants";
 import { createPayment } from "@/lib";
+import { getUserSession } from "@/lib/get-user-session";
 import { sendEmail } from "@/lib/send-email";
 import { prisma } from "@/prisma/prisma-client";
-import { OrderStatus } from "@prisma/client";
+import { OrderStatus, Prisma } from "@prisma/client";
+import { hashSync } from "bcrypt";
+import { create } from "domain";
+import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 
 
@@ -116,4 +122,87 @@ export async function createOrder(data: TCheckoutFormSchema ) {
         //throw new Error('[Created order] Server Error');
         return null;
    }
+}
+
+
+export async function updateUserInfo(body: Prisma.UserUpdateInput) {
+    try {
+        const currentUser = await getUserSession();
+
+        if ( !currentUser ) {
+            throw new Error('Пользователь не найден!');
+        }
+
+        const findUser = await prisma.user.findFirst({
+            where: {
+                id: Number(currentUser.id),
+            }
+        });
+
+        await prisma.user.update({
+            where: {
+                id: Number(currentUser.id),
+            },
+            data: {
+                fullName: body.fullName,
+                email: body.email,
+                password: body.password ? hashSync(body.password as string, 10) : findUser?.password,
+            },
+        });
+        
+    } catch (error) {
+        console.error('[Update user info] Server Error', error);
+        throw new Error('[Update user info] Server Error');
+    }
+}
+
+export async function currentUserSession() {
+    try {
+        const currentUser = await getServerSession(authOptions);
+        return currentUser;
+    } catch (error) {
+        console.error('[Current session] Server Error', error);
+        throw new Error('[Current session] Server Error');
+    }
+}
+
+export async function registerUser(body: Prisma.UserCreateInput) {
+    try {
+        const findUser = await prisma.user.findFirst({
+            where: {
+                email: body.email,
+            },
+        })
+
+        if ( findUser ) {
+            if ( !findUser.verified ) {
+                throw new Error('Почта не подтвержена!');
+            }
+
+            throw new Error('Пользователь с такой почтой уже зарегистрирован!');
+        }
+
+        const createdUser = await prisma.user.create({
+            data: {
+                fullName: body.fullName,
+                email: body.email,
+                password: hashSync(body.password, 10),
+            },
+        });
+
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+        await prisma.verificationCode.create({
+            data: {
+                userId: createdUser.id,
+                code,
+            },
+        });
+
+        await sendEmail(createdUser.email, 'Super Pizza / 📝 Подтвердение регистрации', VerificationUser({code}));
+
+    } catch (error) {
+        console.error('[Register user] Server Error', error);
+        throw new Error('[Register user] Server Error');
+    }
 }

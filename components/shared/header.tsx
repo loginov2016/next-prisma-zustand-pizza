@@ -7,9 +7,8 @@ import { Container } from '../ui/container';
 import Link from 'next/link';
 import { SearchInput } from './search-input';
 import { CartButton } from './cart-button';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { useSession } from 'next-auth/react';
 import { ProfileButton } from './profile-button';
 import { AuthModal } from './modals';
 
@@ -20,19 +19,28 @@ interface IHeaderProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>
 
 export const Header: React.FC<IHeaderProps> = ({ hasSearch = true, hasCartButton = true, className }) => {
   const [openAuthModal, setOpenAuthModal] = React.useState(false);
-  const { data: session } = useSession();
   const searchParams = useSearchParams();
-
-  console.log('session: ', session);
+  const router = useRouter();
 
   useEffect(() => {
     //console.log('Header');
+    let toastMessage = '';
 
     if ( searchParams.has('success') ) {
-      setTimeout(() => {
-        toast.success('Заказ успешно оплачен! Информация о заказе отправлена на почту', {icon: '✅'});
-      }, 0);
+      toastMessage = 'Заказ успешно оплачен📝! Информация о заказе отправлена на почту.'
     }
+
+    if ( searchParams.has('verified') ) {
+      toastMessage = 'Почта успешно подтверждена📝!'
+    }
+
+    if ( toastMessage ) {
+      setTimeout(() => {
+        router.replace('/', { scroll: false });
+        toast.success(toastMessage, {icon: '✅'});
+      }, 1000);
+    }
+
   }, []);
 
 

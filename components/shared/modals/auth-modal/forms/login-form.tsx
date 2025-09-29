@@ -44,7 +44,7 @@ export const LoginForm: React.FC<ILoginFormProps> = ({ onClose, className }) => 
                 //return toast.error('Не удалось войти в аккаунт', { icon: '❌' });
             }
 
-            toast.success('Вы успешно вошли в аккаунт', { icon: '✅' });
+            toast.success('Вы успешно вошли в аккаунт 📝', { icon: '✅' });
             onClose?.();
             
         } catch (error) {
