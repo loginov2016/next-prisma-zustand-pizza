@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { Button } from '../ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -14,10 +15,10 @@ interface Props {
 
 export const InfoBlock: React.FC<Props> = ({ className, title, text, imageUrl }) => {
   return (
-    <div className={cn(className, 'flex items-center justify-between w-[840px] gap-12')}>
+    <div className='flex items-center justify-between w-[840px] gap-12'>
       <div className="flex flex-col">
         <div className="w-[445px]">
-          <Title size="lg" text={title} className="font-extrabold" />
+          <Title size="lg" text={title} className={cn('font-extrabold', className)} />
           <p className="text-gray-400 text-lg">{text}</p>
         </div>
 
@@ -28,15 +29,15 @@ export const InfoBlock: React.FC<Props> = ({ className, title, text, imageUrl })
               На главную
             </Button>
           </Link>
-          <a href="">
+          {/* <a href="">
             <Button variant="outline" className="text-gray-500 border-gray-400 hover:bg-gray-50">
               Обновить
             </Button>
-          </a>
+          </a> */}
         </div>
       </div>
 
-      <img src={imageUrl} alt={title} width={300} />
+      {imageUrl && <img src={imageUrl} alt={title} width={300} />}
     </div>
   );
 };

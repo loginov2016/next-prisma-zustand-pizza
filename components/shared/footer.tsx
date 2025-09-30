@@ -2,7 +2,6 @@ import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Container } from '../ui/container';
 import { NavigationLinks } from './navigation-links';
-import Link from 'next/link';
 import { NavigationApps } from './navigation-apps';
 import { FranchiseStats } from './franchise-stats';
 import { LegalInfo } from './legal-info';

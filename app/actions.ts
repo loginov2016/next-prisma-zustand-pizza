@@ -9,7 +9,6 @@ import { sendEmail } from "@/lib/send-email";
 import { prisma } from "@/prisma/prisma-client";
 import { OrderStatus, Prisma } from "@prisma/client";
 import { hashSync } from "bcrypt";
-import { create } from "domain";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 

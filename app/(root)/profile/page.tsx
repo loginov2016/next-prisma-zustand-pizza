@@ -1,5 +1,3 @@
-//'use client';
-
 import { ProfileForm } from '@/components/shared';
 import { getUserSession } from '@/lib/get-user-session';
 import { cn } from '@/lib/utils';
