@@ -10,10 +10,12 @@ import { createOrder } from "@/app/actions";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { Api } from "@/services/api-client";
+import { useRouter } from "next/navigation";
 
 interface ICheckoutPageProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
 
 export default function CheckoutPage() {
+    const router = useRouter();
     const [buttonLoading, setButtonLoading] = React.useState(false);
     const { totalAmount, cartItems, removeCartItem, onClickCountButton, loading } = useGetCart();
     const { data: session } = useSession();
@@ -44,6 +46,12 @@ export default function CheckoutPage() {
             fetchUserInfo()
         }
     }, [session]);
+
+    useEffect(() => {
+        if (cartItems.length === 0) {
+            router.push('/');
+        }
+    }, [cartItems, router]);
 
     const onSubmitForm: SubmitHandler<TCheckoutFormSchema> = async (data) => {
         //console.log(data);
