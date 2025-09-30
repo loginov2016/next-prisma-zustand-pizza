@@ -15,7 +15,7 @@ interface IFooterProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>
 
 export const Footer: React.FC<IFooterProps> = ({ className }) => {
   return (
-    <footer className={cn('border border-t bg-[#181818] py-10 text-[rgb(255,255,255)]', className)}>
+    <footer className={cn('border border-t bg-[#181818] p-10 text-[rgb(255,255,255)]', className)}>
       <Container>
         <div className="flex flex-col flex-nowrap gap-14 w-full">
           <div className='flex flex-grow-1 flex-shrink-1 gap-10'>
