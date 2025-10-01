@@ -1,8 +1,10 @@
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 
-interface ILegalInfoProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface ILegalInfoProps {
+  className?: string;
+}
 
 export const LegalInfo: React.FC<ILegalInfoProps> = ({ className }) => {
   return (

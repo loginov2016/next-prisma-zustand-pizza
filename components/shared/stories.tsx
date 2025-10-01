@@ -5,11 +5,13 @@ import { cn } from '@/lib/utils';
 import { Api } from '@/services/api-client';
 import { TStory } from '@/services/stories';
 import ReactStories from 'react-insta-stories';
-import React, { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Container } from '../ui';
 import { X } from 'lucide-react';
 
-interface IStoriesProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface IStoriesProps {
+    className?: string;
+}
 
 export const Stories: React.FC<IStoriesProps> = ({ className }) => {
     const [stories, setStories] = React.useState<TStory[]>([]);

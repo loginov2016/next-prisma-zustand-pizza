@@ -1,7 +1,9 @@
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 
-interface IOrganizationInfoProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface IOrganizationInfoProps {
+  className?: string;
+}
 
 export const OrganizationInfo: React.FC<IOrganizationInfoProps> = ({ className }) => {
   return (

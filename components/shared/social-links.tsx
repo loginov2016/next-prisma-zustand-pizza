@@ -1,8 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 
-interface ISocialNetworkProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface ISocialNetworkProps {
+  className?: string;
+}
 
 export const SocialLinks: React.FC<ISocialNetworkProps> = ({ className }) => {
   return (

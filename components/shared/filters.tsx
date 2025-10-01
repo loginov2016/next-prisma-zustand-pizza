@@ -1,16 +1,15 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
+import React from 'react';
 import { Title } from './title';
 import { Input } from '../ui';
 import { RangeSlider } from './range-slider';
 import { FilterCheckboxGroup } from './filter-checkbox-group';
 import { useFilter, useIngredients, useQueryString } from '@/hooks';
-import { useSearchParams } from 'next/navigation';
 
-interface IFiltersProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  
+interface IFiltersProps {
+  className?: string;
 }
 
 interface IFilterPriceProps {
@@ -25,8 +24,6 @@ export interface IFilterQueryString extends IFilterPriceProps {
 }
 
 export const Filters: React.FC<IFiltersProps> = ({ className }) => {
-  //console.log('Сработал компонент Filters');
-  //const searchParams = useSearchParams();
   
   const { ingredients, loading } = useIngredients();
   const filters = useFilter();

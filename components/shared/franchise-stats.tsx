@@ -1,7 +1,9 @@
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 
-interface IFranchiseStatsProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface IFranchiseStatsProps {
+  className?: string;
+}
 
 export const FranchiseStats: React.FC<IFranchiseStatsProps> = ({ className }) => {
   return (

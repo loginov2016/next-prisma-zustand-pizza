@@ -2,7 +2,7 @@
 
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { CheckoutCartBlock, CheckoutDeliveryAddressBlock, CheckoutPersonalDataBlock,  CheckoutSidebar, checkoutFormSchema, type TCheckoutFormSchema, Container, Title } from '@/components/shared';
 import { useGetCart } from '@/hooks';
 import { cn } from "@/lib/utils";
@@ -12,7 +12,6 @@ import { useSession } from "next-auth/react";
 import { Api } from "@/services/api-client";
 import { useRouter } from "next/navigation";
 
-interface ICheckoutPageProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
 
 export default function CheckoutPage() {
     const router = useRouter();
@@ -45,7 +44,7 @@ export default function CheckoutPage() {
         if ( session ) {
             fetchUserInfo()
         }
-    }, [session]);
+    }, [session, form]); // Поставил зависимость form
 
     useEffect(() => {
         if (cartItems.length === 0) {

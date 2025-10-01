@@ -1,4 +1,3 @@
-import { Toaster } from 'react-hot-toast';
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { Providers } from '@/components/shared';

@@ -1,9 +1,9 @@
 import { InfoBlock } from '@/components/shared';
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 
-interface ISuccessPageProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
-  
+interface ISuccessPageProps {
+  className?: string;
 }
 
 export default function SuccessPage({ className }: ISuccessPageProps) {

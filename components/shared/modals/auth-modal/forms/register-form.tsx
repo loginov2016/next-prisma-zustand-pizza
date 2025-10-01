@@ -15,7 +15,7 @@ interface IRegisterFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivEl
     onClickLogin?: VoidFunction;
 }
 
-export const RegisterForm: React.FC<IRegisterFormProps> = ({ onClose, onClickLogin, className }) => {
+export const RegisterForm: React.FC<IRegisterFormProps> = ({ onClose }) => {
     const form = useForm<TRegisterFormSchema>({
         resolver: zodResolver(registerFormSchema),
         defaultValues: {

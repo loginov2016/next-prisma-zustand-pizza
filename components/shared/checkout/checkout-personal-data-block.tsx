@@ -1,11 +1,13 @@
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 import { WhiteBlock } from '../white-block';
 import { FormInput } from '../form';
 
 
 
-interface ICheckoutPersonalDataBlockProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface ICheckoutPersonalDataBlockProps {
+    className?: string;
+}
 
 export const CheckoutPersonalDataBlock: React.FC<ICheckoutPersonalDataBlockProps> = ({ className }) => {
     

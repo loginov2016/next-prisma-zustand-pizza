@@ -6,11 +6,11 @@ import { Api } from '@/services/api-client';
 import { Product } from '@prisma/client';
 import { Search } from 'lucide-react';
 import Link from 'next/link';
-import React, { DetailedHTMLProps, HTMLAttributes, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useClickAway, useDebounce } from 'react-use';
 
-interface ISearchInputProps extends DetailedHTMLProps< HTMLAttributes<HTMLInputElement>, HTMLInputElement > {
-  
+interface ISearchInputProps {
+    className?: string;
 }
 
 export const SearchInput: React.FC<ISearchInputProps> = ({ className }) => {

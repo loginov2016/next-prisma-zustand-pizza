@@ -15,7 +15,7 @@ interface IProfileButtonProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivE
 }
 
 export const ProfileButton: React.FC<IProfileButtonProps> = ({ onClickSignIn, className }) => {
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     //const session = getUserSession();
 
 

@@ -21,7 +21,7 @@ interface ILoginFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivEleme
     onClose?: () => void;
 }
 
-export const LoginForm: React.FC<ILoginFormProps> = ({ onClose, className }) => {
+export const LoginForm: React.FC<ILoginFormProps> = ({ onClose }) => {
     const form = useForm<TLoginFormSchema>({
         resolver: zodResolver(loginFormSchema),
         defaultValues: {

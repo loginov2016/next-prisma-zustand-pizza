@@ -1,14 +1,14 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 import { Button } from '../ui';
 import { ArrowRight, ShoppingCart } from 'lucide-react';
 import { CartDrawer } from './cart-drawer';
 import { useCartStore } from '@/store';
 
-interface ICartButtonProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
-  
+interface ICartButtonProps  {
+  className?: string;
 }
 
 /**

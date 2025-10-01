@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface ICheckoutItemDetailsProps  {
     title?: ReactNode;

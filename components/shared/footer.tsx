@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 import { Container } from '../ui/container';
 import { NavigationLinks } from './navigation-links';
 import { NavigationApps } from './navigation-apps';
@@ -8,8 +8,8 @@ import { LegalInfo } from './legal-info';
 import { SocialLinks } from './social-links';
 import { OrganizationInfo } from './organization-info';
 
-interface IFooterProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {
-  
+interface IFooterProps {
+  className?: string;
 }
 
 export const Footer: React.FC<IFooterProps> = ({ className }) => {

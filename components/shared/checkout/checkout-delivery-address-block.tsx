@@ -1,14 +1,16 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 import { WhiteBlock } from '../white-block';
 import { FormTextarea } from '../form';
 import { AddressInput } from '../address-input';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ErrorText } from '../error-text';
 
-interface ICheckoutDeliveryAddressBlockProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface ICheckoutDeliveryAddressBlockProps {
+  className?: string;
+}
 
 export const CheckoutDeliveryAddressBlock: React.FC<ICheckoutDeliveryAddressBlockProps> = ({ className }) => {
   const { control } = useFormContext();

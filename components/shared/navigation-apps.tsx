@@ -1,8 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React from 'react';
 
-interface INavigationAppsProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface INavigationAppsProps {
+  className?: string;
+}
 
 export const NavigationApps: React.FC<INavigationAppsProps> = ({ className }) => {
   return (

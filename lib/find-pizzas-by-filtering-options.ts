@@ -14,8 +14,7 @@ const DEFAULT_MIN_PRICE = 0;
 const DEFAULT_MAX_PRICE = 1000;
 
 export const findPizzasByFilteringOptions = async (params: IGetSearchParams) => {
-    const { query, sortBy, pizzaSizes, pizzaTypes, ingredients, priceFrom, priceTo } = params;
-    //console.log({query, sortBy, pizzaSizes, pizzaTypes, ingredients, priceFrom, priceTo});
+    const { pizzaSizes, pizzaTypes, ingredients, priceFrom, priceTo } = params;
     const arrPizzaSizes    = pizzaSizes?.split(',').map(Number);
     const arrPizzaTypes    = pizzaTypes?.split(',').map(Number);
     const arrIngredientIds = ingredients?.split(',').map(Number);

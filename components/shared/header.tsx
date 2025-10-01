@@ -41,7 +41,7 @@ export const Header: React.FC<IHeaderProps> = ({ hasSearch = true, hasCartButton
       }, 1000);
     }
 
-  }, []);
+  }, [router, searchParams]); // Поставил зависимости router, searchParams
 
 
   return (

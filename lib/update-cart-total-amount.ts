@@ -1,7 +1,6 @@
 import { prisma } from "@/prisma/prisma-client";
-import { Api } from "@/services/api-client";
-import { ICartDTO } from "@/services/dto/cart.dto";
 import { getCartItemTotalPrice } from "./get-cart-item-total-price";
+
 
 export const updateCartTotalAmount = async (token: string) => {
     // Найти корзину по токену пользователя.

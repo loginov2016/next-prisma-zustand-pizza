@@ -1,9 +1,10 @@
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { Title } from './title';
+import React from 'react';
 import Link from 'next/link';
 
-interface INavigationLinksProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {}
+interface INavigationLinksProps {
+  className?: string;
+}
 
 export const NavigationLinks: React.FC<INavigationLinksProps> = ({ className }) => {
   return (

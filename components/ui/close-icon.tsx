@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import React, { DetailedHTMLProps, SVGProps } from 'react';
 
 interface ICloseIconProps extends DetailedHTMLProps< SVGProps<SVGSVGElement>, SVGSVGElement > {
-  
+    className?: string;
 }
 
 export const CloseIcon: React.FC<ICloseIconProps> = ({ className, width=24, height=24, stroke="currentColor" }) => {

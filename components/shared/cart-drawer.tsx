@@ -1,12 +1,11 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -23,8 +22,9 @@ import { Title } from './title';
 import { useGetCart } from '@/hooks';
 
 
-
-interface ICartDrawerProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+interface ICartDrawerProps  {
+    children: React.ReactNode;
+}
 
 export const CartDrawer: React.FC<ICartDrawerProps> = ({ children }) => {
     const { totalAmount, cartItems, removeCartItem, onClickCountButton } = useGetCart();

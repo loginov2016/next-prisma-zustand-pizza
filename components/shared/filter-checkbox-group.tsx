@@ -29,8 +29,7 @@ export const FilterCheckboxGroup: React.FC<IFilterCheckboxGroupProps> = ({
     onClickCheckbox,
     onClearFilterCheckboxGroup,
     selectedFilterCheckbox,
-    name,
-    defaultValues, 
+    name, 
 }) => {
   const [showAllCheckbox, setShowAllCheckbox] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState<string>('');

@@ -4,7 +4,7 @@ import { CartItemDetailsImage, CartItemDetailsPrice, CartItemInfo } from './cart
 import type { ICartItemProps } from './cart-item-details/cart-item-details.types';
 import { CountButton } from './count-button';
 import { Trash2Icon } from 'lucide-react';
-//import * as CartItem from './cart-item-details';
+
 
 
 interface ICartDrawerItemProps extends ICartItemProps {
@@ -13,8 +13,7 @@ interface ICartDrawerItemProps extends ICartItemProps {
   className?: string;
 }
 
-export const CartDrawerItem: React.FC<ICartDrawerItemProps> = ({ 
-  id,
+export const CartDrawerItem: React.FC<ICartDrawerItemProps> = ({
   imageUrl,
   details,
   name,
