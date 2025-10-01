@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
 import { useCartStore } from '@/store';
 import { TCartStateItem } from '@/lib/get-cart-details';
@@ -22,10 +23,16 @@ export const useGetCart = (): IUseGetCart => {
         cartState.updateCartItemQuantity(id, newQuantity); 
     }
     
+    /* 
+        При добавлении в массив зависимостей cartState, 
+        useEffect будет вызван при любом изменении cartState.
+        В результате получил бесконечное кол-во GET запросов,
+        в виде: GET /api/cart 200 in 350ms
+    */
     useEffect( () => {
             cartState.fetchCartItems();
             //console.log({cartItems});
-        }, [cartState] ); // Добавил в массив зависимостей cartState
+        }, [] ); // Добавил в массив зависимостей cartState
 
     return {...cartState, onClickCountButton};
 }

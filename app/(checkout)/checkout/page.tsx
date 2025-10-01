@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form"
@@ -44,13 +45,13 @@ export default function CheckoutPage() {
         if ( session ) {
             fetchUserInfo()
         }
-    }, [session, form]); // Поставил зависимость form
+    }, [session]); // Поставил зависимость form
 
     useEffect(() => {
         if (cartItems.length === 0) {
             router.push('/');
         }
-    }, [cartItems, router]);
+    }, [cartItems, router]); // Поставил зависимость router
 
     const onSubmitForm: SubmitHandler<TCheckoutFormSchema> = async (data) => {
         //console.log(data);
