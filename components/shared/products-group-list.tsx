@@ -17,11 +17,11 @@ interface IProductsGroupListProps {
 
 export const ProductsGroupList: React.FC<IProductsGroupListProps> = ({ title, products, listClassName, categoryId, className }) => {
   const setActiveCategoryId = useCategoryStore( state => state.setActiveId );
-  const intersectionRef = React.useRef(null);
+  const intersectionRef = React.useRef<HTMLDivElement>(document.createElement('div'));
   const intersection = useIntersection(intersectionRef, {
     root: null,
     rootMargin: '10px',
-    threshold: 0.6,
+    threshold: 0.4,
   });
 
   React.useEffect( () => {
