@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
 
         await prisma.user.update({
             where: {
-                id: verificationCode.userId,
+                id: verificationCode.userId || undefined,
             },
             data: {
                 verified: new Date(),
