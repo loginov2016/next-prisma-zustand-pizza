@@ -25,7 +25,7 @@ export const useGetCart = (): IUseGetCart => {
     useEffect( () => {
             cartState.fetchCartItems();
             //console.log({cartItems});
-        }, []);
+        }, [cartState] ); // Добавил в массив зависимостей cartState
 
     return {...cartState, onClickCountButton};
 }

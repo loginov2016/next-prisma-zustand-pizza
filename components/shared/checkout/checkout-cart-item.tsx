@@ -5,12 +5,11 @@ import { cn } from '@/lib/utils';
 import { X } from 'lucide-react';
 import { ICartItemProps } from '../cart-item-details/cart-item-details.types';
 import { CartItemDetailsCountButton, CartItemDetailsImage, CartItemDetailsPrice, CartItemInfo } from '../cart-item-details';
-import { IUseGetCart } from '@/hooks';
 
 
 interface ICheckoutCartItemProps extends ICartItemProps {
-  onClickCountButton?: IUseGetCart['onClickCountButton'];
-  onClickRemoveCartItem?: IUseGetCart['removeCartItem'];
+  onClickCountButton?: (type: 'plus' | 'minus') => void;
+  onClickRemoveCartItem?: () => void;
   className?: string;
 }
 
