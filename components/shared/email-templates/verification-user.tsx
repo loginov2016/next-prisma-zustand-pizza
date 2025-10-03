@@ -9,7 +9,7 @@ export function VerificationUser({ code }: IVerificationCodeProps) {
     <div>
         <p>Код подтверждения: <h2>{code}</h2></p>
         <p> 
-            Перейдите <a href={`http://localhost:3000/api/auth/verify?code=${code}`}>по этой ссылке</a> для подтверждения вашего аккаунта.
+            Перейдите <a href={`${process.env.DOMAIN_HOST}/api/auth/verify?code=${code}`}>по этой ссылке</a> для подтверждения вашего аккаунта.
         </p>
     </div>
   );
