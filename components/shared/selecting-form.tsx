@@ -13,7 +13,6 @@ interface ISelectingFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivE
 }
 
 export const SelectingForm: React.FC<ISelectingFormProps> = ({ product, onCloseModalWindow }) => {
-    //const router = useRouter();
     const addCartItem               = useCartStore( state => state.addCartItem);
     const loading                   = useCartStore( state => state.loading);
     const isPizzaForm               = product.categoryId === 1;

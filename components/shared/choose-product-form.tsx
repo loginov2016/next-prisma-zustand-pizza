@@ -31,7 +31,6 @@ export const ChooseProductForm: React.FC<IChooseProductFormProps> = ({
                 text={name}
                 size={'md'} 
             />
-            {/* <p className="text-gray-400">{textDetails}</p> */}
 
             <Button
                 className='h-[55px] px-10 text-base rounded-[18px] w-full mt-10'

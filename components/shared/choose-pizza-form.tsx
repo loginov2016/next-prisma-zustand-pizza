@@ -38,9 +38,6 @@ export const ChoosePizzaForm: React.FC<IChoosePizzaFormProps> = ({
     onSubmitAddProductsToCart,
     className,
 }) => {
-    //console.log(ingredients);
-    //console.log(productVariations); // [{id: 1, price: 388, size: 20, pizzaType: 1, productId: 18}, {id: 2, price: 510, size: 30, pizzaType: 2, productId: 18}, {id: 3, price: 466, size: 40, pizzaType: 2, productId: 18}]
-    
     const {
         size,
         type,

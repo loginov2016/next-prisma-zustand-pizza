@@ -29,8 +29,6 @@ interface ICartDrawerProps  {
 export const CartDrawer: React.FC<ICartDrawerProps> = ({ children }) => {
     const { totalAmount, cartItems, removeCartItem, onClickCountButton } = useGetCart();
     const [ buttonLoading, setButtonLoading ] = useState(false);
-    
-    //console.log({cartItems});
 
     return (
         <Sheet>

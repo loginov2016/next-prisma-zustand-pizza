@@ -18,8 +18,6 @@ export const ProfileButton: React.FC<IProfileButtonProps> = ({ onClickSignIn, cl
     const { data: session } = useSession();
     //const session = getUserSession();
 
-
-
     /* const loadingButton = (status: string) => {
         if (status === 'loading') {
             return true;
