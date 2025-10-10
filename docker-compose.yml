@@ -1,4 +1,24 @@
 services:
+  # Frontend
+  frontend:
+    container_name: super-pizza-inetshop
+    image: loginovav/super-pizza-inetshop
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on: 
+      - postgres
+    environment:
+      DATABASE_URL: postgres://admin:admin@postgres_db:5432/postgres_db
+      DATABASE_HOST: postgres
+      DATABASE_TYPE: postgres
+      DATABASE_NAME: postgres_db
+      DATABASE_USER: admin
+      DATABASE_PASSWORD: admin
+      DATABASE_PORT: 5432
+    networks: [ "postgres_db-network" ]
+    links:
+      - postgres:postgres_db
   # PostgreSQL
   postgres:
     container_name: postgres_db

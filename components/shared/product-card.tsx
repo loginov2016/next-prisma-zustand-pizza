@@ -20,8 +20,8 @@ interface IProductCardProps {
 export const ProductCard: React.FC<IProductCardProps> = ({ id, name, price, imageUrl, ingredients, className }) => {
   // hover:-translate-y-3
   return (
-    <div className={cn('flex flex-col justify-between rounded-lg transition duration-300 hover:shadow-[0px_5px_20px_rgba(255,105,0,0.4)] hover:scale-105', className)}>
-      <Link href={`/product/${id}`} className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
+    <div className={cn('flex flex-col justify-between rounded-lg', className)}>
+      <Link href={`/product/${id}`} className="flex justify-center p-6 bg-secondary rounded-lg h-[260px] transition duration-300 hover:shadow-[0px_5px_20px_rgba(255,105,0,0.4)] hover:scale-105">
         <img className="w-[215px] h-[215px]" src={imageUrl} alt={name} />
       </Link>
       <Title text={name} size='sm' className='mb-1 mt-3 font-bold' />
@@ -33,7 +33,7 @@ export const ProductCard: React.FC<IProductCardProps> = ({ id, name, price, imag
           от <b>{price} ₽</b>
         </span>
         <Link href={`/product/${id}`}>
-          <Button variant='secondary' className="text-base font-bold">
+          <Button variant='secondary' className="text-base font-bold cursor-pointer">
             <Plus size={20} className="mr-1" />  
             В корзину
             <ShoppingCart />
