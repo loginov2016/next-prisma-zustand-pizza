@@ -14,4 +14,5 @@ echo "Database is up, running prisma db seed"
 npx prisma db seed
 
 # Запускаем приложение
+echo "Database is ready, starting the app в development mode!"
 npm run dev
