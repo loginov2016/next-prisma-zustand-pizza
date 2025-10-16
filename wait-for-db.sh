@@ -6,13 +6,14 @@ until nc -z -v -w30 postgres_db 5432; do
   sleep 1
 done
 
-# Когда база данных доступна, выполняем миграции и запускаем приложение
+# Когда база данных доступна, выполняем миграции
 echo "Database is up, running prisma db push"
 npx prisma db push
 
+# Когда база данных доступна, наполняем базу данных начальными данными
 echo "Database is up, running prisma db seed"
 npx prisma db seed
 
 # Запускаем приложение
-echo "Database is ready, starting the app в development mode!"
-npm run dev
+echo "Build is ready, starting run start!"
+npm run start

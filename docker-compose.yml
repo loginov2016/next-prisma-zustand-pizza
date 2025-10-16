@@ -1,8 +1,8 @@
 services:
   # Frontend
   frontend:
-    container_name: super-pizza-inetshop
-    image: loginovav/super-pizza-inetshop
+    container_name: super-pizza-inetshop-prod
+    image: loginovav/super-pizza-inetshop-prod
     restart: always
     ports:
       - "3000:3000"
