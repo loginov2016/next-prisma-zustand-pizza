@@ -31,7 +31,7 @@ export const ProfileButton: React.FC<IProfileButtonProps> = ({ onClickSignIn, cl
             {
                 !session ? (
                     <Button
-                        className='flex items-center gap-1'
+                        className='flex items-center gap-1 hover:cursor-pointer'
                         variant="outline"
                         onClick={onClickSignIn}
                     >

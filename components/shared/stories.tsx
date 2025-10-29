@@ -38,7 +38,7 @@ export const Stories: React.FC<IStoriesProps> = ({ className }) => {
 
     return (
     <>
-        <Container className={cn('flex items-center justify-between gap-2 mt-10', className)}>
+        <Container className={cn('flex max-sm:hidden items-center justify-between gap-2 mt-10', className)}>
             {
                 stories.length === 0 && (
                     [...Array(6)].map((_, index) => (

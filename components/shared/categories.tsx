@@ -14,12 +14,12 @@ export const Categories: React.FC<ICategoriesProps> = ({ items, className }) => 
     const activeCategoryId = useCategoryStore( state => state.activeId );
     
     return (
-        <div className={cn('inline-flex bg-gray-50 rounded-2xl gap-1 p-1', className)}>
+        <div className={cn('inline-flex max-sm:flex-col bg-gray-50 rounded-2xl gap-1 p-1', className)}>
             {
                 items.map( (category) => (
                     <Link 
                         href={`/#${category.name}`} 
-                        className={cn('flex items-center font-bold h-11 rounded-2xl px-5', 
+                        className={cn('flex items-center max-sm:justify-center font-bold h-11 rounded-2xl px-5', 
                         {'bg-white shadow-md shadow-gray-200 text-primary': activeCategoryId === category.id })} 
                         key={category.id}
                     >

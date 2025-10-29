@@ -1,6 +1,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@utility auto-fill-*{
+  grid-template-columns: repeat(auto-fill, minmax(min(--value([*]), 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(--value(--text-*), 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--spacing)* --value(integer), 100%), 1fr));
+}
+
+@utility auto-fit-*{
+  grid-template-columns: repeat(auto-fit, minmax(min(--value([*]), 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(--value(--text-*), 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--spacing)* --value(integer), 100%), 1fr));
+}
+
 @custom-variant dark (&:is(.dark *));
 
 html {

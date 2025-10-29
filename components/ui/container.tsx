@@ -8,7 +8,7 @@ interface IContainerProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivEleme
 
 export const Container: React.FC<React.PropsWithChildren<IContainerProps>> = ({ className, children }) => {
   return (
-    <div className={cn('mx-auto max-w-[1280px]', className)}>
+    <div className={cn('mx-auto min-w-[320px] max-w-[1280px]', className)}>
       {children}
     </div>
   );

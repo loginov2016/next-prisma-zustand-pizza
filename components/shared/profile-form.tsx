@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
 import { Button, Container } from '../ui';
 import { User } from '@prisma/client';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -18,6 +18,7 @@ interface IProfileFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivEle
 }
 
 export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) => {
+    const [buttonSignOutLoading, setButtonSignOutLoading] = useState<boolean>(false);
 
     const form = useForm({
             resolver: zodResolver(registerFormSchema),
@@ -45,10 +46,12 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) =>
         }
     };
 
-    const onClickSignOut = () => {
-        signOut({
+    const onClickSignOut = async () => {
+        setButtonSignOutLoading(true);
+        await signOut({
             callbackUrl: '/',
         });
+        setButtonSignOutLoading(false);
     }
 
     return (
@@ -68,10 +71,11 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) =>
                 Сохранить
                 </Button>
                 <Button
+                    loading={buttonSignOutLoading}
                     onClick={onClickSignOut}
                     variant="secondary"
                     disabled={form.formState.isSubmitting} 
-                    className="text-base mt-3" 
+                    className="text-base mt-3 hover:cursor-pointer" 
                     type="button"
                 >
                 Выйти из профиля
@@ -81,4 +85,3 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) =>
     </Container>
     );
 }
-

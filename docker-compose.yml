@@ -32,7 +32,7 @@ services:
       - "5432:5432"
     networks: [ "postgres_db-network" ]
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
   # Adminer
   adminer:
     container_name: adminer

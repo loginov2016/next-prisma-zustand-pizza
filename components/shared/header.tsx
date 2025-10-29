@@ -43,12 +43,12 @@ export const Header: React.FC<IHeaderProps> = ({ hasSearch = true, hasCartButton
 
   }, [router, searchParams]); // Поставил зависимости router, searchParams
 
-
+  // flex items-center justify-between py-12
   return (
     <header className={cn('border-b', className)}>
-      <Container className='flex items-center justify-between py-12'>
+      <Container className='flex max-sm:flex-col max-sm:py-3 items-center justify-between py-12'>
         {/* Левая часть Header*/}
-        <Link href='/'>
+        <Link href='/' className='max-sm:flex max-sm:w-[100%] max-sm:justify-center max-sm:my-3'>
           <div className='flex items-center gap-4'>
             <Image src="/logo.png" alt="Logo" width={35} height={35} />
             <div>
@@ -59,14 +59,14 @@ export const Header: React.FC<IHeaderProps> = ({ hasSearch = true, hasCartButton
         </Link>
         
         { hasSearch && (
-            <div className="mx-10 flex-1">
+            <div className="mx-10 flex-1 max-sm:my-3 max-sm:justify-stretch">
               <SearchInput />
             </div>
           )
         }
         
         {/* Правая часть Header */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center max-sm:my-3 gap-3">
             <AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)} />
             <ProfileButton onClickSignIn={() => setOpenAuthModal(true)} />
             { hasCartButton && <CartButton />}

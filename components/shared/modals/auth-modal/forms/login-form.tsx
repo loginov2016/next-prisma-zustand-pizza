@@ -1,4 +1,4 @@
-'use client';
+//'use client';
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -31,7 +31,6 @@ export const LoginForm: React.FC<ILoginFormProps> = ({ onClose }) => {
     });
 
     const onSubmit = async (data: TLoginFormSchema) => {
-        //console.log(data);
         try {
             const response = await signIn('credentials', {
                 ...data,
@@ -71,7 +70,6 @@ export const LoginForm: React.FC<ILoginFormProps> = ({ onClose }) => {
                     >
                         Войти
                     </Button>
-                
             </form>    
         </FormProvider>
     );
