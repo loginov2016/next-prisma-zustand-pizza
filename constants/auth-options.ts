@@ -6,6 +6,14 @@ import { prisma } from "@/prisma/prisma-client";
 import { compare, hashSync } from "bcrypt";
 import { UserRole } from "@prisma/client";
 
+/* 
+  GitHub недавно внедрил поддержку стандарта RFC 9207 для идентификации эмитента (issuer) в OAuth-callback.
+  Теперь GitHub в ответе на авторизацию отправляет дополнительный параметр issuer, который содержит URL-адрес
+  конечной точки авторизации GitHub.
+  Чтобы исправить ошибку(не проходит авторизация через github), нужно добавить свойство issuer в конфигурацию 
+  GitHub-провайдера со значением https://github.com/login/oauth.
+*/
+
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -15,6 +23,7 @@ export const authOptions: NextAuthOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID || '',
       clientSecret: process.env.GITHUB_SECRET || '',
+      issuer: 'https://github.com/login/oauth', // <=== Чтобы исправить ошибку добавил эту строчку.
       profile(profile) {
         return {
           id: profile.id,

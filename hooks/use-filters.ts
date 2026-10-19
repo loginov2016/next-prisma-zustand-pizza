@@ -1,8 +1,7 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useState } from "react";
 import { useSet } from "react-use";
 import { IFilterPriceProps } from "./use-query-string";
 import { useSearchQueryParams } from "./use-search-query-params";
-import { useRouter, useSearchParams } from "next/navigation";
 
 interface IFilters {
   selectedIngredients:               Set<string>;
@@ -43,7 +42,7 @@ export const useFilter = (): IFilters => {
     setFilterPrice({priceFrom: 0, priceTo: 0});
   }
 
-  //console.log('filterPrices', filterPrices);
+  //console.log({filterPrices});
 
   return {
     selectedIngredients,

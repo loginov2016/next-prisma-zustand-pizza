@@ -1,4 +1,4 @@
-import { ProfileForm } from '@/components/shared';
+import { ProfileForm, ProfileFormDeleteUser } from '@/components/shared';
 import { getUserSession } from '@/lib/get-user-session';
 import { prisma } from '@/prisma/prisma-client';
 import { redirect } from 'next/navigation';
@@ -18,7 +18,10 @@ export default async function ProfilePage() {
     }
 
     return (
-        <ProfileForm data={user} />   
+        <div>
+            <ProfileForm data={user} />
+            <ProfileFormDeleteUser /> 
+        </div>
     );
 }
 

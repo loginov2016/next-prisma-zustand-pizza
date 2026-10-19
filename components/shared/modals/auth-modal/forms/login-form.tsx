@@ -22,6 +22,7 @@ interface ILoginFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivEleme
 }
 
 export const LoginForm: React.FC<ILoginFormProps> = ({ onClose }) => {
+
     const form = useForm<TLoginFormSchema>({
         resolver: zodResolver(loginFormSchema),
         defaultValues: {
@@ -39,15 +40,15 @@ export const LoginForm: React.FC<ILoginFormProps> = ({ onClose }) => {
 
             if ( !response?.ok ) {
                 throw new Error();
-                //return toast.error('Не удалось войти в аккаунт', { icon: '❌' });
+                toast.error('Не удалось войти в профиль пользователя', { icon: '❌' });
             }
 
-            toast.success('Вы успешно вошли в аккаунт 📝', { icon: '✅' });
+            toast.success(`Вы успешно вошли в профиль пользователя📝`, { icon: '✅' });
             onClose?.();
             
         } catch (error) {
             console.error('Error [Login Form]', error);
-            toast.error('Не удалось войти в аккаунт', { icon: '❌' });
+            toast.error(`Не удалось войти в профиль пользователя`, { icon: '❌' });
         }
     };
 

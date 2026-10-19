@@ -8,7 +8,7 @@ import { getUserSession } from "@/lib/get-user-session";
 import { sendEmail } from "@/lib/send-email";
 import { prisma } from "@/prisma/prisma-client";
 import { OrderStatus, Prisma } from "@prisma/client";
-import { hashSync } from "bcrypt";
+import { compareSync, hashSync } from "bcrypt";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 
@@ -152,6 +152,40 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
     } catch (error) {
         console.error('[Update user info] Server Error', error);
         throw new Error('[Update user info] Server Error');
+    }
+}
+
+export async function deleteUserInfo(currentPassword: string) {
+    try {
+        const currentUser = await getUserSession();
+
+        if ( !currentUser ) {
+            throw new Error('Пользователь не найден!');
+        }
+
+        const findUser = await prisma.user.findFirst({
+            where: {
+                id: Number(currentUser.id),
+            }
+        });
+
+        if ( !findUser ) {
+            throw new Error('Пользователь в Базе данных не найден!');
+        }
+
+        if ( !compareSync(currentPassword, findUser.password) ) {
+            throw new Error('Неверный пароль!');
+        }
+
+        await prisma.user.delete({
+            where: {
+                id: Number(currentUser.id),
+            },
+        });
+        
+    } catch (error) {
+        console.error('[Update user info] Server Error', error);
+        throw new Error('[Delete user info] Server Error');
     }
 }
 

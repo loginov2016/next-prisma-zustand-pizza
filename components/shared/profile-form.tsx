@@ -8,7 +8,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerFormSchema, TRegisterFormSchema } from './modals/auth-modal/forms';
 import toast from 'react-hot-toast';
-import { signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { Title } from './title';
 import { FormInput } from './form';
 import { updateUserInfo } from '@/app/actions';
@@ -18,7 +18,7 @@ interface IProfileFormProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivEle
 }
 
 export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) => {
-    const [buttonSignOutLoading, setButtonSignOutLoading] = useState<boolean>(false);
+    const { data: session } = useSession();
 
     const form = useForm({
             resolver: zodResolver(registerFormSchema),
@@ -31,6 +31,8 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) =>
         }
     );
 
+    
+
     const onSubmit = async (data: TRegisterFormSchema) => {
         try {
             await updateUserInfo({
@@ -39,24 +41,16 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) =>
                 password: data.password,
             });
 
-            toast.success('Данные обновлены', { icon: '✅' });
+            toast.success(`Данные пользователя ${session?.user?.name} успешно обновлены`, { icon: '✅' });
         } catch (error) {
             console.log('[Profile Form Page onSubmit] Error', error);
-            return toast.error('Ошибка при обновлении данных', { icon: '❌' });
+            return toast.error('Ошибка при обновлении данных пользователя ${session?.user?.name}', { icon: '❌' });
         }
     };
 
-    const onClickSignOut = async () => {
-        setButtonSignOutLoading(true);
-        await signOut({
-            callbackUrl: '/',
-        });
-        setButtonSignOutLoading(false);
-    }
-
     return (
-    <Container className={cn('my-10 flex flex-col items-center justify-center', className)}>
-        <Title text={`Личные данные пользователя / ${data.fullName}`} size="md" className="font-bold" />
+    <Container className={cn('mt-10 flex flex-col items-center justify-center', className)}>
+        <Title text={`Личный профиль пользователя: ${session?.user?.name}`} size="md" className="font-bold" />
         <FormProvider {...form} >
             <form className="flex flex-col gap-5 w-96 mt-10" onSubmit={form.handleSubmit(onSubmit)}>
                 <FormInput name='fullName' label='Полное имя' required />
@@ -68,17 +62,7 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) =>
                     className="text-base mt-3" 
                     type="submit"
                 >
-                Сохранить
-                </Button>
-                <Button
-                    loading={buttonSignOutLoading}
-                    onClick={onClickSignOut}
-                    variant="secondary"
-                    disabled={form.formState.isSubmitting} 
-                    className="text-base mt-3 hover:cursor-pointer" 
-                    type="button"
-                >
-                Выйти из профиля
+                    Сохранить профиль
                 </Button>
             </form>
         </FormProvider>

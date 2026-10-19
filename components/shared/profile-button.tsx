@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
-import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, use, useEffect } from 'react';
 import { Button } from '../ui';
 import { CircleUser, User } from 'lucide-react';
 import Link from 'next/link';
@@ -18,14 +18,6 @@ export const ProfileButton: React.FC<IProfileButtonProps> = ({ onClickSignIn, cl
     const { data: session } = useSession();
     //const session = getUserSession();
 
-    /* const loadingButton = (status: string) => {
-        if (status === 'loading') {
-            return true;
-        } else {
-            return undefined;
-        }
-    } */
-
     return (
         <div className={cn('', className)}>
             {
@@ -36,7 +28,7 @@ export const ProfileButton: React.FC<IProfileButtonProps> = ({ onClickSignIn, cl
                         onClick={onClickSignIn}
                     >
                         <User size={16} />
-                        Войти
+                        Войти
                     </Button>
                 ) : (
                     <Link href="/profile">

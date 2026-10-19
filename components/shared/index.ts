@@ -44,6 +44,8 @@ export { FormInput, FormTextarea                                   } from './for
 export { ChooseProductModal, AuthModal                             } from './modals';
 export { Providers                                                 } from './providers';
 export { ProfileButton                                             } from './profile-button';
+export { ProfileSignOutButton                                      } from './profile-sign-out-button';
 export { InfoBlock                                                 } from './info-block';
 export { ProfileForm                                               } from './profile-form';
+export { ProfileFormDeleteUser                                     } from './profile-form-delete-user';
 export { Stories                                                   } from './stories';

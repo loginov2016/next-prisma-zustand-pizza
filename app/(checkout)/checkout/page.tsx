@@ -40,8 +40,6 @@ export default function CheckoutPage() {
             form.setValue('lastName', lastName);
             form.setValue('email', data.email);
         }
-
-
         if ( session ) {
             fetchUserInfo()
         }
@@ -59,9 +57,7 @@ export default function CheckoutPage() {
         try {
             setButtonLoading(true);
             const url = await createOrder(data);
-
             toast.success('Заказ успешно оформлен! Переход на оплату...', {icon: '✅'});
-
             if (url) {
                 window.location.href = url;
             }

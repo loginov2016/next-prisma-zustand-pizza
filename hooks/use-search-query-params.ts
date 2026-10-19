@@ -8,6 +8,7 @@ export interface IFilterSearchParams extends IFilterPriceProps {
   ingredients: string;
 }
 
+
 export const useSearchQueryParams = () => {
   //console.log('Сработал хук useSearchQueryParams');
   const searchParams = useSearchParams() as unknown as Map<keyof IFilterSearchParams, string>;

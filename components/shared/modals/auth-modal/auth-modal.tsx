@@ -7,6 +7,7 @@ import React, { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
 import { Button } from '@/components/ui';
 import { signIn } from 'next-auth/react';
 import { LoginForm, RegisterForm } from './forms';
+import toast from 'react-hot-toast';
 
 
 interface IAuthModalProps extends DetailedHTMLProps< HTMLAttributes<HTMLDivElement>, HTMLDivElement > {

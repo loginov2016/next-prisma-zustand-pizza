@@ -12,11 +12,17 @@ export const registerFormSchema = loginFormSchema.merge(
         fullName: z.string().min(5, { message: "Введите имя и фамилию, содержащие не менее 5 символов" }),
         confirmPassword: passwordSchema 
     })
-).refine(data => data.password === data.confirmPassword, {
+    ).refine(data => data.password === data.confirmPassword, {
         message: "Пароли не солвпадают",
         path: ["confirmPassword"],    
     }
 );
 
+export const deleteUserFormSchema = z.object({ 
+    currentPassword: passwordSchema
+});
+  
+
 export type TLoginFormSchema = z.infer<typeof loginFormSchema>;
 export type TRegisterFormSchema = z.infer<typeof registerFormSchema>;
+export type TDeleteUserFormSchema = z.infer<typeof deleteUserFormSchema>;
