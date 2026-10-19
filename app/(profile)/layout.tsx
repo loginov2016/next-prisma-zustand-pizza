@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Container, Header } from "@/components/shared";
-import { Footer } from "@/components/shared/footer";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
@@ -19,7 +18,6 @@ export default function ProfileLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
 }>) {
   return (
     <main className='min-h-screen'>
