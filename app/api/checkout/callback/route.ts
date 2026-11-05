@@ -10,19 +10,29 @@ export async function POST(req: NextRequest) {
     try {
         const data = (await req.json()) as IPaymentCallbackData;
 
+        if (!data) {
+            return NextResponse.json({ error: 'Data not found' }, { status: 404 });
+        }
+
+        console.log('[REQUEST POST DATA]: ', data);
+
         const order = await prisma.order.findFirst(
             {
                 where: {
-                    id: +data.object.metadata.order_id,
+                    id: Number(data.object.metadata.order_id),
                 },
             }
         );
+
+        //console.log('[CHECKOUT CALLBACK POST] Order: ', order);
 
         if (!order) {
             return NextResponse.json({ error: 'Order not found' }, { status: 404 });
         }
 
         const isSucceeded = data.object.status === 'succeeded';
+
+        console.log({isSucceeded});
 
         await prisma.order.update({
             where: {
@@ -38,18 +48,24 @@ export async function POST(req: NextRequest) {
         if (isSucceeded) {
             await sendEmail(
                 order.email, 
-                'Super Pizza / Ваш заказ успешно оплачен 📝', 
+                `Super Pizza / Ваш заказ #${order.id} успешно оплачен 📝`, 
                 SuccessPaymentForOrder({ 
                     orderId: order.id, 
                     totalAmount: order.totalAmount, 
                     cartItems, 
                 })
             );
+        } else {
+            // Письмо об неуспешной оплате
         }
 
-        return NextResponse.json(data);
+        const response = NextResponse.json(data);
+
+        response.cookies.set('order_id', data.object.metadata.order_id);
+        
+        return response;
     } catch (error) {
         console.log('[CHECKOUT CALLBACK POST] Error: ', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ error: 'CHECKOUT CALLBACK POST' }, { status: 500 });
     }
 }

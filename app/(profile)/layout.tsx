@@ -20,10 +20,16 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className='min-h-screen'>
+    <main className='min-h-screen bg-[#F4F1EE]'>
       <Container>
         <Suspense>
-          <Header hasSearch={false} hasCartButton={false} hasProfileButton={false} hasProfileSignOutButton={true} />
+          <Header 
+            hasSearch={false} 
+            hasCartButton={true} 
+            hasProfileButton={false} 
+            hasProfileSignOutButton={true} 
+            className='border-none'
+          />
         </Suspense>
         {children}
       </Container>

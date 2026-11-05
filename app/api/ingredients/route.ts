@@ -7,7 +7,3 @@ export async function GET() {
    //console.log(ingredients); 
    return NextResponse.json(ingredients);
 }
-
-export async function POST() { 
-   
-}

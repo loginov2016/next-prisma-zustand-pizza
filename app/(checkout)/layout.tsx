@@ -1,5 +1,4 @@
-import { Container, Header } from "@/components/shared"
-import { Footer } from "@/components/shared/footer"
+import { Container, Header, WhiteBlock } from "@/components/shared"
 import { Metadata } from "next"
 import { Suspense } from "react"
 
@@ -17,10 +16,15 @@ export default function CheckoutLayout({
     <main className="min-h-screen bg-[#F4F1EE]">
         <Container>
             <Suspense>
-              <Header hasSearch={false} hasCartButton={false} className="border-gray-200" />
+              <Header 
+              hasSearch={false} 
+              hasCartButton={false} 
+              hasDifferentClassForProfileButton={true}
+              buttonVariantProfile='outline'
+              className="border-none" 
+              />
             </Suspense>
-            {children}
-            <Footer />
+              {children}
         </Container>
     </main>
   )

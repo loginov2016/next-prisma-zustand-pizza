@@ -1,6 +1,6 @@
 'use server';
 
-import { PendingPaymentForOrder, TCheckoutFormSchema } from "@/components/shared";
+import { PendingPaymentForOrder, type TCheckoutFormSchema } from "@/components/shared";
 import { VerificationUser } from "@/components/shared/email-templates";
 import { authOptions } from "@/constants";
 import { createPayment } from "@/lib";
@@ -14,8 +14,6 @@ import { cookies } from "next/headers";
 
 
 export async function createOrder(data: TCheckoutFormSchema ) {
-    console.log(data);
-
    try {
         const cookieStore = cookies();
         const cartToken = (await cookieStore).get('cartToken')?.value;
@@ -66,8 +64,13 @@ export async function createOrder(data: TCheckoutFormSchema ) {
                     listProductsCart: JSON.stringify(userCart.cartProductVariations),
                 }
         });
+
+        if (!order) {
+            throw new Error('Order not created');
+        }
+
         // Обнуление суммы заказа корзины пользователя по id корзины.
-        await prisma.cart.update({
+        const ResetTotalAmountOrder = await prisma.cart.update({
             where: {
                 id: userCart.id,
             },
@@ -75,27 +78,36 @@ export async function createOrder(data: TCheckoutFormSchema ) {
                 totalAmount: 0,
             }
         });
+
+        if (!ResetTotalAmountOrder) {
+            throw new Error('Failed to reset the order total in the cart');
+        }
+
         // Удаление всех продуктов из корзины пользователя.
-        await prisma.cartProductVariation.deleteMany({
+        const RemoveAllProductsFromCart = await prisma.cartProductVariation.deleteMany({
             where: {
                 cartId: userCart.id,
             }
         });
-        // Возвращаем ссылку на страницу оплаты.
-        
-        //console.log(data.email);
 
+        if (!RemoveAllProductsFromCart) {
+            throw new Error('Failed to remove all products from the cart');
+        }
+        
+        // Возвращаем ссылку на страницу оплаты.
         const paymentData = await createPayment({
             amount: order.totalAmount,
             orderId: order.id,
             description: 'Оплата Заказ #' + order.id,
         });
 
+        console.log('PAYMENT DATA: ', paymentData);
+
         if (!paymentData) {
             throw new Error('Payment data not found');
         }
 
-        await prisma.order.update({
+        const paymentIdUpdate = await prisma.order.update({
             where: {
                 id: order.id,
             },
@@ -104,23 +116,60 @@ export async function createOrder(data: TCheckoutFormSchema ) {
             }
         });
 
-        const paymentUrl = paymentData.confirmation.confirmation_url;
-        console.log(paymentUrl);
+        if (!paymentIdUpdate) {
+            throw new Error("Couldn't update the payment ID.");
+        }
 
-        await sendEmail(data.email, 'Super Pizza / Оплатите заказ #' + order.id, PendingPaymentForOrder({ 
+        const paymentUrl = paymentData.confirmation.confirmation_url;
+        
+        console.log({paymentUrl});
+
+        const sendEmailForPayment = await sendEmail(data.email, 'Super Pizza / Оплатите заказ #' + order.id, PendingPaymentForOrder({ 
             orderId: order.id, 
             totalAmount: order.totalAmount,
             paymentUrl,
             })
         );    
 
+        if (!sendEmailForPayment) {
+            throw new Error('Failed to send email for payment');
+        }
+
         return paymentUrl;
 
    } catch (error) {
         console.log('[Created order] Server Error', error);
-        //throw new Error('[Created order] Server Error');
-        return null;
+        throw new Error('[Created order] Server Error');
+        //return null;
    }
+}
+
+export async function getUserOrder() {
+    try {
+        const cookieStore = cookies();
+
+        const orderId = (await cookieStore).get('order_id')?.value;
+
+        // Если orderId не нашёлся, то возвращаем ошибку.
+        if (!orderId) {
+            throw new Error('Order ID not found');
+        }
+        // По id заказа находим сам заказ 
+        const order = await prisma.order.findFirst({
+            where: {
+                id: Number(orderId)
+            },
+        });
+        // Если заказа нет, возвращаем ошибку
+        if (!order) {
+            throw new Error('Order not found');
+        }
+        // Если заказ существует, то возвращаем его
+        return order;
+    } catch (error) {
+        console.error('[Get User Order] Server Error', error);
+        throw new Error('[Get User Order] Server Error');
+    }
 }
 
 
@@ -184,7 +233,7 @@ export async function deleteUserInfo(currentPassword: string) {
         });
         
     } catch (error) {
-        console.error('[Update user info] Server Error', error);
+        console.error('[Delete user info] Server Error', error);
         throw new Error('[Delete user info] Server Error');
     }
 }

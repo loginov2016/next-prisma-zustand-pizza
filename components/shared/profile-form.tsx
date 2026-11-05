@@ -49,10 +49,10 @@ export const ProfileForm: React.FC<IProfileFormProps> = ({ data, className }) =>
     };
 
     return (
-    <Container className={cn('mt-10 flex flex-col items-center justify-center', className)}>
+    <Container className={cn('mt-5 flex flex-col items-center justify-center', className)}>
         <Title text={`Личный профиль пользователя: ${session?.user?.name}`} size="md" className="font-bold" />
         <FormProvider {...form} >
-            <form className="flex flex-col gap-5 w-96 mt-10" onSubmit={form.handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-5 w-96 mt-5" onSubmit={form.handleSubmit(onSubmit)}>
                 <FormInput name='fullName' label='Полное имя' required />
                 <FormInput name='email' label='E-mail' required />
                 <FormInput name='password' label='Новый пароль' required />

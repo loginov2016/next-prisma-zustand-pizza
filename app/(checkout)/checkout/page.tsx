@@ -52,15 +52,22 @@ export default function CheckoutPage() {
     }, [cartItems, router]); // Поставил зависимость router
 
     const onSubmitForm: SubmitHandler<TCheckoutFormSchema> = async (data) => {
-        //console.log(data);
-        //createOrder(data);
         try {
             setButtonLoading(true);
             const url = await createOrder(data);
+
+            if(!url) {    
+                //router.push(url);
+                new Error('Ссылка URL на оплату равна null!');
+            }
+
+            console.log({url});
             toast.success('Заказ успешно оформлен! Переход на оплату...', {icon: '✅'});
+
             if (url) {
                 window.location.href = url;
             }
+            
         } catch (error) {
             console.log(error);
             setButtonLoading(false);

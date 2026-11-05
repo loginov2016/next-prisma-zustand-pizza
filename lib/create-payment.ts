@@ -8,7 +8,8 @@ export interface ICreatePaymentProps {
 }
 
 export async function createPayment(details: ICreatePaymentProps) {
-    const { data } = await axios.post<IPaymentData>(
+    try {
+        const { data } = await axios.post<IPaymentData>(
         'https://api.yookassa.ru/v3/payments',
         {
             amount: {
@@ -35,7 +36,15 @@ export async function createPayment(details: ICreatePaymentProps) {
                 'Idempotence-Key': Math.random().toString(36).substring(7),
             }
         }
-    );
+        );
 
-    return data;
+        if (!data) {
+            throw new Error('Payment not created');
+        }
+
+        return data;
+    } catch (error) {
+        console.log('[Create Payment] Fetch Error', error);
+        throw new Error('[Create Payment] Fetch Error');
+    }
 }
