@@ -1,5 +1,6 @@
 import { IPaymentCallbackData } from "@/@types/yookassa";
 import { SuccessPaymentForOrder } from "@/components/shared";
+import { CanceledPaymentForOrder } from "@/components/shared/email-templates";
 import { sendEmail } from "@/lib";
 import { prisma } from "@/prisma/prisma-client";
 import { TCartItemDTO } from "@/services/dto/cart.dto";
@@ -46,9 +47,10 @@ export async function POST(req: NextRequest) {
         const cartItems = JSON.parse(order?.listProductsCart as unknown as string) as TCartItemDTO[];
 
         if (isSucceeded) {
+            // Письмо об успешной оплате
             await sendEmail(
                 order.email, 
-                `Super Pizza / Ваш заказ #${order.id} успешно оплачен 📝`, 
+                `Super Pizza / Ваш заказ #${order.id} успешно оплачен ✅`,
                 SuccessPaymentForOrder({ 
                     orderId: order.id, 
                     totalAmount: order.totalAmount, 
@@ -56,14 +58,19 @@ export async function POST(req: NextRequest) {
                 })
             );
         } else {
-            // Письмо об неуспешной оплате
+            // Письмо об отмены оплаты
+            await sendEmail(
+                order.email, 
+                `Super Pizza / Ваш заказ #${order.id} отменён ❌`, 
+                CanceledPaymentForOrder({ 
+                    orderId: order.id, 
+                    totalAmount: order.totalAmount, 
+                })
+            );
         }
-
-        const response = NextResponse.json(data);
-
-        response.cookies.set('order_id', data.object.metadata.order_id);
         
-        return response;
+        return NextResponse.json({ ok: true });
+
     } catch (error) {
         console.log('[CHECKOUT CALLBACK POST] Error: ', error);
         return NextResponse.json({ error: 'CHECKOUT CALLBACK POST' }, { status: 500 });

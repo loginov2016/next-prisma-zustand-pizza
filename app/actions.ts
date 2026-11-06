@@ -144,12 +144,9 @@ export async function createOrder(data: TCheckoutFormSchema ) {
    }
 }
 
-export async function getUserOrder() {
+export async function getUserOrder(orderId: string | undefined) {
     try {
-        const cookieStore = cookies();
-
-        const orderId = (await cookieStore).get('order_id')?.value;
-
+        
         // Если orderId не нашёлся, то возвращаем ошибку.
         if (!orderId) {
             throw new Error('Order ID not found');

@@ -22,8 +22,4 @@ export const removeCartItem = async (itemId: number): Promise<ICartDTO> => {
     return data;
 }
 
-export const getOrder = async (): Promise<ICartDTO> => {
-    const { data } = await axiosInstance.get<ICartDTO>('/order');
-    return data;
-}
 

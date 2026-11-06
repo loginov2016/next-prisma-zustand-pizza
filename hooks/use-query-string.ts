@@ -17,22 +17,7 @@ export interface IQueryFiltersProps {
 export const useQueryString = (queryParams: IQueryFiltersProps): void => {
   //console.log('Сработал хук useQueryString');
   const router = useRouter();
-  const searchParams = useSearchParams();
   
-  /* useEffect( () => {
-    //console.log('SearchQueryString: ',searchParams.toString());
-    if ( searchParams.toString() === 'priceFrom=0&priceTo=0' ) {
-      //router.push('/', { scroll: false });
-      const params = new URLSearchParams(searchParams.toString());
-      //console.log('params: ', params.toString()); // params: priceFrom=0&priceTo=0
-      params.delete('priceFrom');
-      params.delete('priceTo');
-      //console.log('params: ', params.toString()); // params: 
-      //router.push(`?${params.toString()}`, { scroll: false });
-    }
-  }, []); */
-
-
   useEffect( () => {
 
     //console.log('SearchQueryString: ',searchParams.toString());
@@ -47,12 +32,6 @@ export const useQueryString = (queryParams: IQueryFiltersProps): void => {
       const queryFilterString = qs.stringify(queryFilters, {
         arrayFormat: 'comma'
       });
-      
-      //console.log({queryFilterString});
-      // queryFilterString === 'priceFrom=0&priceTo=0'
-      //const priceFrom = searchParams.has('priceFrom') ? searchParams.get('priceFrom') : '0';
-      //const priceTo   = searchParams.has('priceTo')   ? searchParams.get('priceTo')   : '0';
-      //priceFrom === '0' && priceTo === '0'
 
       if ( queryFilterString === 'priceFrom=0&priceTo=0' ) {
         router.push(`/`, { scroll: false });
@@ -64,8 +43,6 @@ export const useQueryString = (queryParams: IQueryFiltersProps): void => {
         router.push(`?${replaceStr}`, { scroll: false });
         return;
       }
-
-      //console.log({queryFilters});
       /* 
         Обязательно нужно передавать в метод push второй аргумент: { scroll: false },
         чобы при клике на чекбокс, скролл не прыгал на верх.

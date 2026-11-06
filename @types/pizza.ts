@@ -21,18 +21,3 @@ export interface IPizzaTypes {
     name: 'традиционная' | 'тонкая';
     value: '1' | '2';
 }
-
-
-
-// type TPizzaSizeKeys = '20' | '30' | '40';
-// type TPizzaSizeValues = 'Маленькая' | 'Средняя' | 'Большая';
-
-/* type myPartial<T> = {
-     [K in keyof T]: T[K];
-} */
-
-// type TMapPizzaSize = myPartial<typeof mapPizzaSize>
-
-/* type IMapPizzaSize = {
-    [K in TPizzaSizeKeys]: TPizzaSizeValues;
-}; */
