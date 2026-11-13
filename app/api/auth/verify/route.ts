@@ -40,7 +40,4 @@ export async function GET(req: NextRequest) {
     } catch (error) {
         console.log('[GET /api/auth/verify] Error', error);
     }
-    
-    
-    
 }

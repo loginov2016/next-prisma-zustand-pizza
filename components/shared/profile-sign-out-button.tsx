@@ -21,7 +21,7 @@ export const ProfileSignOutButton = ({ className, buttonVariantProfileSignOut='o
     const onClickSignOut = async () => {
             //setButtonSignOutLoading(true);
             await signOut({
-                callbackUrl: '/',
+                callbackUrl: `${process.env.NEXT_PUBLIC_DOMAIN_HOST}`,
             });
             //setButtonSignOutLoading(false);
             toast.success(`Вы успешно вышли из профиля пользователя ${session?.user?.name}`, { icon: '✅', duration: 5000 });

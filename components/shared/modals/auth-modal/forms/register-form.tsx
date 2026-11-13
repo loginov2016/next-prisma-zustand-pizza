@@ -41,7 +41,7 @@ export const RegisterForm: React.FC<IRegisterFormProps> = ({ onClose }) => {
       onClose?.();
     } catch (error) {
       console.log('[Register Form Page onSubmit] Error', error);
-      return toast.error('Неверный E-Mail или пароль', {
+      return toast.error('Такой E-Mail или пароль уже существует', {
         icon: '❌',
       });
     }
